@@ -1,0 +1,77 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.rulers": [
+    120
+  ],
+  "editor.tabSize": 2,
+  "editor.wordWrap": "off",
+  "eslint.codeActionsOnSave.mode": "problems",
+  "eslint.format.enable": true,
+  "eslint.rules.customizations": [
+    {
+      "rule": "*",
+      "severity": "warn"
+    }
+  ],
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.encoding": "utf8",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "prettier.singleQuote": true,
+  "search.exclude": {
+    "yarn.lock": true,
+    "**/broadcast": true,
+    "**/*.csv": true,
+    "**/cache": true,
+    "**/forge-out": true,
+    "**/out": true,
+    "**/node_modules": true,
+    ".yarn/releases/*": true,
+    "**/nockFixtures": true,
+    "**/.yarn": true,
+    "**/.pnp.*": true,
+    "**/dist/*": true
+  },
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.referencesCodeLens.enabled": false,
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "workbench.editor.revealIfOpen": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[solidity]": {
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "JuanBlanco.solidity"
+  },
+  "solidity.formatter": "prettier",
+  "solidity.linter": "solhint",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false,
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced"
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+  "eslint.nodePath": ".yarn/sdks",
+  "solidity.compileUsingRemoteVersion": "v0.8.24+commit.e11b9ed9"
+}

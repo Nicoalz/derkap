@@ -3,6 +3,7 @@
 
 import { usePWA } from "@/contexts/pwa-context";
 import React from "react";
+import NoPwaScreen from '@/screens/NoPwaScreen';
 import BottomNavbar from "./BottomNavbar";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -29,10 +30,23 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="overflow-x-hidden flex flex-col min-h-screen">
       <Header />
-      <main className="container mx-auto flex-1 flex flex-col justify-center">
-        {children}
-      </main>
-      {isPWA ? <BottomNavbar /> : <Footer />}
+      {isPWA ? (
+        <>
+          <main className="container mx-auto flex-1 flex flex-col justify-center">
+            {children}
+          </main>
+          <BottomNavbar />
+        </>
+      ) :
+        (
+          <>
+            <div className='container mx-auto flex-1 flex flex-col justify-center'>
+              <NoPwaScreen />
+            </div>
+            <Footer />
+          </>
+        )
+      }
     </div>
   );
 };

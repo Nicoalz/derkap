@@ -1,9 +1,9 @@
-const HomeScreen: React.FC = () => {
+const ProfileScreen: React.FC = () => {
   return (
     <div className="w-full flex flex-col items-center mb-32">
-      <p>Accueil</p>
+      <p>Profil</p>
     </div>
   );
 };
 
-export default HomeScreen;
+export default ProfileScreen;

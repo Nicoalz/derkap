@@ -34,6 +34,8 @@ const Capture: React.FC<{ setIsCaptureOpen: React.Dispatch<React.SetStateAction<
       if (context) {
         canvas.width = width;
         canvas.height = height;
+        context.translate(width, 0);
+        context.scale(-1, 1);
         context.drawImage(video, 0, 0, width, height);
         setHasPhoto(true);
       }
@@ -56,33 +58,41 @@ const Capture: React.FC<{ setIsCaptureOpen: React.Dispatch<React.SetStateAction<
       <div className="flex justify-between items-center font-bold text-xl mb-4 w-full px-8">
         <div
           onClick={() => setIsCaptureOpen(false)}
-          className='bg-custom-primary p-1 rounded-sm'>
+          className='bg-custom-primary p-1 rounded-md'>
           <ArrowLeftIcon className="w-6 h-6 " />
         </div>
         <p>Capture ton défi !</p>
 
       </div>
       <div className="relative w-full max-w-xs">
-        <video ref={videoRef} className="rounded-md w-full" autoPlay playsInline />
+        {!hasPhoto && (
+          <video
+            ref={videoRef}
+            className="rounded-md w-full transform scale-x-[-1]" // Flip video horizontally
+            autoPlay
+            playsInline
+          />
+        )}
         <canvas width={320} height={320 / (4 / 5)} ref={canvasRef} className={`absolute top-0 left-0 w-full ${hasPhoto ? 'block' : 'hidden'}`} />
       </div>
-      {hasPhoto && (
-        <div className='w-full flex items-center justify-between'>
+      {hasPhoto ? (
+        <div className='flex items-center justify-between mt-4'>
           <div
             onClick={() => closePhoto()}
-            className='bg-custom-primary p-1 rounded-sm'>
-            <ArrowPathIcon className="w-6 h-6 " />
+            className='bg-custom-primary p-2 rounded-md mx-4'>
+            <ArrowPathIcon className="w-8 h-8 " />
           </div>
           <div
             onClick={() => console.log('Photo saved')}
-            className='bg-custom-primary p-1 rounded-sm'>
-            <CheckIcon className="w-6 h-6 " />
+            className='bg-custom-primary p-2 rounded-md mx-4'>
+            <CheckIcon className="w-8 h-8 " />
           </div>
         </div>
+      ) : (
+        <CaptureButton
+          func={() => takePhoto()}
+        />
       )}
-      <CaptureButton
-        func={() => takePhoto()}
-      />
     </div>
   );
 };

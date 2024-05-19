@@ -1,6 +1,11 @@
+import { ArrowLeftIcon, ArrowPathIcon, CheckIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useRef, useState } from "react";
-
-const Capture: React.FC = () => {
+import CaptureButton from './CaptureButton';
+const Capture: React.FC<{ setIsCaptureOpen: React.Dispatch<React.SetStateAction<boolean>> }> = ({
+  setIsCaptureOpen,
+}: {
+  setIsCaptureOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [hasPhoto, setHasPhoto] = useState(false);
@@ -48,21 +53,36 @@ const Capture: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full items-center">
-      <h1 className="font-bold text-xl mb-4">
-        Capture ton défi !
-      </h1>
+      <div className="flex justify-between items-center font-bold text-xl mb-4 w-full px-8">
+        <div
+          onClick={() => setIsCaptureOpen(false)}
+          className='bg-custom-primary p-1 rounded-sm'>
+          <ArrowLeftIcon className="w-6 h-6 " />
+        </div>
+        <p>Capture ton défi !</p>
+
+      </div>
       <div className="relative w-full max-w-xs">
         <video ref={videoRef} className="rounded-md w-full" autoPlay playsInline />
-        <canvas ref={canvasRef} className={`absolute top-0 left-0 w-full ${hasPhoto ? 'block' : 'hidden'}`} />
+        <canvas width={320} height={320 / (4 / 5)} ref={canvasRef} className={`absolute top-0 left-0 w-full ${hasPhoto ? 'block' : 'hidden'}`} />
       </div>
-      <button onClick={takePhoto} className="mt-4 p-2 bg-custom-primary text-white rounded">
-        Take Photo
-      </button>
       {hasPhoto && (
-        <button onClick={closePhoto} className="mt-2 p-2 bg-red-500 text-white rounded">
-          Retake Photo
-        </button>
+        <div className='w-full flex items-center justify-between'>
+          <div
+            onClick={() => closePhoto()}
+            className='bg-custom-primary p-1 rounded-sm'>
+            <ArrowPathIcon className="w-6 h-6 " />
+          </div>
+          <div
+            onClick={() => console.log('Photo saved')}
+            className='bg-custom-primary p-1 rounded-sm'>
+            <CheckIcon className="w-6 h-6 " />
+          </div>
+        </div>
       )}
+      <CaptureButton
+        func={() => takePhoto()}
+      />
     </div>
   );
 };

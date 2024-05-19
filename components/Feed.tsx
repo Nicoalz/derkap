@@ -36,8 +36,8 @@ const Feed: React.FC = () => {
   ]
 
   return (
-    <div className='flex flex-col w-full'>
-      <h1 className='font-bold text-2xl'>Vos amis</h1>
+    <div className='flex flex-col w-full no-scrollbar '>
+      <h1 className='font-bold text-2xl px-2'>Vos amis</h1>
       <div className='w-full flex flex-col items-center justify-center'>
         {posts.map((post, index) => (
           <Post key={index} postData={post} />

@@ -40,10 +40,22 @@ const Capture: React.FC<{
           const videoHeight = video.videoHeight;
 
           // Calculate the size and position of the cropping area
-          const cropWidth = videoWidth;
-          const cropHeight = videoWidth * (4 / 5);
-          const cropX = 0;
-          const cropY = (videoHeight - cropHeight) / 2;
+          const aspectRatio = 4 / 5;
+          let cropWidth, cropHeight, cropX, cropY;
+
+          if (videoWidth / videoHeight > aspectRatio) {
+            // Video is wider than desired aspect ratio
+            cropHeight = videoHeight;
+            cropWidth = cropHeight * aspectRatio;
+            cropX = (videoWidth - cropWidth) / 2;
+            cropY = 0;
+          } else {
+            // Video is taller than desired aspect ratio
+            cropWidth = videoWidth;
+            cropHeight = cropWidth / aspectRatio;
+            cropX = 0;
+            cropY = (videoHeight - cropHeight) / 2;
+          }
 
           canvas.width = desiredWidth;
           canvas.height = desiredHeight;
@@ -52,12 +64,12 @@ const Capture: React.FC<{
           context.scale(-1, 1);
           context.drawImage(video, cropX, cropY, cropWidth, cropHeight, 0, 0, desiredWidth, desiredHeight);
           setHasPhoto(true);
-          console.log('Photo taken')
           const img = canvas.toDataURL('image/png');
           setImgTaken(img);
-        };
-      };
-    }
+          console.log('Photo taken')
+        }
+      }
+    };
 
     const closePhoto = () => {
       const canvas = canvasRef.current;

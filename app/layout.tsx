@@ -1,7 +1,7 @@
 import LayoutApp from "@/components/LayoutApp";
 import { FeedProvider } from '@/contexts/feed-context';
 import { PWAProvider } from "@/contexts/pwa-context";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
@@ -38,6 +38,14 @@ export const metadata: Metadata = {
     userScalable: false,
   },
 };
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#0a0e15",
+}
 
 export default function RootLayout({
   children,

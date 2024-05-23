@@ -6,6 +6,7 @@ export interface TPost {
   description: string,
   user: TUser,
   date: string,
+  feed: string,
 }
 
 export const postWitdh = 1080/2;

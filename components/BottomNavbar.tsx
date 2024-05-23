@@ -11,18 +11,17 @@ import { usePWA } from "@/contexts/pwa-context";
 
 const tabs = [
   {
-    name: "Discover",
-    route: "/discover",
-    outline: MagnifyingGlassIcon,
-    solid: MagnifyingGlassIcon,
-  },
-  {
     name: "Home",
     route: "/",
     outline: HomeIcon,
     solid: HomeIconSolid,
   },
-
+  {
+    name: "Explorer",
+    route: "/explore",
+    outline: MagnifyingGlassIcon,
+    solid: MagnifyingGlassIcon,
+  },
   {
     name: "Profile",
     route: "/profile",

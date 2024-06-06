@@ -14,7 +14,6 @@ interface LayoutProps {
 const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE === "true";
   const { isPWA } = usePWA();
-
   if (isMaintenance) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -29,7 +28,6 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="overflow-x-hidden flex flex-col min-h-screen">
       <Header />
-
 
       {isPWA ? (
         <>

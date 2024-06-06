@@ -8,8 +8,8 @@ export const postsMocked = [{
 },
 {
   isPhoto: true,
-  url: '/posts/augustin.png',
-  description: 'Téma la vue',
+  url: '/posts/augustin.JPG',
+  description: 'Derkap de bz ce défi',
   user: { name: 'Augustin', username: '10gust10', img: '/aug.jpeg' },
   date: '2021-06-01',
   feed: 'Amis',

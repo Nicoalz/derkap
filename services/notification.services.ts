@@ -37,7 +37,7 @@ const getVapidDetails = (): TVapidDetails => {
   }
 
   return {
-    subject: 'mailto: <contact@derkap.com>',
+    subject: 'mailto:contact@derkap.com',
     publicKey: vapidPublicKey,
     privateKey: vapidPrivateKey,
   };

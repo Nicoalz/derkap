@@ -1,4 +1,4 @@
-import { useFeed } from '@/contexts/feed-context';
+import { useUser } from '@/contexts/user-context';
 import { TPost } from '@/types';
 import { ArrowLeftIcon, ArrowPathIcon, CheckIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useRef, useState } from "react";
@@ -15,7 +15,7 @@ const Capture: React.FC<{
     const [hasPhoto, setHasPhoto] = useState(false);
     const [imgTaken, setImgTaken] = useState<string | null>(null);
     const [newDescription, setNewDescription] = useState<string>('');
-    const { userFeeds, selectedFeed, setSelectedFeed } = useFeed();
+    const { userFeeds, selectedFeed, setSelectedFeed, userData } = useUser();
 
     useEffect(() => {
       // Get access to the user's camera
@@ -108,7 +108,7 @@ const Capture: React.FC<{
         isPhoto: true,
         url: imgTaken,
         description: newDescription,
-        user: { name: 'Nicolas', username: 'Nicoalz', img: 'https://picsum.photos/11' },
+        user: userData,
         date: '2021-06-01',
         feed: selectedFeed
       });

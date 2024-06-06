@@ -1,22 +1,19 @@
+"use client";
 import Image from 'next/image';
-import { TUser } from '../types';
 
+import { useUser } from '../contexts/user-context';
 const ProfileScreen: React.FC = () => {
-  const user: TUser = {
-    name: 'Nicolas',
-    username: 'Nicoalz',
-    img: 'https://picsum.photos/500',
-  }
+  const { userData } = useUser();
   const communities = ['IIMPACT', 'Paris 15']
   const postsAmount = 10
   return (
     <div className="w-full flex flex-col items-center mb-32">
       <div className='flex flex-col items-center'>
-        <p>@{user.username}</p>
-        <Image src={user.img} alt={user.name} width={70} height={70}
-          className='rounded-full my-2'
+        <p>@{userData.username}</p>
+        <Image src={userData.img} alt={userData.name} width={70} height={70}
+          className='rounded-full my-2 w-20 h-20 object-cover'
         />
-        <p>{user.name}</p>
+        <p>{userData.name}</p>
         <div className='flex justify-between items-center gap-x-8 my-4'>
           <div className='flex flex-col justify-center items-center'>
             <p>Abonnés</p>

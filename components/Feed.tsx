@@ -1,10 +1,10 @@
-import { useFeed } from '@/contexts/feed-context';
+import { useUser } from '@/contexts/user-context';
 import { TPost } from '@/types';
 import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 const Feed: React.FC<{ allPosts: TPost[] }> = ({ allPosts }) => {
-  const { userFeeds, selectedFeed, setSelectedFeed } = useFeed();
+  const { userFeeds, selectedFeed, setSelectedFeed } = useUser();
 
   const [activePosts, setActivePosts] = useState<TPost[]>([]);
 

@@ -15,7 +15,7 @@ const Post: React.FC<{ postData: TPost }> = ({ postData }) => {
             src={postData.user.img}
             width={30}
             height={30}
-            className='rounded-full mr-2'
+            className='rounded-full mr-2 w-8 h-8 object-cover'
           />
           <p>{postData.user.name}</p>
         </div>

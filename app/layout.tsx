@@ -1,6 +1,6 @@
 import LayoutApp from "@/components/LayoutApp";
-import { FeedProvider } from '@/contexts/feed-context';
 import { PWAProvider } from "@/contexts/pwa-context";
+import { UserProvider } from '@/contexts/user-context';
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -54,13 +54,13 @@ export default function RootLayout({
 }>) {
   return (
     <PWAProvider>
-      <FeedProvider>
+      <UserProvider>
         <html lang="en">
           <body className={inter.className}>
             <LayoutApp>{children}</LayoutApp>
           </body>
         </html>
-      </FeedProvider>
+      </UserProvider>
     </PWAProvider>
   );
 }

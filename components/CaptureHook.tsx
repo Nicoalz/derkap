@@ -53,12 +53,12 @@ const Capture: React.FC<{
           <p>Capture ton défi !</p>
 
         </div>
-        <div className="relative w-full max-w-xs">
+        <div className="w-full max-w-xs">
 
           {imgTaken ? (
             <img src={imgTaken} alt='img taken' className='rounded-md w-full h-full' />
           ) : (
-            <Webcam className='rounded-md w-[320px] h-[400px]'
+            <Webcam className='rounded-md'
               mirrored={true}
               videoConstraints={{
                 width: 320,
@@ -69,7 +69,7 @@ const Capture: React.FC<{
               screenshotFormat="image/jpeg"
               width={320}
               height={400}
-
+              screenshotQuality={1}
             />
           )}
         </div>

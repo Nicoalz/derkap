@@ -100,6 +100,16 @@ const Capture: React.FC<{
           console.log('Photo closed')
         }
       }
+      // re open video
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        })
+        .catch(err => {
+          console.error("Error accessing camera: ", err);
+        });
     };
 
     const validatePhoto = () => {

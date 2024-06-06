@@ -15,7 +15,11 @@ export const sendCustomNotificationToAll = async ({
   const vapidDetails = getVapidDetails();
 
   const subscriptions = await getNotificationSubscriptions();
+  console.log({
+    step:'subscriptions',
+    subscriptions
 
+  })
   const sentNotifs = await Promise.allSettled(
     subscriptions.map(subscription => sendCustomNotification({ subscription, vapidDetails, title, message })),
   );

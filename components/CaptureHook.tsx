@@ -60,15 +60,15 @@ const Capture: React.FC<{
           ) : (
             <Webcam className='rounded-md'
               mirrored={true}
-              videoConstraints={{
-                width: 320,
-                height: 400,
-                facingMode: "user"
-              }}
+              // videoConstraints={{
+              //   width: 320,
+              //   height: 400,
+              //   facingMode: "user"
+              // }}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              width={320}
-              height={400}
+              // width={320}
+              // height={400}
               screenshotQuality={1}
             />
           )}

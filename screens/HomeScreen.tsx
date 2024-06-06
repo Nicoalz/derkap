@@ -1,6 +1,7 @@
 'use client';
-import Capture from '@/components/Capture';
+// import Capture from '@/components/Capture';
 import CaptureButton from '@/components/CaptureButton';
+import CaptureHook from '@/components/CaptureHook';
 import ChallengerBox from '@/components/ChallengeBox';
 import Feed from '@/components/Feed';
 import { TPost } from '@/types';
@@ -18,7 +19,7 @@ const HomeScreen: React.FC = () => {
     <div className="w-full flex flex-col items-center relative flex-1 mb-32">
       <ChallengerBox />
       {isCaptureOpen ? (
-        <Capture
+        <CaptureHook
           setIsCaptureOpen={setIsCaptureOpen}
           addNewPost={addNewPost}
         />

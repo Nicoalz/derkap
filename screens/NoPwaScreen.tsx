@@ -3,10 +3,10 @@ const NoPwaScreen: React.FC = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center text-center">
       <p >
-        To use this app, please install it on your device.
+        Pour utiliser cette application, veuillez l'installer sur votre appareil.
       </p>
       <p>
-        Click on the "Add to Home Screen" button in your share menu of your browser.
+        Cliquez sur le bouton "Ajouter à l'écran d'accueil" dans le menu de partage de votre navigateur.
       </p>
     </div>
   );

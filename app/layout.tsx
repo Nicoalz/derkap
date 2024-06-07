@@ -3,6 +3,8 @@ import { PWAProvider } from "@/contexts/pwa-context";
 import { UserProvider } from '@/contexts/user-context';
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
+
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 const title = "Derkap";
@@ -58,6 +60,8 @@ export default function RootLayout({
         <html lang="en">
           <body className={inter.className}>
             <LayoutApp>{children}</LayoutApp>
+            <Toaster position="top-center" richColors />
+
           </body>
         </html>
       </UserProvider>

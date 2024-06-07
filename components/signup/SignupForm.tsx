@@ -65,7 +65,7 @@ export default function SignUpForm() {
         toast.error(error)
       }
       else {
-        toast.success("Un email de confirmation vous a été envoyé")
+        toast.success("Un email de confirmation vous a été envoyé (à faire avec resend))")
 
       }
     } catch (error) {
@@ -95,7 +95,7 @@ export default function SignUpForm() {
       <Input placeholder='Pseudo' type='text' name='username' errorMsg={usernameError} onChange={(e) => checkUsernameSchema(e.target.value)} />
       <Input placeholder='Email' type='email' name='email' errorMsg={emailError} onChange={(e) => checkEmailSchema(e.target.value)} />
       <Input placeholder='Mot de passe' type='password' name='password' errorMsg={passwordError} onChange={(e) => checkPasswordSchema(e.target.value)} />
-      <input disabled={isLoading} type="submit" value={isLoading ? "Chargement..." : "S'inscrire"} className={cn("bg-red-500 cursor-pointer text-white px-20 py-2 hover:scale-105 transition-transform rounded", { "bg-gray-200 ": isLoading })} />
+      <input disabled={isLoading} type="submit" value={isLoading ? "Chargement..." : "S'inscrire"} className={cn("bg-red-500 cursor-pointer text-white px-20 py-2 transition-transform rounded", { "bg-gray-200 ": isLoading })} />
     </form>
   )
 }

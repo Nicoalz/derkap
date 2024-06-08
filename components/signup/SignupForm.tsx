@@ -66,6 +66,7 @@ export default function SignUpForm() {
       }
       else {
         toast.success("Un email de confirmation vous a été envoyé (à faire avec resend))")
+        router.push("/connexion")
 
       }
     } catch (error) {

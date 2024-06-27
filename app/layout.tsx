@@ -6,12 +6,14 @@ import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 
 import "./globals.css";
+import { ThemeProvider } from '../components/ui/theme-provider';
 const inter = Inter({ subsets: ["latin"] });
 const title = "Derkap";
 const description = "Derkap";
 const domain = "wwww.example.com/";
 const url = `https://${domain}`;
 const socialBannerUrl = "/social_banner.png";
+
 export const metadata: Metadata = {
   title,
   description,
@@ -57,11 +59,17 @@ export default function RootLayout({
   return (
     <PWAProvider>
       <UserProvider>
-        <html lang="en">
+        <html lang="fr">
           <body className={inter.className}>
-            <LayoutApp>{children}</LayoutApp>
-            <Toaster position="top-center" richColors />
-
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <LayoutApp>{children}</LayoutApp>
+              <Toaster position="top-center" richColors />
+            </ThemeProvider>
           </body>
         </html>
       </UserProvider>

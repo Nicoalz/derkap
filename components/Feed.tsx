@@ -28,7 +28,7 @@ const Feed: React.FC<{ allPosts: TPost[] }> = ({ allPosts }) => {
           <li
             key={index}
             onClick={() => setSelectedFeed(feed)}
-            className={`px-2 cursor-pointer font-bold ${selectedFeed === feed ? 'text-custom-primary text-2xl' : 'text-gray-500 text-base'
+            className={`px-2 cursor-pointer text-lg ${selectedFeed === feed ? 'text-custom-primary font-bold' : 'text-gray-500'
               }`}
           >
             {feed}

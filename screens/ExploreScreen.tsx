@@ -8,7 +8,7 @@ const ExploreScreen: React.FC = () => {
       <input
         type="text"
         placeholder="Rechercher"
-        className="w-52 p-2 border-2 border-gray-300 rounded-md my-4 "
+        className="w-full max-w-96 p-2 border-2 border-gray-300 rounded-md my-4 "
       />
       <div className='w-full flex flex-col px-4 my-4'>
         <p className='text-xl font-bold text-custom-primary'>
@@ -24,18 +24,18 @@ const ExploreScreen: React.FC = () => {
           }
         </div>
       </div>
-      <div className='w-full flex flex-col px-4 my-4'>
+      <div className='w-full flex flex-col px-2'>
         <p className='text-xl font-bold text-custom-primary'>
           Communautés
         </p>
         <div className='w-full flex justify-start items-center flex-wrap'>
           {
             communities.map((community, i) => (
-              <div className='flex flex-col items-center justify-start w-16 m-2'>
+              <div className='flex flex-col items-center justify-start w-20 p-1'>
                 <Image key={i} src={`https://picsum.photos/20${i}`} alt='Post' width={100} height={100}
-                  className='rounded-md w-16 h-16'
+                  className='rounded-md aspect-square'
                 />
-                <p className='text-[0.5rem]'>
+                <p className='w-full text-sm line-clamp-1 truncate'>
                   {community}
                 </p>
               </div>

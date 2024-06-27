@@ -1,11 +1,11 @@
 import { useUser } from '@/contexts/user-context';
-import { TPost } from '@/types';
 import { ArrowLeftIcon, ArrowPathIcon, CheckIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useRef, useState } from "react";
+import { TPostDb } from '../types';
 import CaptureButton from './CaptureButton';
 const Capture: React.FC<{
   setIsCaptureOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  addNewPost: (post: TPost) => void;
+  addNewPost: (post: TPostDb) => void;
 }> = ({
   setIsCaptureOpen,
   addNewPost
@@ -115,11 +115,12 @@ const Capture: React.FC<{
     const validatePhoto = () => {
       if (!imgTaken) return;
       addNewPost({
-        isPhoto: true,
-        url: imgTaken,
+        is_photo: true,
+        file_url: imgTaken,
         description: newDescription,
         user: userData,
-        date: '2021-06-01',
+        created_at: '2021-06-01',
+        id: 1,
         feed: selectedFeed
       });
       setIsCaptureOpen(false);

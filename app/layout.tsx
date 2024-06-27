@@ -5,6 +5,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 
+import { createSupabaseAppServerClient } from '../libs/supabase/server';
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 const title = "Derkap";
@@ -49,14 +50,18 @@ export const viewport: Viewport = {
   themeColor: "#0a0e15",
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const supabase = createSupabaseAppServerClient()
+  const { user } = (await supabase.auth.getUser()).data;
+  const profile = user && (await supabase.from('profile').select('*').eq('id', user?.id).single()).data;
   return (
     <PWAProvider>
-      <UserProvider>
+      <UserProvider user={user} profile={profile}>
         <html lang="en">
           <body className={inter.className}>
             <LayoutApp>{children}</LayoutApp>

@@ -9,7 +9,6 @@ const Home: NextPage = async () => {
   const supabase = createSupabaseAppServerClient()
 
   const { user } = (await supabase.auth.getUser()).data;
-  console.log({ user })
 
   return (
 

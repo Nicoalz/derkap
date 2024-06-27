@@ -4,12 +4,12 @@ import CaptureButton from '@/components/CaptureButton';
 import CaptureHook from '@/components/CaptureHook';
 import ChallengerBox from '@/components/ChallengeBox';
 import Feed from '@/components/Feed';
-import { TPost } from '@/types';
+import { TPostDb } from '@/types';
 import { User } from '@supabase/supabase-js';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { getPosts } from '../functions/supabase/post/get-post';
 import { signoutSupabase } from '../functions/supabase/signout-supabase';
-import { postsMocked } from '../libs/postsData';
 
 interface HomeScreenProps {
   user?: User | null;
@@ -18,10 +18,10 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
   const [isCaptureOpen, setIsCaptureOpen] = useState(false)
-  const [allPosts, setAllPosts] = useState<TPost[]>(postsMocked);
+  const [allPosts, setAllPosts] = useState<TPostDb[]>([]);
 
 
-  const addNewPost = (newPost: TPost) => {
+  const addNewPost = (newPost: TPostDb) => {
     setAllPosts([newPost, ...allPosts]);
   }
 
@@ -31,11 +31,29 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
       console.error(error)
       toast.error('Une erreur est survenue')
     }
+  }
 
+  const handleGetPosts = async () => {
+    const res = await getPosts(); // { data, error }
+    // console.log(data, error)
+    if (res.error) {
+      console.error(res.error)
+      toast.error('Une erreur est survenue dans la récupération des posts')
+      return;
+    }
+    if (res.data) {
+      console.log(res.data)
+      setAllPosts(res.data)
+    }
 
   }
 
+  useEffect(() => {
+    user && handleGetPosts()
+  }, [user])
+
   return (
+    console.log(allPosts),
     <div className="w-full flex flex-col items-center relative flex-1 mb-32">
       {user &&
         <>

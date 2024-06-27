@@ -10,6 +10,7 @@ const Home: NextPage = async () => {
 
   const { user } = (await supabase.auth.getUser()).data;
 
+
   return (
 
     <>

@@ -1,7 +1,6 @@
 "use server"
 
 import { headers } from "next/headers"
-import { redirect } from "next/navigation"
 import { createSupabaseAppServerClient } from '../../libs/supabase/server'
 
 interface SignInFormValues {
@@ -27,6 +26,5 @@ export const signinSupabase = async ({formValues}: {formValues: SignInFormValues
 		return error.message
 	}
 
-	return redirect(`${origin}/auth/callback`)
 }
 

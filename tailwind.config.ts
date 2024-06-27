@@ -17,7 +17,7 @@ const config: Config = {
       },
       colors: {
         "custom-dark": "#0a0e15", // custom colors can be added here
-        "custom-primary": "#eb6861",
+        "custom-primary": "#9747ff",
       },
     },
   },

@@ -9,11 +9,13 @@ const ProfileScreen: React.FC = () => {
   return (
     <div className="w-full flex flex-col items-center mb-32">
       <div className='flex flex-col items-center'>
+
         <p>@{userData.username}</p>
         <Image src={userData.avatar_url ?? ""} alt={userData.name ?? ""} width={70} height={70}
-          className='rounded-full my-2 w-20 h-20 object-cover'
+          className='rounded-full my-2 w-20 h-20 object-cover border-2 border-custom-primary'
         />
         <p>{userData.name}</p>
+        <p className='text-[10px] text-slate-400'>@{userData.username}</p>
         <div className='flex justify-between items-center gap-x-8 my-4'>
           <div className='flex flex-col justify-center items-center'>
             <p>Abonnés</p>
@@ -26,22 +28,35 @@ const ProfileScreen: React.FC = () => {
         </div>
       </div>
       <div className='my-4'>
-        <button className='bg-custom-primary text-white p-2 rounded-md'>Modifier</button>
+        <button className='bg-custom-primary text-white p-2 rounded-md'>Créer ma communauté</button>
       </div>
       <div className='w-full flex flex-col px-4 my-4'>
         <p className='text-xl font-bold text-custom-primary'>
           Mes Communautés
         </p>
-        <div className='flex justify-start items-center overflow-auto'>
+        <div className='flex justify-start items-center overflow-auto gap-2'>
           {
             communities.map((community, i) => (
-              <div className='flex flex-col items-center justify-center'>
-                <Image key={i} src={`https://picsum.photos/20${i}`} alt='Post' width={100} height={100}
-                  className='rounded-md m-2'
+              <div className='flex flex-col items-center justify-center h-64 relative'>
+                <Image
+                  key={i}
+                  src={`https://picsum.photos/20${i}`}
+                  alt='Post'
+                  width={150}
+                  height={300}
+                  className='rounded-md m-2 h-full w-full object-cover'
                 />
-                <p>
-                  {community}
-                </p>
+                <div className='w-full h-full absolute inset-0 flex flex-col justify-end text-white p-4'>
+                  <p className='text-[12px]'>
+                    {community}
+                  </p>
+                  <p className='text-[10px]'>
+                    Catégorie de la communauté
+                  </p>
+                  <p className='text-[6px] text-slate-400'>
+                    @créateur
+                  </p>
+                </div>
               </div>
             ))
           }
@@ -49,6 +64,38 @@ const ProfileScreen: React.FC = () => {
       </div>
       <div className='w-full flex flex-col px-4 my-4'>
         <p className='text-xl font-bold text-custom-primary'>
+          Liste communauté inscrite
+        </p>
+        <div className='flex justify-start items-center overflow-auto gap-2'>
+          {
+            communities.map((community, i) => (
+              <div className='flex flex-col items-center justify-center h-64 relative'>
+                <Image
+                  key={i}
+                  src={`https://picsum.photos/20${i}`}
+                  alt='Post'
+                  width={150}
+                  height={300}
+                  className='rounded-md m-2 h-full w-full object-cover'
+                />
+                <div className='w-full h-full absolute inset-0 flex flex-col justify-end text-white p-4'>
+                  <p className='text-[12px]'>
+                    {community}
+                  </p>
+                  <p className='text-[10px]'>
+                    Catégorie de la communauté
+                  </p>
+                  <p className='text-[6px] text-slate-400'>
+                    @créateur
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div className='w-full flex flex-col px-4 my-4'>
+        {/* <p className='text-xl font-bold text-custom-primary'>
           Mes Posts
         </p>
         <div className='flex justify-start items-center overflow-auto'>
@@ -59,7 +106,7 @@ const ProfileScreen: React.FC = () => {
               />
             ))
           }
-        </div>
+        </div> */}
       </div>
     </div>
   );

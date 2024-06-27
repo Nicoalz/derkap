@@ -1,14 +1,14 @@
 import { useUser } from '@/contexts/user-context';
-import { TPost } from '@/types';
+import { TPostDb } from '@/types';
 import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
-const Feed: React.FC<{ allPosts: TPost[] }> = ({ allPosts }) => {
+const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
   const { userFeeds, selectedFeed, setSelectedFeed } = useUser();
 
-  const [activePosts, setActivePosts] = useState<TPost[]>([]);
+  const [activePosts, setActivePosts] = useState<TPostDb[]>([]);
 
-  const getFeedPosts = (feed: string): TPost[] => {
+  const getFeedPosts = (feed: string): TPostDb[] => {
     return allPosts.filter(post => post.feed === feed);
   }
 
@@ -18,7 +18,7 @@ const Feed: React.FC<{ allPosts: TPost[] }> = ({ allPosts }) => {
 
   useEffect(() => {
     updatePosts();
-  }, [selectedFeed]);
+  }, [selectedFeed, allPosts]);
 
 
   return (

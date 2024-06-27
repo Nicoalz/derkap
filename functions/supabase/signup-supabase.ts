@@ -18,6 +18,9 @@ export const signupSupabase = async ({formValues}: {formValues: SignUpFormValues
 	const supabase = createSupabaseAppServerClient()
 
 
+	try {
+
+
 	const { error } = await supabase.auth.signUp({
 		email,
 		password,
@@ -30,6 +33,7 @@ export const signupSupabase = async ({formValues}: {formValues: SignUpFormValues
 	})
 
 
+
 	if (error) {
 		if (error.message.includes("User already registered")) {
 			return "Cet email est déjà utilisé."
@@ -37,6 +41,11 @@ export const signupSupabase = async ({formValues}: {formValues: SignUpFormValues
 		if (error.message.includes('duplicate key value violates unique constraint "profiles_username_key"')) {
 		return 'Ce nom d\'utilisateur est déjà utilisé.'
 	}
+	return error.message
 }
+	}catch (error) {
+		console.error(error)
+
+	}
 
 }

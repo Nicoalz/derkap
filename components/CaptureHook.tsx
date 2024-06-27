@@ -1,12 +1,15 @@
 import { useUser } from '@/contexts/user-context';
-import { TPost } from '@/types';
+import { TPostDb } from '@/types';
 import { ArrowLeftIcon, ArrowPathIcon, CheckIcon } from '@heroicons/react/24/outline';
 import React, { useState } from "react";
 import Webcam from "react-webcam";
+import { toast } from 'sonner';
+import { pushPostToDb } from '../functions/supabase/post/push-post-db';
+import { cn } from '../functions/utils';
 import CaptureButton from './CaptureButton';
 const Capture: React.FC<{
   setIsCaptureOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  addNewPost: (post: TPost) => void;
+  addNewPost: (post: TPostDb) => void;
 }> = ({
   setIsCaptureOpen,
   addNewPost
@@ -24,22 +27,39 @@ const Capture: React.FC<{
 
     const [newDescription, setNewDescription] = useState<string>('');
     const { userFeeds, selectedFeed, setSelectedFeed, userData } = useUser();
-
+    const [isValidatingFile, setIsValidatingFile] = useState<boolean>(false);
     const resetPhoto = () => {
       setImgTaken(null);
     };
 
-    const validatePhoto = () => {
-      if (!imgTaken) return;
-      addNewPost({
-        isPhoto: true,
-        url: imgTaken,
-        description: newDescription,
-        user: userData,
-        date: '2021-06-01',
-        feed: selectedFeed
-      });
-      setIsCaptureOpen(false);
+    const validatePhoto = async () => {
+      try {
+        setIsValidatingFile(true);
+        if (!imgTaken) return;
+        const post: TPostDb = {
+          id: 0,
+          is_photo: true,
+          file_url: imgTaken,
+          description: newDescription,
+          user: userData,
+          created_at: '2021-06-01',
+          feed: selectedFeed
+        }
+        const { data, error } = await pushPostToDb({ post: post });
+        if (error) {
+          toast.error(error);
+          return;
+        }
+        console.log(data);
+        data && addNewPost(data);
+        setIsCaptureOpen(false);
+      } catch (error) {
+        console.error(error);
+        toast.error('Une erreur est survenue');
+
+      } finally {
+        setIsValidatingFile(false);
+      }
     }
 
     return (
@@ -103,11 +123,12 @@ const Capture: React.FC<{
                 className='bg-custom-primary p-2 rounded-md mx-4'>
                 <ArrowPathIcon className="w-8 h-8 " />
               </div>
-              <div
+              <button type='button'
+                disabled={isValidatingFile}
                 onClick={() => validatePhoto()}
-                className='bg-custom-primary p-2 rounded-md mx-4'>
+                className={cn('bg-custom-primary p-2 rounded-md mx-4', { "bg-gray-400": isValidatingFile })}>
                 <CheckIcon className="w-8 h-8 " />
-              </div>
+              </button>
             </div>
           </div>
         ) : (

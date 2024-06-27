@@ -34,19 +34,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
   }
 
   const handleGetPosts = async () => {
-    const res = await getPosts(); // { data, error }
+    const { data, error } = await getPosts(); // { data, error }
     // console.log(data, error)
-    if (res.error) {
-      console.error(res.error)
+    if (error) {
+      console.error(error)
       toast.error('Une erreur est survenue dans la récupération des posts')
       return;
     }
-    if (res.data) {
-      console.log(res.data)
-      setAllPosts(res.data)
+    if (data) {
+      console.log(data)
+      setAllPosts(data as any)
     }
 
   }
+
 
   useEffect(() => {
     user && handleGetPosts()

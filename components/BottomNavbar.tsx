@@ -34,11 +34,10 @@ const BottomNavbar: React.FC = () => {
   const { currentPath } = usePWA();
 
   return (
-
-    <nav className="fixed bottom-0 w-full bg-custom-dark border-t-[0.5px] border-custom-primary text-custom-primary flex justify-around items-center pt-4 pb-14 px-2">
+    <nav className="fixed bottom-4 w-full max-w-md left-1/2 transform -translate-x-1/2 bg-white/30 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl text-custom-primary flex justify-around items-center py-4 px-2">
       {tabs.map((tab, index) => (
         <Link
-          className={`p-1 rounded-xl flex flex-col items-center w-1/6 ${currentPath === tab.route && "text-black/90 bg-custom-primary"
+          className={`p-1 rounded-xl flex flex-col items-center w-1/6 ${currentPath === tab.route && "text-black/90"
             }`}
           key={index}
           href={tab.route}
@@ -51,7 +50,6 @@ const BottomNavbar: React.FC = () => {
         </Link>
       ))}
     </nav>
-
   );
 };
 

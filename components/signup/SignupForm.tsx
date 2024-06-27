@@ -1,5 +1,6 @@
 "use client"
 
+import { ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from "react"
 import { toast } from 'sonner'
@@ -97,6 +98,8 @@ export default function SignUpForm() {
       <Input placeholder='Email' type='email' name='email' errorMsg={emailError} onChange={(e) => checkEmailSchema(e.target.value)} />
       <Input placeholder='Mot de passe' type='password' name='password' errorMsg={passwordError} onChange={(e) => checkPasswordSchema(e.target.value)} />
       <input disabled={isLoading} type="submit" value={isLoading ? "Chargement..." : "S'inscrire"} className={cn("bg-red-500 cursor-pointer text-white px-20 py-2 transition-transform rounded", { "bg-gray-200 ": isLoading })} />
+      <a href="/connexion" className='flex items-center'>Se connecter <ChevronRight size={20} /></a>
+
     </form>
   )
 }

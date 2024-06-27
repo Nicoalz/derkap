@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
   const { user } = (await supabase.auth.getUser()).data;
   if (!user){
       const url = request.nextUrl.clone();
-      url.pathname = "/connexion";
+      if (url.pathname != "/inscription") url.pathname = "/connexion";
         return NextResponse.rewrite(url);
   }
 

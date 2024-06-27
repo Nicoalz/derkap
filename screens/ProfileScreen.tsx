@@ -9,7 +9,9 @@ const ProfileScreen: React.FC = () => {
   return (
     <div className="w-full flex flex-col items-center mb-32">
       <div className='flex flex-col items-center'>
-        <Image src={userData.img} alt={userData.name} width={70} height={70}
+
+        <p>@{userData.username}</p>
+        <Image src={userData.avatar_url ?? ""} alt={userData.name ?? ""} width={70} height={70}
           className='rounded-full my-2 w-20 h-20 object-cover border-2 border-custom-primary'
         />
         <p>{userData.name}</p>

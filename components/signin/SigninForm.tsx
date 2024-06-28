@@ -1,5 +1,6 @@
 "use client"
 
+import { ChevronRight } from 'lucide-react'
 import { useState } from "react"
 import { toast } from 'sonner'
 import { signinSupabase } from '../../functions/supabase/signin-supabase'
@@ -44,6 +45,7 @@ export default function SignInForm() {
       <Input placeholder='Email' type='email' name='email' />
       <Input placeholder='Mot de passe' type='password' name='password' />
       <input disabled={isLoading} type="submit" value={isLoading ? "Chargement..." : "Se connecter"} className={cn("bg-red-500 cursor-pointer text-white px-20 py-2 transition-transform rounded", { "bg-gray-200 ": isLoading })} />
+      <a href="/inscription" className='flex items-center'>S'inscrire <ChevronRight size={20} /></a>
     </form>
   )
 }

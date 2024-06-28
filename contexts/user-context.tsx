@@ -1,26 +1,29 @@
 "use client";
+import { User } from '@supabase/supabase-js';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { TUser } from '../types';
+import { TUserDb } from '../types';
 
 interface UserContextType {
   userFeeds: string[];
   baseFeeds: string[]
   selectedFeed: string;
   setSelectedFeed: (feed: string) => void;
-  userData: TUser,
+  userData: TUserDb,
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 interface UserProviderProps {
   children: ReactNode;
+  user: User | null;
+  profile: TUserDb | null;
 }
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+export const UserProvider: React.FC<UserProviderProps> = ({ children, user, profile }) => {
   const baseFeeds = ['Amis']
   const [userFeeds, setUserFeeds] = useState<string[]>([]);
   const [selectedFeed, setSelectedFeed] = useState(baseFeeds[0]);
-  const userData: TUser = { name: 'Nicolas', username: 'Nicoalz', img: '/nico.jpeg' }
+  const userData: TUserDb = { id: user?.id ?? "", name: profile?.name ?? "", username: profile?.username ?? "", avatar_url: '/nico.jpeg', created_at: user?.created_at ?? "" }
 
 
   const fetchUserFeeds = (_userId: string) => {

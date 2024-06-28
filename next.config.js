@@ -28,6 +28,11 @@ const nextConfig = {
       },
     ],
   },
+    experimental: {
+    serverActions: {
+      bodySizeLimit: '5mb',
+    },
+  },
   webpack(config) {
         const registerJs = path.join(path.dirname(require.resolve("next-pwa")), "register.js");
         const entry = config.entry;

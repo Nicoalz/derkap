@@ -62,11 +62,10 @@ export default async function RootLayout({
   return (
     <PWAProvider>
       <UserProvider user={user} profile={profile}>
-        <html lang="en">
-          <body className={inter.className}>
+        <html lang="fr">
+          <body className={`${inter.className} via-custom-gradient`}>
             <LayoutApp>{children}</LayoutApp>
             <Toaster position="top-center" richColors />
-
           </body>
         </html>
       </UserProvider>

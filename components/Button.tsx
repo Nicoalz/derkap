@@ -1,6 +1,9 @@
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import { cn } from '../lib/utils';
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+// property) JSX.IntrinsicElements.button: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
+
+interface ButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   text: string;
   isCancel?: boolean;
 }

@@ -39,7 +39,7 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
           <li
             key={index}
             onClick={() => setSelectedFeed(feed)}
-            className={`px-4 py-2 cursor-pointer font-bold text-lg ${selectedFeed === feed ? 'border-b-2 border-custom-black text-custom-black'
+            className={`px-4 py-2 cursor-pointer text-lg ${selectedFeed === feed ? 'border-b-2 border-custom-black font-bold text-custom-black'
               : 'border-b-0 text-custom-gray'
               }`}
           >

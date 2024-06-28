@@ -1,7 +1,7 @@
- export interface TDerkap  {
+ export interface TChallenge  {
   id: number;
   title: string;
   subtitle: string;
   description: string;
-  icone: string;
+  emoji: string;
 }

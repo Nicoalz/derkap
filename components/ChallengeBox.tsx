@@ -1,21 +1,18 @@
 "use client"
-import { usePWA } from '@/contexts/pwa-context';
 import { fetchWithToken } from '@/libs/fetch';
 import { useEffect, useState } from "react";
 import { cn } from '../lib/utils';
-import { TDerkap } from '../types/Derkap';
+import { TChallenge } from '../types/Challenge';
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
-  derkap?: TDerkap
+  challenge?: TChallenge
 }
 
-
-const ChallengerBox = ({ derkap, className }: props) => {
-  const { isPWA } = usePWA();
+const ChallengerBox = ({ challenge, className, ...props }: props) => {
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => { // todo change subscription
     setIsNotificationSupported('Notification' in window);
   }, []);
   const requestPermission = async () => {
@@ -83,11 +80,11 @@ const ChallengerBox = ({ derkap, className }: props) => {
     }
   };
 
-  const { description, icone, title, subtitle } = derkap ?? {};
+  const { description, emoji, title, subtitle } = challenge ?? {};
 
 
   return (
-    <div className={cn(' w-full', className)}>
+    <div {...props} className={cn(' w-full', className)}>
       <div
         onClick={() => {
           requestPermission();
@@ -95,7 +92,7 @@ const ChallengerBox = ({ derkap, className }: props) => {
         className='flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-black shadow-card gap-4 items-center'>
         {/* <Image className=' ' src='/visage.svg' width={60} height={60} alt='mrderka' /> */}
         <p className='text-[3rem] '>
-          {icone ?? '📭'}
+          {emoji ?? '📭'}
         </p>
         <div className='text-left'>
           <h1 className='font-bold uppercase text-lg font-champ'>{title ?? 'Derkap du jour'}</h1>

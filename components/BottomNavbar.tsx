@@ -15,8 +15,8 @@ const tabs = [
     icon: Kaps,
   },
   {
-    name: "Photo",
-    route: "/photo",
+    name: "Capture",
+    route: "/capture",
     icon: Photo,
   },
   {

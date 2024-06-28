@@ -117,7 +117,7 @@ const CaptureScreen: React.FC = () => {
           {
             // todo add disabled={isValidatingFile} to button
           }
-          <Button   onClick={() => validatePhoto()} text='Poster mon derkap de fou' className='my-4 mx-auto w-full font-champ text-xl' />
+          <Button disabled={isValidatingFile} onClick={() => validatePhoto()} text='Poster mon derkap de fou' className='my-4 mx-auto w-full font-champ text-xl' />
         </div>
       ) : (
         <CaptureButton

@@ -9,7 +9,7 @@ interface props extends React.HTMLAttributes<HTMLDivElement> {
   challenge?: TChallenge
 }
 
-const ChallengerBox = ({ challenge, className }: props) => {
+const ChallengerBox = ({ challenge, className, ...props }: props) => {
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
 
   useEffect(() => { // todo change subscription
@@ -84,7 +84,7 @@ const ChallengerBox = ({ challenge, className }: props) => {
 
 
   return (
-    <div className={cn(' w-full', className)}>
+    <div {...props} className={cn(' w-full', className)}>
       <div
         onClick={() => {
           requestPermission();

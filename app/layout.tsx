@@ -5,6 +5,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 
+import { ThemeProvider } from '../components/ui/theme-provider';
 import { createSupabaseAppServerClient } from '../libs/supabase/server';
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
@@ -13,6 +14,7 @@ const description = "Derkap";
 const domain = "wwww.example.com/";
 const url = `https://${domain}`;
 const socialBannerUrl = "/social_banner.png";
+
 export const metadata: Metadata = {
   title,
   description,
@@ -63,9 +65,18 @@ export default async function RootLayout({
     <PWAProvider>
       <UserProvider user={user} profile={profile}>
         <html lang="fr">
-          <body className={`${inter.className} via-custom-gradient`}>
-            <LayoutApp>{children}</LayoutApp>
-            <Toaster position="top-center" richColors />
+
+          <body className={inter.className}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="light"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <LayoutApp>{children}</LayoutApp>
+              <Toaster position="top-center" richColors />
+            </ThemeProvider>
+
           </body>
         </html>
       </UserProvider>

@@ -114,15 +114,6 @@ const Capture: React.FC<{
 
     const validatePhoto = () => {
       if (!imgTaken) return;
-      addNewPost({
-        is_photo: true,
-        file_url: imgTaken,
-        description: newDescription,
-        user: userData,
-        created_at: '2021-06-01',
-        id: 1,
-        feed: selectedFeed
-      });
       setIsCaptureOpen(false);
     }
 

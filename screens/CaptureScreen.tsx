@@ -4,13 +4,13 @@ import CaptureButton from '@/components/CaptureButton';
 import ChallengerBox from '@/components/ChallengeBox';
 import { useUser } from '@/contexts/user-context';
 import { TChallenge, TPostDb } from '@/types';
-import { ArrowPathIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { XIcon } from 'lucide-react';
 import React, { useState } from "react";
 import Webcam from "react-webcam";
 import { toast } from 'sonner';
+import Button from '../components/Button';
 import Title from '../components/Title';
 import { pushPostToDb } from '../functions/supabase/post/push-post-db';
-import { cn } from '../lib/utils';
 import { mockedChallenges } from '../libs/mockedChallenges';
 const CaptureScreen: React.FC = () => {
   const [challenge, setChallenge] = useState<TChallenge | null>(mockedChallenges[1]);
@@ -71,13 +71,21 @@ const CaptureScreen: React.FC = () => {
 
 
       <Title text='Capture ton Derkap !' />
-      {challenge && (<ChallengerBox challenge={challenge} />)}
-      <div className="w-full max-w-xs">
+      {challenge && !imgTaken && (<ChallengerBox challenge={challenge} />)}
+      <div className="w-full mt-4 relative h-0  pb-[125%]">
 
         {imgTaken ? (
-          <img src={imgTaken} alt='img taken' className='rounded-md object-cover w-[320px] h-[400px]' />
+          <div className='absolute rounded-xl object-cover inset-0 h-full w-full bg-green-300'>
+            <div
+              onClick={() => resetPhoto()}
+              className='absolute top-2 left-2 p-2 bg-custom-black text-white rounded-xl'>
+              <XIcon className='w-6 h-6' />
+            </div>
+            <img src={imgTaken} alt='img taken' className='object-cover w-full h-full rounded-xl ' />
+          </div>
         ) : (
-          <Webcam className='rounded-md object-cover w-[320px] h-[400px]'
+
+          <Webcam className='absolute rounded-xl object-cover inset-0 h-full w-full'
             onDoubleClick={() => setFacingMode(facingMode === 'user' ? 'environment' : 'user')}
             mirrored={facingMode === 'user'}
             videoConstraints={{
@@ -98,41 +106,15 @@ const CaptureScreen: React.FC = () => {
       </div>
       {imgTaken ? (
         <div className='flex flex-col items-center justify-center w-full mt-2'>
-          <div className='flex flex-col items-center w-full'>
-            <div className='flex flex-col justify-center items-start'>
-              <p className='text-gray-500 font-bold text-xs'>FEED</p>
-              <select
-                value={selectedFeed}
-                onChange={(e) => setSelectedFeed(e.target.value)}
-                className='rounded-sm border border-none text-white bg-custom-primary p-1'>
-                {userFeeds.map((feed, index) => (
-                  <option key={index} value={feed}>{feed}</option>
-                ))}
-              </select>
-            </div>
-            <div className='w-3/4 justify-center items-center'>
-              <p className='text-gray-500 font-bold text-xs'>DESCRIPTION</p>
-              <input type='text'
-                value={newDescription}
-                onChange={(e) => setNewDescription(e.target.value)}
-                placeholder='Raconte pas ta vie...'
-                className='text-xs w-full rounded-sm border border-none px-2 py-1 focus:outline-none text-white bg-custom-primary placeholder:text-white/50'
-              />
-            </div>
+          <div className='w-full justify-center items-center'>
+            <textarea
+              value={newDescription}
+              onChange={(e) => setNewDescription(e.target.value)}
+              placeholder='Raconte pas trop ta vie par contre...'
+              className='w-full resize-none shadow-card px-4 py-2 rounded-xl min-h-40 flex focus:ring-none focus:outline-none border border-custom-black text-black'
+            />
           </div>
-          <div className='flex items-center justify-between mt-2'>
-            <div
-              onClick={() => resetPhoto()}
-              className='bg-custom-primary p-2 rounded-md mx-4'>
-              <ArrowPathIcon className="w-8 h-8 " />
-            </div>
-            <button type='button'
-              disabled={isValidatingFile}
-              onClick={() => validatePhoto()}
-              className={cn('bg-custom-primary p-2 rounded-md mx-4', { "bg-gray-400": isValidatingFile })}>
-              <CheckIcon className="w-8 h-8 " />
-            </button>
-          </div>
+          <Button  onClick={() => validatePhoto()} text='Poster mon derkap de fou' className='my-4 mx-auto w-full font-champ text-xl' />
         </div>
       ) : (
         <CaptureButton

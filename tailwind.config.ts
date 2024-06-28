@@ -36,6 +36,7 @@ const config = {
         "custom-black": "#1B0A32",
         "custom-violet": "#9747FF",
         "custom-orange": "#E45B37",
+        "custom-gray": "#545454"
       },
       boxShadow: {
         'card': '5px 5px 5px #1B0A32',

@@ -1,7 +1,6 @@
 "use client"
 import { usePWA } from '@/contexts/pwa-context';
 import { fetchWithToken } from '@/libs/fetch';
-import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 
 const ChallengerBox: React.FC = () => {
@@ -83,19 +82,22 @@ const ChallengerBox: React.FC = () => {
 
 
   return (
-    <div className='w-full px-2 pb-4 md:px-0'>
+    <div className='px-4 w-full'>
       <div
         onClick={() => {
           requestPermission();
         }}
-        className='flex justify-center gap-8 items-center text-center w-full bg-custom-primary rounded-xl py-2'>
-        <Image className=' ' src='/mrderka.png' width={60} height={60} alt='mrderka' />
-        <div className='text-center'>
-          <h1 className='font-bold uppercase text-xl'>Challenge du jour</h1>
-          <p className=''>
+        className='flex justify-center w-full bg-custom-white border border-custom-black rounded-xl py-2 text-black shadow-card gap-4 items-center'>
+        {/* <Image className=' ' src='/visage.svg' width={60} height={60} alt='mrderka' /> */}
+        <p className='text-[3rem]'>
+          👨‍🦲
+        </p>
+        <div className='text-left'>
+          <h1 className='font-bold uppercase text-lg font-champ'>Derkap du jour</h1>
+          <p className='text-sm font-champ'>
             {challenge.title}
           </p>
-          <p className='text-xs'>
+          <p className='text-sm'>
             {challenge.description}
           </p>
         </div>

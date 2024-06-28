@@ -60,7 +60,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#0a0e15",
+  themeColor: "linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%)"
 }
 
 export default async function RootLayout({

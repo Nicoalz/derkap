@@ -25,7 +25,7 @@
 } */
 
 body {
-  background: linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%);
+  background: linear-gradient(to bottom, #F6D5F7 0%, #FBE9D7 100%);
   color: #1b0a32 !important;
 
   /* font-family: 'Champ', sans-serif; */
@@ -44,7 +44,7 @@ body {
 .bg-blur-light {
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-background-image: linear-gradient(to right, rgba(246, 213, 247, 0.8) 0%, rgba(251, 233, 215, 0.8) 100%);
+background-image: linear-gradient(to bottom, rgba(246, 213, 247, 0.8) 0%, rgba(251, 233, 215, 0.8) 100%);
 
 
 }

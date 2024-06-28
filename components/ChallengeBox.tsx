@@ -91,11 +91,11 @@ const ChallengerBox: React.FC = () => {
         className='flex justify-center gap-8 items-center text-center w-full bg-custom-primary rounded-xl py-2'>
         <Image className=' ' src='/mrderka.png' width={60} height={60} alt='mrderka' />
         <div className='text-center'>
-          <h1 className='font-bold uppercase text-xl'>Challenge du jour</h1>
-          <p className=''>
+          <h1 className='font-bold uppercase text-xl font-champ'>Challenge du jour</h1>
+          <p className=' font-champ'>
             {challenge.title}
           </p>
-          <p className='text-xs'>
+          <p className='text-xs font-bold'>
             {challenge.description}
           </p>
         </div>

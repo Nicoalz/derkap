@@ -40,7 +40,7 @@ const CaptureScreen: React.FC = () => {
     try {
       setIsValidatingFile(true);
       if (!imgTaken) return;
-      const post: TPostDb = {
+      const post: TPostDb = { // todo select good feed
         id: 0,
         is_photo: true,
         file_url: imgTaken,
@@ -114,7 +114,10 @@ const CaptureScreen: React.FC = () => {
               className='w-full resize-none shadow-card px-4 py-2 rounded-xl min-h-40 flex focus:ring-none focus:outline-none border border-custom-black text-black'
             />
           </div>
-          <Button  onClick={() => validatePhoto()} text='Poster mon derkap de fou' className='my-4 mx-auto w-full font-champ text-xl' />
+          {
+            // todo add disabled={isValidatingFile} to button
+          }
+          <Button   onClick={() => validatePhoto()} text='Poster mon derkap de fou' className='my-4 mx-auto w-full font-champ text-xl' />
         </div>
       ) : (
         <CaptureButton

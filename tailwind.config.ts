@@ -37,7 +37,8 @@ const config = {
         "custom-black": "#1B0A32",
         "custom-violet": "#9747FF",
         "custom-orange": "#E45B37",
-        "custom-gray": "#545454"
+        "custom-gray": "#545454",
+        "grad-linear": "linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%)",
       },
       boxShadow: {
         'card': '5px 5px 5px #1B0A32',

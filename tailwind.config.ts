@@ -23,6 +23,10 @@ const config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        champ: ['var(--font-champ)'],
+        sans: ['var(--font-dm-sans)'],
+      },
       colors: {
         "custom-primary": "#9747ff",
         "custom-white": "#f5f5f5",
@@ -47,6 +51,7 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+
 } satisfies Config
 
 export default config

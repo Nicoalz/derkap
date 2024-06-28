@@ -20,9 +20,8 @@
 @font-face {
   font-family: 'Champ';
   src: url('/public/fonts/champs/champs-Black.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
 }
+
 
 body {
   background: linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%);
@@ -37,9 +36,24 @@ body {
 }
 
 .text-champ {
-  font-family: 'Champ', sans-serif;
+  font-family: 'Champ', sans-serif !important;
 }
 
 .text-dmsans {
   font-family: 'DM Sans', sans-serif;
+}
+
+.noscrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.gradient-after::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10%;
+  height: 100%;
+  background: linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%);
+  z-index: -1;
 }

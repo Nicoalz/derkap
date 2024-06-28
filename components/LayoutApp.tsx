@@ -24,7 +24,6 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="overflow-x-hidden flex flex-col min-h-screen">
-      <Header />
       <>
         <main className="container mx-auto flex-1 flex flex-col">
           {children}

@@ -46,7 +46,7 @@ const BottomNavbar: React.FC = () => {
             key={index}
             href={tab.route}
           >
-            <IconComponent className="w-6 h-6" isActive={isActive} />
+            <IconComponent className="w-6 h-6 " isActive={isActive} />
           </Link>
         );
       })}

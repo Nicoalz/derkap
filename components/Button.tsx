@@ -6,6 +6,6 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
 }
 export default function Button({ text, isCancel, className, ...props }: ButtonProps) {
   return (
-    <button {...props} className={cn(" bg-custom-primary text-white py-2 px-4 rounded-xl  text-sm", className, { "bg-gray-200 text-black": isCancel })}> {text} </button>
+    <button {...props} className={cn(" bg-custom-primary text-white py-2 px-4 rounded-xl  text-sm", className, { "bg-gray-200 text-custom-black": isCancel })}> {text} </button>
   )
 }

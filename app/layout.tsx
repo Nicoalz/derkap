@@ -58,10 +58,9 @@ export default function RootLayout({
     <PWAProvider>
       <UserProvider>
         <html lang="en">
-          <body className={inter.className}>
+          <body className={`${inter.className} via-custom-gradient`}>
             <LayoutApp>{children}</LayoutApp>
             <Toaster position="top-center" richColors />
-
           </body>
         </html>
       </UserProvider>

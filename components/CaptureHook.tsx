@@ -42,8 +42,9 @@ const Capture: React.FC<{
           file_url: imgTaken,
           description: newDescription,
           user: userData,
-          created_at: '2021-06-01',
-          feed: selectedFeed
+          created_at: new Date().toISOString(),
+          feed: selectedFeed,
+          file_name: userData.id + '/' + new Date().toISOString(),
         }
         const { data, error } = await pushPostToDb({ post: post });
         if (error) {

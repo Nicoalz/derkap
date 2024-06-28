@@ -5,9 +5,9 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 
+import { ThemeProvider } from '../components/ui/theme-provider';
 import { createSupabaseAppServerClient } from '../libs/supabase/server';
 import "./globals.css";
-import { ThemeProvider } from '../components/ui/theme-provider';
 const inter = Inter({ subsets: ["latin"] });
 const title = "Derkap";
 const description = "Derkap";
@@ -69,7 +69,7 @@ export default async function RootLayout({
           <body className={inter.className}>
             <ThemeProvider
               attribute="class"
-              defaultTheme="dark"
+              defaultTheme="light"
               enableSystem
               disableTransitionOnChange
             >

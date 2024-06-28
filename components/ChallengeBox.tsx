@@ -88,11 +88,14 @@ const ChallengerBox: React.FC = () => {
         onClick={() => {
           requestPermission();
         }}
-        className='flex justify-evenly w-full bg-custom-white border border-custom-black rounded-xl py-2 text-black shadow-card'>
-        <Image className=' ' src='/visage.svg' width={60} height={60} alt='mrderka' />
+        className='flex justify-center w-full bg-custom-white border border-custom-black rounded-xl py-2 text-black shadow-card gap-4 items-center'>
+        {/* <Image className=' ' src='/visage.svg' width={60} height={60} alt='mrderka' /> */}
+        <p className='text-[3rem]'>
+          👨‍🦲
+        </p>
         <div className='text-left'>
-          <h1 className='font-bold uppercase text-xl text-champ'>Derkap du jour</h1>
-          <p className='text-xs text-champ'>
+          <h1 className='font-bold uppercase text-lg text-champ'>Derkap du jour</h1>
+          <p className='text-sm text-champ'>
             {challenge.title}
           </p>
           <p className='text-sm'>

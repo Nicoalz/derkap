@@ -1,10 +1,17 @@
-import { postHeight, postWitdh, TPostDb } from '@/types';
 
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTrigger
+} from "@/components/ui/drawer";
+import { TPostDb, postHeight, postWitdh } from '@/types';
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import React from "react";
 import AspectRatioImage from './AspectRatioImage';
 const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
+
 
 
   return (
@@ -20,8 +27,40 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
           />
           <p>{postData.user?.name ?? postData.user.username}</p>
         </div>
-        <EllipsisHorizontalIcon className='w-5 h-5' />
 
+        {/* <DropdownMenu>
+          <DropdownMenuTrigger>
+            <EllipsisHorizontalIcon className='w-5 h-5' />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <DropdownMenuLabel>Signaler</DropdownMenuLabel>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <DropdownMenuLabel>Partager</DropdownMenuLabel>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <DropdownMenuLabel>Enregistrer</DropdownMenuLabel>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu> */}
+        <Drawer >
+          <DrawerTrigger>
+            <EllipsisHorizontalIcon className='w-5 h-5' />
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerDescription>
+              <div className='w-full flex items-center justify-center gap-4 p-8 mb-16'>
+                <p>Signaler</p>
+                <p>Partager</p>
+                <p>Enregistrer</p>
+              </div>
+            </DrawerDescription>
+          </DrawerContent>
+        </Drawer>
       </div>
 
       {postData.is_photo ? (

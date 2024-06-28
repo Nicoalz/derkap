@@ -1,6 +1,5 @@
 'use client';
 // import Capture from '@/components/Capture';
-import CaptureButton from '@/components/CaptureButton';
 import CaptureHook from '@/components/CaptureHook';
 import Feed from '@/components/Feed';
 import { TPostDb } from '@/types';
@@ -67,11 +66,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
         />
       ) : (
         <Feed allPosts={allPosts} />
-      )}
-      {!isCaptureOpen && (
-        <CaptureButton
-          func={() => setIsCaptureOpen(true)}
-        />
       )}
     </div>
   );

@@ -3,7 +3,7 @@ import { useUser } from '@/contexts/user-context';
 import { TPostDb } from '@/types';
 import Image from 'next/image';
 import React, { useEffect, useState } from "react";
-import { TDerkap } from '../types/Derkap';
+import { TChallenge } from '../types/Challenge';
 import Post from "./Post";
 const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
   const { userFeeds, selectedFeed, setSelectedFeed } = useUser();
@@ -23,12 +23,12 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
   }, [selectedFeed, allPosts]);
 
 
-  const defaultDerkap: TDerkap = {
+  const defaultChallenge: TChallenge = {
     id: 0,
     title: 'DERKAP du jour ',
     subtitle: 'Chauve qui peut !',
     description: 'Prends une photo de toi avec un chauve !',
-    icone: '👨‍🦲'
+    emoji: '👨‍🦲'
   }
 
 
@@ -46,7 +46,7 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
           </li>
         ))}
       </ul>
-      <ChallengerBox derkap={defaultDerkap} />
+      <ChallengerBox challenge={defaultChallenge} />
       <div className='w-full flex flex-col items-center justify-center'>
         {activePosts.length > 0 ? activePosts.map((post, index) => (
           <Post key={index} postData={post} />

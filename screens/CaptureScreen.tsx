@@ -1,6 +1,5 @@
 'use client';
 
-import CaptureButton from '@/components/CaptureButton';
 import ChallengerBox from '@/components/ChallengeBox';
 import { useUser } from '@/contexts/user-context';
 import { TChallenge, TPostDb } from '@/types';
@@ -18,12 +17,14 @@ const CaptureScreen: React.FC = () => {
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
   const [imgTaken, setImgTaken] = useState<string | null>(null);
   const webcamRef = React.useRef<Webcam>(null);
+  const validateRef = React.useRef<HTMLButtonElement>(null);
   const capture = React.useCallback(
     () => {
       if (!webcamRef.current) return
       const imageSrc = webcamRef.current.getScreenshot();
       if (!imageSrc) return;
       setImgTaken(imageSrc);
+      if (validateRef.current) validateRef.current.scrollIntoView({ behavior: 'smooth' }); // to do make it work
     },
     [webcamRef]
   );
@@ -84,27 +85,37 @@ const CaptureScreen: React.FC = () => {
             <img src={imgTaken} alt='img taken' className='object-cover w-full h-full rounded-xl ' />
           </div>
         ) : (
+          <div>
+            <Webcam className='absolute rounded-xl object-cover inset-0 h-full w-full'
+              onDoubleClick={() => setFacingMode(facingMode === 'user' ? 'environment' : 'user')}
+              mirrored={facingMode === 'user'}
+              videoConstraints={{
+                // width: 1920,
+                // height: 2400,
+                facingMode: facingMode,
+                //aspectRatio: 5 / 4
+                //aspectRatio: 4 / 5
+              }}
 
-          <Webcam className='absolute rounded-xl object-cover inset-0 h-full w-full'
-            onDoubleClick={() => setFacingMode(facingMode === 'user' ? 'environment' : 'user')}
-            mirrored={facingMode === 'user'}
-            videoConstraints={{
-              // width: 1920,
-              // height: 2400,
-              facingMode: facingMode,
-              //aspectRatio: 5 / 4
-              //aspectRatio: 4 / 5
-            }}
-
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            // width={1920}
-            // height={2400}
-            screenshotQuality={1}
-          />
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              // width={1920}
+              // height={2400}
+              screenshotQuality={1}
+            />
+            {webcamRef.current && (
+              <div className='flex justify-center items-center'>
+                <div
+                  onClick={() => capture()}
+                  id='capture'
+                  className='absolute w-20 h-20 border-[5px] border-gray-200 bg-blur-light bg bottom-2 rounded-full'>
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </div>
-      {imgTaken ? (
+      {imgTaken && (
         <div className='flex flex-col items-center justify-center w-full mt-2'>
           <div className='w-full justify-center items-center'>
             <textarea
@@ -117,13 +128,16 @@ const CaptureScreen: React.FC = () => {
           {
             // todo add disabled={isValidatingFile} to button
           }
-          <Button disabled={isValidatingFile} onClick={() => validatePhoto()} text='Poster mon derkap de fou' className='my-4 mx-auto w-full font-champ text-xl' />
+          <Button ref={validateRef}
+            id='validateCapture' disabled={isValidatingFile} onClick={() => validatePhoto()} text='Poster mon derkap de fou' className='mt-4 mb-32 mx-auto w-full font-champ text-xl' />
         </div>
-      ) : (
-        <CaptureButton
-          func={() => capture()}
-        />
-      )}
+      )
+        // : (
+        //   <CaptureButton
+        //     func={() => capture()}
+        //   />
+        // )
+      }
     </div>
   );
 };

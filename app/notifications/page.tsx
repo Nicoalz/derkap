@@ -1,14 +1,17 @@
 "use client";
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ChallengerBox from '../../components/ChallengeBox';
 import FriendDemandBox from '../../components/FriendDemandBox';
 import Switch from '../../components/Switch';
 import Title from '../../components/Title';
-import { TUserDb } from '../../types';
+import { useChallengeStore } from '../../lib/store/useChallengeStore';
 import { mockedChallenges as challenges } from '../../libs/mockedChallenges';
+import { TChallenge, TUserDb } from '../../types';
 export default function Notifications() {
   const [isFirstSwitchActive, setIsFirstSwitchActive] = useState(true)
-
+  const { setChallenge } = useChallengeStore();
+  const router = useRouter();
   const demands: TUserDb[] = [
     {
       id: "1",
@@ -19,14 +22,21 @@ export default function Notifications() {
     }
   ]
 
+  const redirectToChallenge = ({ challenge }: { challenge: TChallenge }) => {
+    if (!challenge) return
+    if (!challenge.id) return
+    console.log({ challenge })
+    setChallenge(challenge)
+    router.push(`/challenge/${challenge.id}`)
+  }
+
   return (
     <div>
       <Title text="Notifications" />
       <Switch switch1Text="Derkap" switch2Text="Demandes" isFirstSwitchActive={isFirstSwitchActive} setIsFirstSwitchActive={setIsFirstSwitchActive} className='mt-2' />
       {isFirstSwitchActive ? challenges.map(challenge => (
-        <ChallengerBox key={challenge.id} challenge={challenge} className='mt-4' />
+        <ChallengerBox key={challenge.id} challenge={challenge} className='mt-4' onClick={() => redirectToChallenge({ challenge: challenge })} />
       )
-
       )
 
         :

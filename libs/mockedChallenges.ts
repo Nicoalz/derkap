@@ -2,8 +2,8 @@ import { TChallenge } from '../types'
 export const mockedChallenges: TChallenge[] = [
     {
       id: 1,
-      title: 'DERKAP du jour',
-      subtitle: 'Chauve qui peut !',
+      title: 'Chauve qui peut ! ',
+      subtitle: 'DERKAP du jour',
       description: 'Prends une photo de toi avec une personne chauve !',
       emoji: '👨‍🦲'
     },

@@ -14,12 +14,14 @@ const Capture: React.FC<{
   setIsCaptureOpen,
   addNewPost
 }) => {
+    const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
     const [imgTaken, setImgTaken] = useState<string | null>(null);
     const webcamRef = React.useRef<Webcam>(null);
     const capture = React.useCallback(
       () => {
         if (!webcamRef.current) return
-        const imageSrc = webcamRef.current.getScreenshot();
+        const imageSrc = webcamRef.current.getScreenshot({ width: 1920, height: 2400 });
+        if (!imageSrc) return;
         setImgTaken(imageSrc);
       },
       [webcamRef]
@@ -77,19 +79,22 @@ const Capture: React.FC<{
         <div className="w-full max-w-xs">
 
           {imgTaken ? (
-            <img src={imgTaken} alt='img taken' className='rounded-md w-full h-full' />
+            <img src={imgTaken} alt='img taken' className='rounded-md object-cover' />
           ) : (
-            <Webcam className='rounded-md'
+            <Webcam className='rounded-md object-cover w-[320px] h-[400px]'
+              onDoubleClick={() => setFacingMode(facingMode === 'user' ? 'environment' : 'user')}
               mirrored={true}
-              // videoConstraints={{
-              //   width: 320,
-              //   height: 400,
-              //   facingMode: "user"
-              // }}
+              videoConstraints={{
+                width: 1920,
+                height: 2400,
+                facingMode: facingMode,
+                aspectRatio: 0.8
+              }}
+
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              // width={320}
-              // height={400}
+              width={1920}
+              height={2400}
               screenshotQuality={1}
             />
           )}

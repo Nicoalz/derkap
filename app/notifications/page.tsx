@@ -39,8 +39,8 @@ export default function Notifications() {
   return (
     <div>
       <Title text="Notifications" />
-      <Switch switch1Text="Notifications" switch2Text="Derkap" isFirstSwitchActive={isFirstSwitchActive} setIsFirstSwitchActive={setIsFirstSwitchActive} className='mt-2' />
-      {derkaps.map(derkap => (
+      <Switch switch1Text="Derkap" switch2Text="Demandes" isFirstSwitchActive={isFirstSwitchActive} setIsFirstSwitchActive={setIsFirstSwitchActive} className='mt-2' />
+      {isFirstSwitchActive && derkaps.map(derkap => (
         <ChallengerBox key={derkap.id} derkap={derkap} className='mt-4' />
       ))}
 

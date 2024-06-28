@@ -19,6 +19,7 @@ const config = {
     },
     extend: {
       backgroundImage: {
+        "gradient-linear": "linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%)",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",

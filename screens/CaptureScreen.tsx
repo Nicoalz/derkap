@@ -11,7 +11,9 @@ import Button from '../components/Button';
 import Title from '../components/Title';
 import { pushPostToDb } from '../functions/supabase/post/push-post-db';
 import { mockedChallenges } from '../libs/mockedChallenges';
+import { useRouter } from 'next/navigation';
 const CaptureScreen: React.FC = () => {
+  const router = useRouter();
   const [challenge, setChallenge] = useState<TChallenge | null>(mockedChallenges[1]);
 
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
@@ -57,7 +59,7 @@ const CaptureScreen: React.FC = () => {
         return;
       }
       console.log(data);
-
+      router.push('/');
     } catch (error) {
       console.error(error);
       toast.error('Une erreur est survenue');

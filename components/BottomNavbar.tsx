@@ -1,7 +1,7 @@
-import React from "react";
-import Link from "next/link";
+import { Home, Kaps, Notification, Photo, User } from "@/components/Icon";
 import { usePWA } from "@/contexts/pwa-context";
-import { Home, User, Kaps, Photo, Notification } from "@/components/Icon";
+import Link from "next/link";
+import React from "react";
 
 const tabs = [
   {
@@ -21,7 +21,7 @@ const tabs = [
   },
   {
     name: "Notification",
-    route: "/notification",
+    route: "/notifications",
     icon: Notification,
   },
   {

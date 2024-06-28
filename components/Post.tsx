@@ -12,8 +12,8 @@ import React, { useState } from "react";
 import { toast } from 'sonner';
 import { useUser } from '../contexts/user-context';
 import { deletePost } from '../functions/supabase/post/delete-post';
-import AspectRatioImage from './AspectRatioImage';
 import { cn } from '../lib/utils';
+import AspectRatioImage from './AspectRatioImage';
 const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
 
   const { userData } = useUser();
@@ -77,7 +77,7 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu> */}
-        <Drawer open={isDrawerOpen}>
+        <Drawer >
           <DrawerTrigger>
             <EllipsisHorizontalIcon className='w-5 h-5' onClick={() => setIsDrawerOpen(true)} />
           </DrawerTrigger>

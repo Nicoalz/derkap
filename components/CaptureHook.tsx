@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import Webcam from "react-webcam";
 import { toast } from 'sonner';
 import { pushPostToDb } from '../functions/supabase/post/push-post-db';
-import { cn } from '../functions/utils';
 import CaptureButton from './CaptureButton';
+import { cn } from '../lib/utils';
 const Capture: React.FC<{
   setIsCaptureOpen: React.Dispatch<React.SetStateAction<boolean>>;
   addNewPost: (post: TPostDb) => void;

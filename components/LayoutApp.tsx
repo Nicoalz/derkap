@@ -1,6 +1,5 @@
 "use client";
 
-
 import { usePWA } from "@/contexts/pwa-context";
 import React from "react";
 import BottomNavbar from "./BottomNavbar";

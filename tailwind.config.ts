@@ -24,8 +24,11 @@ const config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        "custom-dark": "#0a0e15", // custom colors can be added here
         "custom-primary": "#9747ff",
+        "custom-white": "#f5f5f5",
+        "custom-black": "#1B0A32",
+        "custom-violet": "#9747FF",
+        "custom-orange": "#E45B37",
       },
       keyframes: {
         "accordion-down": {

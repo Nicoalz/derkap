@@ -64,7 +64,7 @@ export default async function RootLayout({
   return (
     <PWAProvider>
       <UserProvider user={user} profile={profile}>
-        <html lang="en">
+        <html lang="fr">
 
           <body className={inter.className}>
             <ThemeProvider
@@ -76,6 +76,7 @@ export default async function RootLayout({
               <LayoutApp>{children}</LayoutApp>
               <Toaster position="top-center" richColors />
             </ThemeProvider>
+
           </body>
         </html>
       </UserProvider>

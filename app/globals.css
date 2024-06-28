@@ -26,7 +26,8 @@
 
 body {
   background: linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%);
-  color: #1b0a32;
+  color: #1b0a32 !important;
+
   /* font-family: 'Champ', sans-serif; */
 }
 
@@ -34,4 +35,9 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.bg-blur {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
 }

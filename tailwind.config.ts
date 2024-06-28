@@ -19,6 +19,7 @@ const config = {
     },
     extend: {
       backgroundImage: {
+        "gradient-linear": "linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%)",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
@@ -36,6 +37,8 @@ const config = {
         "custom-black": "#1B0A32",
         "custom-violet": "#9747FF",
         "custom-orange": "#E45B37",
+        "custom-gray": "#545454",
+        "grad-linear": "linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%)",
       },
       boxShadow: {
         'card': '5px 5px 5px #1B0A32',

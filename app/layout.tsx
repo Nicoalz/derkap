@@ -77,7 +77,7 @@ export default async function RootLayout({
       <UserProvider user={user} profile={profile}>
         <html lang="fr" className={`${dmSans.variable} ${champ.variable}`}>
 
-          <body >
+          <body className='bg-gradient-linear'>
             <ThemeProvider
               attribute="class"
               defaultTheme="light"

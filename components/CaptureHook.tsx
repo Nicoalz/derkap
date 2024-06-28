@@ -20,7 +20,7 @@ const Capture: React.FC<{
     const capture = React.useCallback(
       () => {
         if (!webcamRef.current) return
-        const imageSrc = webcamRef.current.getScreenshot({ width: 1920, height: 2400 });
+        const imageSrc = webcamRef.current.getScreenshot();
         if (!imageSrc) return;
         setImgTaken(imageSrc);
       },
@@ -30,6 +30,7 @@ const Capture: React.FC<{
     const [newDescription, setNewDescription] = useState<string>('');
     const { userFeeds, selectedFeed, setSelectedFeed, userData } = useUser();
     const [isValidatingFile, setIsValidatingFile] = useState<boolean>(false);
+
     const resetPhoto = () => {
       setImgTaken(null);
     };
@@ -73,28 +74,29 @@ const Capture: React.FC<{
             className='bg-custom-primary p-1 rounded-md'>
             <ArrowLeftIcon className="w-6 h-6 " />
           </div>
-          <p>Capture ton défi !</p>
+          <p>Capture ton défi stp bb !</p>
 
         </div>
         <div className="w-full max-w-xs">
 
           {imgTaken ? (
-            <img src={imgTaken} alt='img taken' className='rounded-md object-cover' />
+            <img src={imgTaken} alt='img taken' className='rounded-md object-cover w-[320px] h-[400px]' />
           ) : (
             <Webcam className='rounded-md object-cover w-[320px] h-[400px]'
               onDoubleClick={() => setFacingMode(facingMode === 'user' ? 'environment' : 'user')}
-              mirrored={true}
+              mirrored={facingMode === 'user'}
               videoConstraints={{
-                width: 1920,
-                height: 2400,
+                // width: 1920,
+                // height: 2400,
                 facingMode: facingMode,
-                aspectRatio: 0.8
+                //aspectRatio: 5 / 4
+                //aspectRatio: 4 / 5
               }}
 
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              width={1920}
-              height={2400}
+              // width={1920}
+              // height={2400}
               screenshotQuality={1}
             />
           )}

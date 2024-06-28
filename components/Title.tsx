@@ -6,6 +6,6 @@ interface titleProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function Title({ text, className, ...props }: titleProps) {
   return (
-    <h2 {...props} className={cn("font-champ text-title", className)}>{text}</h2>
+    <h2 {...props} className={cn("font-champ text-[32px] text-custom-black", className)}>{text}</h2>
   )
 }

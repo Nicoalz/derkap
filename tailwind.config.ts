@@ -27,6 +27,9 @@ const config = {
         champ: ['var(--font-champ)'],
         sans: ['var(--font-dm-sans)'],
       },
+      fontSize: {
+        "title": "32px",
+      },
       colors: {
         "custom-primary": "#9747ff",
         "custom-white": "#f5f5f5",

@@ -1,8 +1,9 @@
+import ChallengerBox from '@/components/ChallengeBox';
 import { useUser } from '@/contexts/user-context';
 import { TPostDb } from '@/types';
 import Image from 'next/image';
-import ChallengerBox from '@/components/ChallengeBox';
 import React, { useEffect, useState } from "react";
+import { TDerkap } from '../types/Derkap';
 import Post from "./Post";
 const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
   const { userFeeds, selectedFeed, setSelectedFeed } = useUser();
@@ -22,9 +23,18 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
   }, [selectedFeed, allPosts]);
 
 
+  const defaultDerkap: TDerkap = {
+    id: 0,
+    title: 'DERKAP du jour ',
+    subtitle: 'Chauve qui peut !',
+    description: 'Prends une photo de toi avec un chauve !',
+    icone: '👨‍🦲'
+  }
+
+
   return (
     <div className='flex flex-col w-full gap-8'>
-      <ul className='flex justify-start items-end gap-2 px-4'>
+      <ul className='flex justify-start items-end gap-2'>
         {userFeeds.map((feed, index) => (
           <li
             key={index}
@@ -36,7 +46,7 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
           </li>
         ))}
       </ul>
-      <ChallengerBox />
+      <ChallengerBox derkap={defaultDerkap} />
       <div className='w-full flex flex-col items-center justify-center'>
         {activePosts.length > 0 ? activePosts.map((post, index) => (
           <Post key={index} postData={post} />

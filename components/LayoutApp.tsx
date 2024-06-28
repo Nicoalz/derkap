@@ -26,7 +26,7 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
     <div className="overflow-x-hidden flex flex-col min-h-screen dark">
       <Header />
       <>
-        <main className="container mx-auto flex-1 flex flex-col">
+        <main className="container max-w-[90%] mx-auto flex-1 flex flex-col">
           {children}
         </main>
         <BottomNavbar />

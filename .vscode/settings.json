@@ -74,5 +74,5 @@
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "eslint.nodePath": ".yarn/sdks",
   "solidity.compileUsingRemoteVersion": "v0.8.24+commit.e11b9ed9",
-  "files.autoSave": "onFocusChange"
+  "files.autoSave": "afterDelay"
 }

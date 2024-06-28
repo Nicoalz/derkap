@@ -12,8 +12,8 @@ import React, { useState } from "react";
 import { toast } from 'sonner';
 import { useUser } from '../contexts/user-context';
 import { deletePost } from '../functions/supabase/post/delete-post';
-import { cn } from '../functions/utils';
 import AspectRatioImage from './AspectRatioImage';
+import { cn } from '../lib/utils';
 const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
 
   const { userData } = useUser();

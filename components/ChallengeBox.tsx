@@ -1,9 +1,17 @@
 "use client"
 import { usePWA } from '@/contexts/pwa-context';
 import { fetchWithToken } from '@/libs/fetch';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { cn } from '../lib/utils';
+import { TDerkap } from '../types/Derkap';
 
-const ChallengerBox: React.FC = () => {
+
+interface props extends React.HTMLAttributes<HTMLDivElement> {
+  derkap?: TDerkap
+}
+
+
+const ChallengerBox = ({ derkap, className }: props) => {
   const { isPWA } = usePWA();
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
 
@@ -75,30 +83,27 @@ const ChallengerBox: React.FC = () => {
     }
   };
 
-  const challenge = {
-    title: 'Chauve qui peut !',
-    description: 'Prends une photo de toi avec un chauve !',
-  };
+  const { description, icone, title, subtitle } = derkap ?? {};
 
 
   return (
-    <div className='px-4 w-full'>
+    <div className={cn(' w-full', className)}>
       <div
         onClick={() => {
           requestPermission();
         }}
-        className='flex justify-center w-full bg-custom-white border border-custom-black rounded-xl py-2 text-black shadow-card gap-4 items-center'>
+        className='flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-black shadow-card gap-4 items-center'>
         {/* <Image className=' ' src='/visage.svg' width={60} height={60} alt='mrderka' /> */}
-        <p className='text-[3rem]'>
-          👨‍🦲
+        <p className='text-[3rem] '>
+          {icone ?? '📭'}
         </p>
         <div className='text-left'>
-          <h1 className='font-bold uppercase text-lg font-champ'>Derkap du jour</h1>
+          <h1 className='font-bold uppercase text-lg font-champ'>{title ?? 'Derkap du jour'}</h1>
           <p className='text-sm font-champ'>
-            {challenge.title}
+            {subtitle ?? 'Pas de défis pour le moment'}
           </p>
           <p className='text-sm'>
-            {challenge.description}
+            {description ?? 'Reviens plus tard'}
           </p>
         </div>
       </div>

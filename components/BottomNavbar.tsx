@@ -1,7 +1,7 @@
-import React from "react";
-import Link from "next/link";
+import { Home, Kaps, Notification, Photo, User } from "@/components/Icon";
 import { usePWA } from "@/contexts/pwa-context";
-import { Home, User, Kaps, Photo, Notification } from "@/components/Icon";
+import Link from "next/link";
+import React from "react";
 
 const tabs = [
   {
@@ -21,7 +21,7 @@ const tabs = [
   },
   {
     name: "Notification",
-    route: "/notification",
+    route: "/notifications",
     icon: Notification,
   },
   {
@@ -36,7 +36,7 @@ const BottomNavbar: React.FC = () => {
   const { currentPath } = usePWA();
 
   return (
-    <nav className="fixed bottom-4 w-[90%] left-1/2 transform -translate-x-1/2 bg-white/60 backdrop-blur-lg border border-gray-300 text-black/70 rounded-lg shadow-lg flex justify-around items-center p-4">
+    <nav className="fixed bottom-6 w-[90%] left-1/2 transform -translate-x-1/2 bg-white/60 backdrop-blur-lg text-black/70 rounded-lg shadow-lg flex justify-around items-center p-4">
       {tabs.map((tab, index) => {
         const IconComponent = tab.icon;
         const isActive = currentPath === tab.route;

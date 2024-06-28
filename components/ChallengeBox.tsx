@@ -83,20 +83,22 @@ const ChallengerBox: React.FC = () => {
 
 
   return (
-    <div
-      onClick={() => {
-        requestPermission();
-      }}
-      className='flex justify-evenly items-center text-center w-full bg-custom-primary rounded-xl py-2 mb-4'>
-      <Image className=' ' src='/mrderka.png' width={60} height={60} alt='mrderka' />
-      <div className='text-center'>
-        <h1 className='font-bold uppercase text-xl'>Challenge du jour</h1>
-        <p className=''>
-          {challenge.title}
-        </p>
-        <p className='text-xs'>
-          {challenge.description}
-        </p>
+    <div className='w-full px-2 pb-4 md:px-0'>
+      <div
+        onClick={() => {
+          requestPermission();
+        }}
+        className='flex justify-center gap-8 items-center text-center w-full bg-custom-primary rounded-xl py-2'>
+        <Image className=' ' src='/mrderka.png' width={60} height={60} alt='mrderka' />
+        <div className='text-center'>
+          <h1 className='font-bold uppercase text-xl'>Challenge du jour</h1>
+          <p className=''>
+            {challenge.title}
+          </p>
+          <p className='text-xs'>
+            {challenge.description}
+          </p>
+        </div>
       </div>
     </div>
   );

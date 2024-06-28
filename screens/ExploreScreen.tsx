@@ -1,19 +1,16 @@
 import Image from 'next/image';
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 const ExploreScreen: React.FC = () => {
   const communities = ['PSG', 'Foot', 'Tennis', 'Music', 'DRILLFR', "DBZ>", 'eSport World', 'ActuNews', 'Cats & the world', 'BasketTeam', "SwissTransfer", "MangaGroup", 'Vegeteam']
   const categories = ['Sport', 'Musique', 'Jeux Vidéos', 'Actualités', 'Animaux', 'Cuisine', 'Yoga', 'Méditation', 'Running', 'Cyclisme', 'Natation', 'Football', 'Basketball', 'Tennis', 'Golf', 'Rugby', 'Handball', 'Volleyball', 'MMA', 'UFC']
   return (
     <div className="w-full flex flex-col items-center mb-32">
-      <div className="flex items-center w-full p-2 border-2 border-gray-300 rounded-md my-4">
-        <MagnifyingGlassIcon className="w-5 h-5 text-gray-500 mr-2" />
-        <input
-          type="text"
-          placeholder="Rechercher"
-          className="flex-grow p-2 border-none outline-none"
-        />
-      </div>
+
+      <input
+        type="text"
+        placeholder="Rechercher"
+        className="w-full max-w-96 p-2 border-2 border-gray-300 rounded-md my-4 "
+      />
       <div className='w-full flex flex-col px-4 my-4'>
         <p className='text-xl font-bold text-custom-primary'>
           Catégories
@@ -28,18 +25,18 @@ const ExploreScreen: React.FC = () => {
           }
         </div>
       </div>
-      <div className='w-full flex flex-col px-4 my-4'>
+      <div className='w-full flex flex-col px-2'>
         <p className='text-xl font-bold text-custom-primary'>
           Communautés
         </p>
         <div className='w-full flex justify-start items-center flex-wrap'>
           {
             communities.map((community, i) => (
-              <div className='flex flex-col items-center justify-start w-16 m-2'>
+              <div className='flex flex-col items-center justify-start w-20 p-1'>
                 <Image key={i} src={`https://picsum.photos/20${i}`} alt='Post' width={100} height={100}
-                  className='rounded-md w-16 h-16'
+                  className='rounded-md aspect-square'
                 />
-                <p className='text-[0.5rem]'>
+                <p className='w-full text-sm line-clamp-1 truncate'>
                   {community}
                 </p>
               </div>

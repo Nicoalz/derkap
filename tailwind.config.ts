@@ -18,7 +18,7 @@ const config = {
       },
     },
     extend: {
-            backgroundImage: {
+      backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
@@ -33,6 +33,9 @@ const config = {
         "custom-black": "#1B0A32",
         "custom-violet": "#9747FF",
         "custom-orange": "#E45B37",
+      },
+      boxShadow: {
+        'card': '5px 5px 5px #1B0A32',
       },
       keyframes: {
         "accordion-down": {

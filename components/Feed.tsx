@@ -1,6 +1,7 @@
 import { useUser } from '@/contexts/user-context';
 import { TPostDb } from '@/types';
 import Image from 'next/image';
+import ChallengerBox from '@/components/ChallengeBox';
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
@@ -22,19 +23,20 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
 
 
   return (
-    <div className='flex flex-col w-full'>
-      <ul className='flex justify-start items-end'>
+    <div className='flex flex-col w-full gap-8'>
+      <ul className='flex justify-start items-end gap-2 px-4'>
         {userFeeds.map((feed, index) => (
           <li
             key={index}
             onClick={() => setSelectedFeed(feed)}
-            className={`px-2 cursor-pointer text-lg ${selectedFeed === feed ? 'text-custom-primary font-bold' : 'text-gray-500'
+            className={`px-4 py-2 cursor-pointer font-bold border border-black rounded-full ${selectedFeed === feed ? 'text-custom-primary' : 'text-gray-500 text-base'
               }`}
           >
             {feed}
           </li>
         ))}
       </ul>
+      <ChallengerBox />
       <div className='w-full flex flex-col items-center justify-center'>
         {activePosts.length > 0 ? activePosts.map((post, index) => (
           <Post key={index} postData={post} />

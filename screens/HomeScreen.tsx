@@ -54,7 +54,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
   }, [user])
 
   return (
-    console.log(allPosts),
     <div className="w-full flex flex-col items-center relative flex-1 mb-32">
       {user &&
         <>

@@ -21,6 +21,7 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
           <p>{postData.user?.name ?? postData.user.username}</p>
         </div>
         <EllipsisHorizontalIcon className='w-5 h-5' />
+
       </div>
 
       {postData.is_photo ? (

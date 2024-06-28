@@ -20,7 +20,7 @@ export const pushPostToDb = async ({ post }: {post: TPostDb}) => {
   const date = new Date().toISOString();
   const blob = await fetch(file_url).then((r) => r.blob())
 
-const { error:errorImg } = await supabase.storage
+const { data: img, error:errorImg } = await supabase.storage
     .from("posts")
     .upload(`${user_id}/${date}`, blob, {
       upsert: true,
@@ -47,6 +47,7 @@ if (!publicUrl) {
   const { data, error:errorPost } = await supabase.from('post').insert(
     {description: description,
      feed: feed,
+     created_at: date,
      is_photo: is_photo,
      file_url: publicUrl,
     }
@@ -63,8 +64,6 @@ if (!publicUrl) {
       error: 'No data'
     }
   }
-
-  console.log(data);
 
 
 

@@ -2,17 +2,18 @@ import LayoutApp from "@/components/LayoutApp";
 import { PWAProvider } from "@/contexts/pwa-context";
 import { UserProvider } from '@/contexts/user-context';
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans } from 'next/font/google';
+import localFont from 'next/font/local';
 import { Toaster } from "sonner";
-
+import { ThemeProvider } from '../components/ui/theme-provider';
 import { createSupabaseAppServerClient } from '../libs/supabase/server';
 import "./globals.css";
-const inter = Inter({ subsets: ["latin"] });
 const title = "Derkap";
 const description = "Derkap";
 const domain = "wwww.example.com/";
 const url = `https://${domain}`;
 const socialBannerUrl = "/social_banner.png";
+
 export const metadata: Metadata = {
   title,
   description,
@@ -42,6 +43,18 @@ export const metadata: Metadata = {
   },
 };
 
+const champ = localFont({
+  src: '../public/fonts/champs/Champ Black.woff2',
+  display: 'swap',
+  variable: '--font-champ',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-dm-sans',
+})
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -62,10 +75,18 @@ export default async function RootLayout({
   return (
     <PWAProvider>
       <UserProvider user={user} profile={profile}>
-        <html lang="en">
-          <body className={inter.className}>
-            <LayoutApp>{children}</LayoutApp>
-            <Toaster position="top-center" richColors />
+        <html lang="fr" className={`${dmSans.variable} ${champ.variable}`}>
+
+          <body >
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="light"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <LayoutApp>{children}</LayoutApp>
+              <Toaster position="top-center" richColors />
+            </ThemeProvider>
 
           </body>
         </html>

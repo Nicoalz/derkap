@@ -17,17 +17,17 @@
 }
 
 
-@font-face {
+/* @font-face {
   font-family: 'Champ';
   src: url('/public/fonts/champs/champs-Black.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-}
+} */
 
 body {
   background: linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%);
   color: #1b0a32;
-  font-family: 'Champ', sans-serif;
+  /* font-family: 'Champ', sans-serif; */
 }
 
 @layer utilities {

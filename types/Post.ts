@@ -14,7 +14,7 @@ export interface TPost {
 
 type TPostPick = Pick<
   Database["public"]["Tables"]["post"]["Row"],
-  "description" | "feed" | "file_url" | "id" | "is_photo" | "created_at"
+  "description" | "feed" | "file_url" | "id" | "is_photo" | "created_at" | "file_name"
 >;
 
 export type TPostDb = TPostPick & {

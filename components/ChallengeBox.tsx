@@ -1,7 +1,6 @@
 "use client"
 import { usePWA } from '@/contexts/pwa-context';
 import { fetchWithToken } from '@/libs/fetch';
-import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 
 const ChallengerBox: React.FC = () => {
@@ -94,8 +93,8 @@ const ChallengerBox: React.FC = () => {
           👨‍🦲
         </p>
         <div className='text-left'>
-          <h1 className='font-bold uppercase text-lg text-champ'>Derkap du jour</h1>
-          <p className='text-sm text-champ'>
+          <h1 className='font-bold uppercase text-lg font-champ'>Derkap du jour</h1>
+          <p className='text-sm font-champ'>
             {challenge.title}
           </p>
           <p className='text-sm'>

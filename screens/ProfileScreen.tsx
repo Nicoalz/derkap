@@ -6,29 +6,28 @@ const ProfileScreen: React.FC = () => {
   const { userData } = useUser();
   const communities = ['IIMPACT', 'Paris 15']
   const postsAmount = 10
+
   return (
     <div className="w-full flex flex-col items-center mb-32">
       <div className='flex flex-col items-center'>
-
-        <p>@{userData.username}</p>
         <Image src={userData.avatar_url ?? ""} alt={userData.name ?? ""} width={70} height={70}
           className='rounded-full my-2 w-20 h-20 object-cover border-2 border-custom-primary'
         />
-        <p>{userData.name}</p>
+        <p className='text-champ tracking-widest'>{userData.username}</p>
         <p className='text-[10px] text-slate-400'>@{userData.username}</p>
         <div className='flex justify-between items-center gap-x-8 my-4'>
           <div className='flex flex-col justify-center items-center'>
-            <p>Abonnés</p>
-            <p>123</p>
+            <p className='font-semibold text-dmsans'>123</p>
+            <p>Followers</p>
           </div>
           <div className='flex flex-col justify-center items-center'>
-            <p>Abonnements</p>
-            <p>102</p>
+            <p className='font-semibold text-dmsans'>102</p>
+            <p>Suivi(e)s</p>
           </div>
         </div>
       </div>
       <div className='my-4'>
-        <button className='bg-custom-primary text-white p-2 rounded-md'>Créer ma communauté</button>
+        <button className='bg-custom-primary text-white p-2 rounded-md text-champ tracking-wider'>Créer ma communauté</button>
       </div>
       <div className='w-full flex flex-col px-4 my-4'>
         <p className='text-xl font-bold text-custom-primary'>

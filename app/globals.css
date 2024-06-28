@@ -35,3 +35,11 @@ body {
     text-wrap: balance;
   }
 }
+
+.text-champ {
+  font-family: 'Champ', sans-serif;
+}
+
+.text-dmsans {
+  font-family: 'DM Sans', sans-serif;
+}

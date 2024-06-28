@@ -1,6 +1,5 @@
 'use client';
 // import Capture from '@/components/Capture';
-import CaptureHook from '@/components/CaptureHook';
 import Feed from '@/components/Feed';
 import { TPostDb } from '@/types';
 import { User } from '@supabase/supabase-js';
@@ -59,14 +58,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
           {/* <button className='mb-2 text-sm px-6 py-2 rounded border-2 border-custom-primary' onClick={handleSignOut}>Se déconnecter</button> */}
         </>
       }
-      {isCaptureOpen ? (
-        <CaptureHook
-          setIsCaptureOpen={setIsCaptureOpen}
-          addNewPost={addNewPost}
-        />
-      ) : (
-        <Feed allPosts={allPosts} />
-      )}
+      <Feed allPosts={allPosts} />
     </div>
   );
 };

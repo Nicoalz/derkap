@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import CategoriesFilter from '../components/CategoriesFilter';
 import { mockedCategories } from '../libs/mockedCategories';
+import { SettingsIcon } from 'lucide-react';
 const ProfileScreen: React.FC = () => {
   const { userData } = useUser();
   const { username, name } = userData
@@ -16,6 +17,9 @@ const ProfileScreen: React.FC = () => {
   const [kaps, setKaps] = useState<TKaps[]>(mockedKaps)
   return (
     <div className="w-full flex flex-col items-center mb-32">
+      <div className='flex w-full justify-end'>
+        <SettingsIcon size={24} className='text-custom-black font-bold' />
+      </div>
       <div className='flex flex-col items-center'>
         <Image src={userData.avatar_url ?? ""} alt={name ?? ""} width={70} height={70}
           className='rounded-full my-2 w-24 h-24 object-cover border-2 border-custom-primary'

@@ -1,3 +1,6 @@
+export * from './Notifications';
 export * from './Post';
 export * from './User';
-export * from './Notifications';
+export * from './Challenge';
+export * from './Kaps';
+export * from './Category';

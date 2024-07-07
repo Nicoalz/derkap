@@ -32,6 +32,7 @@ export type Database = {
           created_at: string
           description: string | null
           feed: string
+          file_name: string
           file_url: string | null
           id: number
           is_photo: boolean | null
@@ -41,6 +42,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           feed?: string
+          file_name: string
           file_url?: string | null
           id?: number
           is_photo?: boolean | null
@@ -50,6 +52,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           feed?: string
+          file_name?: string
           file_url?: string | null
           id?: number
           is_photo?: boolean | null
@@ -60,7 +63,7 @@ export type Database = {
             foreignKeyName: "post_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           },
         ]

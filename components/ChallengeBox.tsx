@@ -1,14 +1,18 @@
 "use client"
-import { usePWA } from '@/contexts/pwa-context';
 import { fetchWithToken } from '@/libs/fetch';
-import Image from 'next/image';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { cn } from '../lib/utils';
+import { TChallenge } from '../types/Challenge';
 
-const ChallengerBox: React.FC = () => {
-  const { isPWA } = usePWA();
+
+interface props extends React.HTMLAttributes<HTMLDivElement> {
+  challenge?: TChallenge
+}
+
+const ChallengerBox = ({ challenge, className, ...props }: props) => {
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => { // todo change subscription
     setIsNotificationSupported('Notification' in window);
   }, []);
   const requestPermission = async () => {
@@ -76,27 +80,29 @@ const ChallengerBox: React.FC = () => {
     }
   };
 
-  const challenge = {
-    title: 'Chauve qui peut !',
-    description: 'Prends une photo de toi avec un chauve !',
-  };
+  const { description, emoji, title, subtitle } = challenge ?? {};
 
 
   return (
-    <div
-      onClick={() => {
-        requestPermission();
-      }}
-      className='flex justify-evenly items-center text-center w-full bg-custom-primary rounded-xl py-2 mb-4'>
-      <Image className=' ' src='/mrderka.png' width={60} height={60} alt='mrderka' />
-      <div className='text-center'>
-        <h1 className='font-bold uppercase text-xl'>Challenge du jour</h1>
-        <p className=''>
-          {challenge.title}
+    <div {...props} className={cn('w-full', className)}>
+      <div
+        onClick={() => {
+          requestPermission();
+        }}
+        className='flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-custom-black shadow-card gap-4 items-center'>
+        {/* <Image className=' ' src='/visage.svg' width={60} height={60} alt='mrderka' /> */}
+        <p className='text-[3rem] '>
+          {emoji ?? '📭'}
         </p>
-        <p className='text-xs'>
-          {challenge.description}
-        </p>
+        <div className='text-left'>
+          <h1 className='font-bold uppercase text-lg font-champ'>{title ?? 'Derkap du jour'}</h1>
+          <p className='text-sm font-champ text-custom-black'>
+            {subtitle ?? 'Pas de défis pour le moment'}
+          </p>
+          <p className='text-sm'>
+            {description ?? 'Reviens plus tard'}
+          </p>
+        </div>
       </div>
     </div>
   );

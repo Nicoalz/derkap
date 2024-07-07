@@ -6,7 +6,7 @@ const CaptureButton: React.FC<{ func: () => void }> = ({
   return (
     <div
       onClick={() => func()}
-      className='w-16 h-16 border-[5px] border-custom-primary bg-custom-primary/40 rounded-full bottom-28 fixed'>
+      className='w-20 h-20 border-[5px] border-gray-200 bg-gradient-linear rounded-full bottom-28 fixed'>
     </div>
   );
 };

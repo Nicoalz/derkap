@@ -84,7 +84,7 @@ const ChallengerBox = ({ challenge, className, ...props }: props) => {
 
 
   return (
-    <div {...props} className={cn(' w-full', className)}>
+    <div {...props} className={cn('w-full', className)}>
       <div
         onClick={() => {
           requestPermission();

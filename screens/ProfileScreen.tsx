@@ -9,6 +9,7 @@ import { useState } from 'react';
 import CategoriesFilter from '../components/CategoriesFilter';
 import { mockedCategories } from '../libs/mockedCategories';
 import { SettingsIcon } from 'lucide-react';
+
 const ProfileScreen: React.FC = () => {
   const { userData } = useUser();
   const { username, name } = userData
@@ -16,7 +17,7 @@ const ProfileScreen: React.FC = () => {
   const [abonnements, setAbonnements] = useState(102)
   const [kaps, setKaps] = useState<TKaps[]>(mockedKaps)
   return (
-    <div className="w-full flex flex-col items-center mb-32">
+    <div className="w-full flex flex-col items-center mb-32 px-2">
       <div className='flex w-full justify-end'>
         <SettingsIcon size={24} className='text-custom-black font-bold' />
       </div>
@@ -31,7 +32,7 @@ const ProfileScreen: React.FC = () => {
           <FollowBlock amount={abonnements} text='Abonnements' />
         </div>
       </div>
-      <div className='w-full flex flex-col px-4 my-4'>
+      <div className='w-full flex flex-col my-4'>
         <h2 className='font-champ text-custom-black text-[22px]'>Kaps</h2>
         <CategoriesFilter categories={mockedCategories} withAdmin={true} />
         <div className='gap-y-2'>

@@ -34,12 +34,12 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
 
   return (
     <div className='flex flex-col w-full gap-8'>
-      <ul className='flex justify-start items-end gap-2'>
+      <ul className='flex justify-start items-end gap-2 overflow-scroll'>
         {userFeeds.map((feed, index) => (
           <li
             key={index}
             onClick={() => setSelectedFeed(feed)}
-            className={`px-4 py-2 cursor-pointer text-lg ${selectedFeed === feed ? 'border-b-2 border-custom-black font-bold text-custom-black'
+            className={`px-4 py-2 whitespace-nowrap cursor-pointer text-lg ${selectedFeed === feed ? 'border-b-2 border-custom-black font-bold text-custom-black'
               : 'border-b-0 text-custom-gray'
               }`}
           >
@@ -47,8 +47,10 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
           </li>
         ))}
       </ul>
-      <ChallengerBox challenge={defaultChallenge} />
-      <div className='w-full flex flex-col items-center justify-center'>
+      <div className='w-full px-2'>
+        <ChallengerBox challenge={defaultChallenge} />
+      </div>
+      <div className='w-full flex flex-col items-center justify-center gap-4'>
         {activePosts.length > 0 ? activePosts.map((post, index) => (
           <Post key={index} postData={post} />
         )) :

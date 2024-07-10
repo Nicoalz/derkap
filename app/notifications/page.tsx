@@ -31,23 +31,16 @@ export default function Notifications() {
   }
 
   return (
-    <div>
+    <div className='px-2'>
       <Title text="Notifications" />
       <Switch switch1Text="Derkap" switch2Text="Demandes" isFirstSwitchActive={isFirstSwitchActive} setIsFirstSwitchActive={setIsFirstSwitchActive} className='mt-2' />
       {isFirstSwitchActive ? challenges.map(challenge => (
         <ChallengerBox key={challenge.id} challenge={challenge} className='mt-4' onClick={() => redirectToChallenge({ challenge: challenge })} />
-      )
-      )
-
-        :
+      )) :
         demands.map(demand => (
           <FriendDemandBox key={demand.id} demand={demand} className='mt-4' />
         ))
-
-
       }
-
-
     </div>
   )
 }

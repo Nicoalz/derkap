@@ -17,6 +17,11 @@
 }
 
 
+@font-face {
+  font-family: 'Champ';
+  src: url('/public/fonts/champs/champs-Black.ttf') format('truetype');
+}
+
 @layer utilities {
       /* Hide scrollbar for Chrome, Safari and Opera */
       .no-scrollbar::-webkit-scrollbar {
@@ -28,6 +33,7 @@
           scrollbar-width: none;  /* Firefox */
     }
   }
+
 
 body {
   background: linear-gradient(to bottom, #F6D5F7 0%, #FBE9D7 100%);
@@ -42,6 +48,29 @@ body {
   }
 }
 
+.text-champ {
+  font-family: 'Champ', sans-serif !important;
+}
+
+.text-dmsans {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.noscrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.gradient-after::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10%;
+  height: 100%;
+  background: linear-gradient(to right, #F6D5F7 0%, #FBE9D7 100%);
+  z-index: -1;
+}
+
 .bg-blur {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
@@ -49,7 +78,5 @@ body {
 .bg-blur-light {
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-background-image: linear-gradient(to bottom, rgba(246, 213, 247, 0.8) 0%, rgba(251, 233, 215, 0.8) 100%);
-
-
+  background-image: linear-gradient(to bottom, rgba(246, 213, 247, 0.8) 0%, rgba(251, 233, 215, 0.8) 100%);
 }

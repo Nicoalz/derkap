@@ -32,7 +32,7 @@ const tabs = [
 
 ];
 
-const BottomNavbar: React.FC = () => {
+const   BottomNavbar: React.FC = () => {
   const { currentPath } = usePWA();
 
   return (

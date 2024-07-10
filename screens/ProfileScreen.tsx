@@ -9,6 +9,7 @@ import { useState } from 'react';
 import CategoriesFilter from '../components/CategoriesFilter';
 import { mockedCategories } from '../libs/mockedCategories';
 import { SettingsIcon } from 'lucide-react';
+
 const ProfileScreen: React.FC = () => {
   const { userData } = useUser();
   const { username, name } = userData

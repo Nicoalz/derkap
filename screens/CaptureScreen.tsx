@@ -74,7 +74,10 @@ const CaptureScreen: React.FC = () => {
 
 
       <Title text='Capture ton Derkap !' />
-      {challenge && !imgTaken && (<ChallengerBox challenge={challenge} />)}
+      <div className='px-2'>
+        {challenge && !imgTaken && (<ChallengerBox challenge={challenge} />)}
+      </div>
+
       <div className="w-full mt-4 relative h-0  pb-[125%]">
 
         {imgTaken ? (

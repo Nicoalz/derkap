@@ -29,7 +29,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children, user, prof
   const fetchUserFeeds = (_userId: string) => {
 
     //todo: fetch user feeds from the server
-    const fetchedFeeds = ['IIMPACT', 'Paris 15'];
+    const fetchedFeeds = ['La Folie des Road Trips', 'Les FR en ES'];
     const userFeeds = [...baseFeeds, ...fetchedFeeds];
     // Mocked user feeds
     setUserFeeds(userFeeds);

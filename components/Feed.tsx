@@ -34,7 +34,7 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
 
   return (
     <div className='flex flex-col w-full gap-8'>
-      <ul className='flex justify-start items-end gap-2 overflow-scroll'>
+      <ul className='mobile-container w-full flex justify-start items-end gap-2 overflow-scroll no-scrollbar'>
         {userFeeds.map((feed, index) => (
           <li
             key={index}

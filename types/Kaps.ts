@@ -7,4 +7,5 @@ export interface TKaps {
   members: number;
   creator: string;
   isAdmin: boolean;
+  derkapImages?:string[]
 }

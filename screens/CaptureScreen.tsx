@@ -65,7 +65,7 @@ const CaptureScreen: React.FC = () => {
         description: newDescription,
         user: userData,
         created_at: new Date().toISOString(),
-        feed: selectedFeed,
+        feed: selectedFeed.name,
         file_name: userData.id + '/' + new Date().toISOString(),
       }
       const { data, error } = await pushPostToDb({ post: post });

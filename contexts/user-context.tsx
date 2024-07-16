@@ -23,7 +23,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children, user, prof
   const baseFeeds = ['Amis']
   const [userFeeds, setUserFeeds] = useState<string[]>([]);
   const [selectedFeed, setSelectedFeed] = useState(baseFeeds[0]);
-  const userData: TUserDb = { id: user?.id ?? "", name: profile?.name ?? "", username: profile?.username ?? "", avatar_url: '/nico.jpeg', created_at: user?.created_at ?? "" }
+  const userData: TUserDb = { id: user?.id ?? "", name: profile?.name ?? "", username: profile?.username ?? "", avatar_url: profile?.avatar_url || '/mrderka.png', created_at: user?.created_at ?? "" }
 
 
   const fetchUserFeeds = (_userId: string) => {

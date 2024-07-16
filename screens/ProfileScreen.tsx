@@ -23,7 +23,7 @@ const ProfileScreen: React.FC = () => {
       </div>
       <div className='flex flex-col items-center'>
         <Image src={userData.avatar_url ?? ""} alt={name ?? ""} width={70} height={70}
-          className='rounded-full my-2 w-24 h-24 object-cover border-2 border-custom-primary'
+          className='rounded-full my-2 w-24 h-24 object-cover border-2 border-custom-primary bg-custom-white'
         />
         <h2 className='font-champ text-custom-black text-[16px]' > {name || username || ""}</h2>
         <p className='text-[10px] text-slate-400'>@{username}</p>

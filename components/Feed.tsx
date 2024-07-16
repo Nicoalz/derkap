@@ -5,7 +5,9 @@ import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 import { TChallenge } from '../types/Challenge';
 import Post from "./Post";
+import { mockedChallenges } from '../libs/mockedChallenges';
 const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
+  const [challenge, setChallenge] = useState<TChallenge>(mockedChallenges[0]);
   const { userFeeds, selectedFeed, setSelectedFeed } = useUser();
 
   const [activePosts, setActivePosts] = useState<TPostDb[]>([]);
@@ -21,15 +23,6 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
   useEffect(() => {
     updatePosts();
   }, [selectedFeed, allPosts]);
-
-
-  const defaultChallenge: TChallenge = {
-    id: 0,
-    title: 'DERKAP du jour ',
-    subtitle: 'Chauve qui peut !',
-    description: 'Prends une photo de toi avec un chauve !',
-    emoji: '👨‍🦲'
-  }
 
 
   return (
@@ -48,7 +41,7 @@ const Feed: React.FC<{ allPosts: TPostDb[] }> = ({ allPosts }) => {
         ))}
       </ul>
       <div className='w-full px-2'>
-        <ChallengerBox challenge={defaultChallenge} />
+        <ChallengerBox challenge={challenge} />
       </div>
       <div className='w-full flex flex-col items-center justify-center gap-4'>
         {activePosts.length > 0 ? activePosts.map((post, index) => (

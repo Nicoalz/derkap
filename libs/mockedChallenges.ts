@@ -6,7 +6,8 @@ export const mockedChallenges: TChallenge[] = [
     subtitle: 'DERKAP du jour',
     description: 'Prends une photo de toi avec une personne chauve !',
     emoji: '👨‍🦲',
-    kapsId: 'kaps0'
+    kapsId: 'kaps0',
+    isGeneral: true
   },
   {
     id: 2,
@@ -14,7 +15,8 @@ export const mockedChallenges: TChallenge[] = [
     subtitle: 'La folie des Road Trips',
     description: 'Filme un animal complètement débile rencontré sur la route !',
     emoji: '😹',
-    kapsId: 'kaps2'
+    kapsId: 'kaps2',
+    isGeneral:false
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ export const mockedChallenges: TChallenge[] = [
     subtitle: 'Les Français en Espagne',
     description: 'Prends une photo de toi avec un drapeau espagnol !',
     emoji: '🇪🇸',
-    kapsId: 'kaps1'
+    kapsId: 'kaps1',
+    isGeneral: false
   }
 ];

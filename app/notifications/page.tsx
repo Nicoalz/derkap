@@ -27,7 +27,7 @@ export default function Notifications() {
     if (!challenge.id) return
     console.log({ challenge })
     setChallenge(challenge)
-    router.push(`/challenge/${challenge.id}`)
+    router.push(`/capture?challengeId=${challenge.id}`)
   }
 
   return (

@@ -5,7 +5,7 @@ import { useUser } from '@/contexts/user-context';
 import { TChallenge, TPostDb } from '@/types';
 import { XIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import { toast } from 'sonner';
 import Button from '../components/Button';
@@ -14,7 +14,7 @@ import { pushPostToDb } from '../functions/supabase/post/push-post-db';
 import { mockedChallenges } from '../libs/mockedChallenges';
 const CaptureScreen: React.FC = () => {
   const router = useRouter();
-  const [challenge, setChallenge] = useState<TChallenge | null>(mockedChallenges[1]);
+  const [challenge, setChallenge] = useState<TChallenge | null>();
 
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
   const [imgTaken, setImgTaken] = useState<string | null>(null);
@@ -34,6 +34,21 @@ const CaptureScreen: React.FC = () => {
   const [newDescription, setNewDescription] = useState<string>('');
   const { userFeeds, selectedFeed, setSelectedFeed, userData } = useUser();
   const [isValidatingFile, setIsValidatingFile] = useState<boolean>(false);
+
+  const initChallenge = () => {
+    const urlparams = new URLSearchParams(window.location.search);
+    const challengeId = urlparams.get('challengeId');
+    console.log({ challengeId });
+    let challenge = mockedChallenges[0];
+    if (challengeId) {
+      challenge = mockedChallenges.find(ch => ch.id.toString() === challengeId) || mockedChallenges[0];
+    }
+    setChallenge(challenge);
+  }
+
+  useEffect(() => {
+    initChallenge();
+  }, []);
 
   const resetPhoto = () => {
     setImgTaken(null);

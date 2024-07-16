@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { getPosts as fetchPostsDb } from '../functions/supabase/post/get-post';
 import { mockedChallenges } from '../libs/mockedChallenges';
-import { postsMocked } from '../libs/postsData';
 import { TChallenge } from '../types/Challenge';
 import Post from "./Post";
 import { Skeleton } from './ui/skeleton';
@@ -87,58 +86,53 @@ const Feed: React.FC = () => {
   }
 
   return (
-    <div className='relative flex flex-col w-full gap-8 -mt-4'>
-      <div className='sticky top-0 bg-custom-pink/40 bg-blur'>
-        <PullToRefresh pullingContent={""} onRefresh={handleRefresh}>
-          <div >
-            <div className='w-full pt-4 pb-8 rounded-b-xl'>
-              <ul className='mobile-container w-full flex justify-start items-end gap-2 overflow-scroll no-scrollbar'>
-                {userFeeds.map((feed, index) => (
-                  <li
-                    key={index}
-                    onClick={() => {
-                      if (selectedFeed === feed) return;
-                      setActivePosts([]);
-                      setSelectedFeed(feed)
-                    }}
-                    className={`px-4 py-2 whitespace-nowrap cursor-pointer text-lg ${selectedFeed.id === feed.id ? 'border-b-2 border-custom-black font-bold text-custom-black'
-                      : 'border-b-0 text-custom-gray'
-                      }`}
-                  >
-                    {feed.name}
-                  </li>
-                ))}
-              </ul>
-              <div className='w-full px-2 mt-8'>
-                <ChallengerBox
-                  onClick={() => {
-                    //redirect to challenge page
-                    router.push(`/capture?challengeId=${challenge.id}`)
-                  }}
-                  challenge={challenge} />
-              </div>
+    <PullToRefresh pullingContent={""} onRefresh={handleRefresh}>
+      <div className='relative flex flex-col w-full gap-8'>
+        <ul className='mobile-container w-full flex justify-start items-end gap-2 overflow-scroll no-scrollbar'>
+          {userFeeds.map((feed, index) => (
+            <li
+              key={index}
+              onClick={() => {
+                if (selectedFeed === feed) return;
+                setActivePosts([]);
+                setSelectedFeed(feed)
+              }}
+              className={`px-4 py-2 whitespace-nowrap cursor-pointer text-lg ${selectedFeed.id === feed.id ? 'border-b-2 border-custom-black font-bold text-custom-black'
+                : 'border-b-0 text-custom-gray'
+                }`}
+            >
+              {feed.name}
+            </li>
+          ))}
+        </ul>
+        <div className='w-full px-2'>
+          <ChallengerBox
+            onClick={() => {
+              //redirect to challenge page
+              router.push(`/capture?challengeId=${challenge.id}`)
+            }}
+            challenge={challenge} />
+        </div>
+
+        <div className='w-full flex flex-col items-center justify-center gap-4'>
+          {activePosts.length > 0 ? activePosts.map((post, index) => (
+            <Post key={index} postData={post} />
+          )) :
+            <div className='flex flex-col justify-center items-center w-full'>
+              {isLoading ? (
+                <div className='w-full flex flex-col items-center justify-center'>
+                  <Skeleton className="w-full h-14" />
+                  <Skeleton className="w-full h-96 my-2" />
+                  <Skeleton className="w-full h-20" />
+                </div>
+              ) : (
+                <><p className='text-4xl font-bold mt-4'>😢</p><p className='text-gray-500 text-xl mt-2'>Aucun post pour le moment </p></>
+              )}
             </div>
-          </div>
-        </PullToRefresh>
+          }
+        </div>
       </div>
-      <div className='w-full flex flex-col items-center justify-center gap-4 -mt-8'>
-        {activePosts.length > 0 ? activePosts.map((post, index) => (
-          <Post key={index} postData={post} />
-        )) :
-          <div className='flex flex-col justify-center items-center w-full'>
-            {isLoading ? (
-              <div className='w-full flex flex-col items-center justify-center'>
-                <Skeleton className="w-full h-14" />
-                <Skeleton className="w-full h-96 my-2" />
-                <Skeleton className="w-full h-20" />
-              </div>
-            ) : (
-              <><p className='text-4xl font-bold mt-4'>😢</p><p className='text-gray-500 text-xl mt-2'>Aucun post pour le moment </p></>
-            )}
-          </div>
-        }
-      </div>
-    </div>
+    </PullToRefresh>
   );
 };
 

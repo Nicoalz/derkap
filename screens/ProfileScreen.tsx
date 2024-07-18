@@ -15,7 +15,7 @@ const ProfileScreen: React.FC = () => {
   const { username, name } = userData
   const [abonnes, setAbonnes] = useState(123)
   const [abonnements, setAbonnements] = useState(102)
-  const [kaps, setKaps] = useState<TKaps[]>(mockedKaps)
+  const [kaps, setKaps] = useState<TKaps[]>(mockedKaps.slice(0, 2))
   return (
     <div className="w-full flex flex-col items-center mb-32 px-2">
       <div className='flex w-full justify-end'>

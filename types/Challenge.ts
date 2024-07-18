@@ -5,4 +5,5 @@ export interface TChallenge {
   description: string;
   emoji: string;
   kapsId?: string;
+  isGeneral: boolean;
 }

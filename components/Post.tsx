@@ -59,7 +59,7 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
           />
           <div className='flex flex-col'>
             <p className='text-champ'>{postData.user?.name ?? postData.user.username}</p>
-            <p className='text-dmsans text-sm'>Location</p>
+            {/* <p className='text-dmsans text-sm'>Location</p> */}
 
           </div>
         </div>

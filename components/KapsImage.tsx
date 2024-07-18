@@ -2,13 +2,19 @@
 
 import Image from 'next/image';
 import { TKaps } from '../types';
+import { useState } from 'react';
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
   kaps: TKaps
 }
 
 const KapsImage = ({ kaps, className, ...props }: props) => {
-  const { name, members, creator, imageUrl, description } = kaps;
+  const { name, members, creator, imageUrl, description, isJoin } = kaps;
+  const [joined, setJoined] = useState(isJoin);
+
+  const handleButtonClick = () => {
+    setJoined(!joined);
+  };
   return (
     <div className={`relative min-w-full w-full h-96 overflow-visible ${className}`} {...props}>
       <div
@@ -24,7 +30,12 @@ const KapsImage = ({ kaps, className, ...props }: props) => {
       </div>
 
       <div className='absolute bottom-[-20px] left-1/2 transform -translate-x-1/2'>
-        <button className='bg-purple-600 text-white text-sm font-bold py-2 px-14 rounded-md font-champ'>Rejoindre</button>
+        <button
+          onClick={handleButtonClick}
+          className={`text-white text-sm font-bold py-2 px-14 rounded-md font-champ ${joined ? 'bg-red-600' : 'bg-purple-600'}`}
+        >
+          {joined ? 'Quitter' : 'Rejoindre'}
+        </button>
       </div>
     </div>
   );

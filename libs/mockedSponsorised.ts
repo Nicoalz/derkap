@@ -26,6 +26,6 @@ export const mockedSponsorised: TSponsorised[] = [
     sponsorised: false,
     isOfficial: false,
     id: '3',
-    imageUrl: 'https://www.lfp.fr/_next/image?url=https%3A%2F%2Fiswsprodwebsite.blob.core.windows.net%2Fwebsite%2Fassets%2FLFP_REVEAL_WEB_LFP_MOBILE_1280x1600_993ede15db.jpg&w=3840&q=75'
+    imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVEDr0GJryRFfov_JRujLD30gq5v4Be9J2Rw&s'
   }
 ]

@@ -8,4 +8,5 @@ export interface TKaps {
   creator: string;
   isAdmin: boolean;
   derkapImages?:string[]
+  isJoin: boolean;
 }

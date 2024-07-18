@@ -3,11 +3,8 @@ import { createSupabaseAppServerClient } from './libs/supabase/server';
 
 
 export async function middleware(request: NextRequest) {
-  console.log("middleware")
   const supabase = createSupabaseAppServerClient()
-  console.log("middleware2")
   const { user } = (await supabase.auth.getUser()).data;
-  console.log("middleware3")
   if (!user){
       const url = request.nextUrl.clone();
       if (url.pathname != "/inscription") url.pathname = "/connexion";

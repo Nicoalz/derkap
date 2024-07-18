@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { getPosts as fetchPostsDb } from '../functions/supabase/post/get-post';
 import { mockedChallenges } from '../libs/mockedChallenges';
+import { postsMocked } from '../libs/postsData';
 import { TChallenge } from '../types/Challenge';
 import Post from "./Post";
 import { Skeleton } from './ui/skeleton';
@@ -21,12 +22,14 @@ const Feed: React.FC = () => {
   const fetchFeedPosts = async (feed: TFeed): Promise<TPostDb[]> => {
     await new Promise((resolve) => setTimeout(resolve, 2000)); // represents a fetch call
 
-    // const fetchedPosts = postsMocked
-    const { data: fetchedPosts } = await fetchPostsDb();
-    if (fetchedPosts === null) return [];
+    const postsLocal = postsMocked
 
-    localStorage.setItem('posts', JSON.stringify(fetchedPosts));
-    return fetchedPosts.filter(post => post.feed === feed.name) as TPostDb[];
+    const { data: fetchedPosts } = await fetchPostsDb();
+
+    if (fetchedPosts === null) return postsMocked
+    const allPosts = [...fetchedPosts, ...postsLocal];
+    localStorage.setItem('posts', JSON.stringify(allPosts));
+    return allPosts.filter(post => post.feed === feed.name) as TPostDb[];
   }
 
   const getLocalPosts = (feed: TFeed) => {

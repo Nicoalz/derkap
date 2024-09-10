@@ -20,6 +20,7 @@ export const signinSupabase = async ({formValues}: {formValues: SignInFormValues
 	})
 
 	if (error) {
+		console.error(error)
 		if (error.message.includes("Invalid login credentials")) {
 			return "Email ou mot de passe incorrect"
 		}

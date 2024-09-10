@@ -12,8 +12,10 @@ import React, { useState } from "react";
 import { toast } from 'sonner';
 import { useUser } from '../contexts/user-context';
 import { deletePost } from '../functions/supabase/post/delete-post';
-import { cn } from '../functions/utils';
+import { cn } from '../lib/utils';
 import AspectRatioImage from './AspectRatioImage';
+
+
 const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
 
   const { userData } = useUser();
@@ -45,41 +47,25 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
 
 
   return (
-    <div className='flex flex-col w-full py-4'>
-      <div className='w-full justify-between flex px-2 py-2 items-center'>
-        <div className='flex justify-center items-center'>
+    <div className='flex flex-col w-full bg-custom-white rounded-lg'>
+      <div className='w-full justify-between flex p-4 items-center '>
+        <div className='flex justify-center items-center gap-4'>
           <Image
             alt={postData.user?.name ?? ""}
             src={postData.user?.avatar_url ?? "/mrderka.png"}
             width={30}
             height={30}
-            className='rounded-full mr-2 w-8 h-8 object-cover'
+            className='rounded-lg w-8 h-8 object-cover'
           />
-          <p>{postData.user?.name ?? postData.user.username}</p>
-        </div>
+          <div className='flex flex-col'>
+            <p className='text-champ'>{postData.user?.name ?? postData.user.username}</p>
+            {/* <p className='text-dmsans text-sm'>Location</p> */}
 
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger>
-            <EllipsisHorizontalIcon className='w-5 h-5' />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <DropdownMenuLabel>Signaler</DropdownMenuLabel>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <DropdownMenuLabel>Partager</DropdownMenuLabel>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <DropdownMenuLabel>Enregistrer</DropdownMenuLabel>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-        <Drawer open={isDrawerOpen}>
+          </div>
+        </div>
+        <Drawer >
           <DrawerTrigger>
-            <EllipsisHorizontalIcon className='w-5 h-5' onClick={() => setIsDrawerOpen(true)} />
+            <EllipsisHorizontalIcon className='w-8 h-8' onClick={() => setIsDrawerOpen(true)} />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerDescription>
@@ -98,11 +84,15 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
         <AspectRatioImage
           alt={postData.description ?? ""}
           src={postData.file_url ?? ""}
-          username={postData.user?.username ?? ""}
-          description={postData.description ?? ""}
         />
       ) : (
         <video width={postWitdh} height={postHeight} src={postData.file_url ?? ""} controls />
+      )}
+
+      {postData.description && (
+        <div className='p-4'>
+          <p><span className='font-bold mr-2'>{postData.user.username}</span>{postData.description}</p>
+        </div>
       )}
     </div>
   );

@@ -14,11 +14,18 @@ const domain = "wwww.example.com/";
 const url = `https://${domain}`;
 const socialBannerUrl = "/social_banner.png";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#F6D5F7"
+}
+
 export const metadata: Metadata = {
   title,
   description,
   manifest: "/manifest.json",
-  themeColor: "#0a0e15", // custom color can be added here
   openGraph: {
     type: "website",
     url,
@@ -35,12 +42,6 @@ export const metadata: Metadata = {
     icon: "/icons/favicon-16x16.png",
     apple: "/icons/apple-touch-icon-180x180.png",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
 };
 
 const champ = localFont({
@@ -55,13 +56,7 @@ const dmSans = DM_Sans({
   variable: '--font-dm-sans',
 })
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  themeColor: "#0a0e15",
-}
+
 
 export default async function RootLayout({
   children,
@@ -77,7 +72,7 @@ export default async function RootLayout({
       <UserProvider user={user} profile={profile}>
         <html lang="fr" className={`${dmSans.variable} ${champ.variable}`}>
 
-          <body >
+          <body className='bg-gradient-linear'>
             <ThemeProvider
               attribute="class"
               defaultTheme="light"

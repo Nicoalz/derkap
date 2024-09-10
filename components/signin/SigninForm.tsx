@@ -12,8 +12,6 @@ export default function SignInForm() {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-
-
   const handleSignUp = async (formData: FormData) => {
     setIsLoading(true)
 

@@ -4,7 +4,7 @@ import { ChevronRight } from 'lucide-react'
 import { useState } from "react"
 import { toast } from 'sonner'
 import { signinSupabase } from '../../functions/supabase/signin-supabase'
-import { cn } from '../../functions/utils'
+import { cn } from '../../lib/utils'
 import { default as Input } from '../form/Input'
 
 

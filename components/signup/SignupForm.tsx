@@ -6,7 +6,7 @@ import { useState } from "react"
 import { toast } from 'sonner'
 import { z } from "zod"
 import { signupSupabase } from '../../functions/supabase/signup-supabase'
-import { cn } from '../../functions/utils'
+import { cn } from '../../lib/utils'
 import { signUpEmailSchema, signUpPasswordSchema, signUpSchema, signUpUsernameSchema } from '../../libs/zod/UserSchema'
 import { default as Input } from '../form/Input'
 

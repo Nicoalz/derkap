@@ -1,13 +1,13 @@
 "use client";
 import { User } from '@supabase/supabase-js';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { TUserDb } from '../types';
+import { mockedFeeds } from '../libs/mockedFeeds';
+import { TFeed, TUserDb } from '../types';
 
 interface UserContextType {
-  userFeeds: string[];
-  baseFeeds: string[]
-  selectedFeed: string;
-  setSelectedFeed: (feed: string) => void;
+  userFeeds: TFeed[];
+  selectedFeed: TFeed;
+  setSelectedFeed: (feed: TFeed) => void;
   userData: TUserDb,
 }
 
@@ -20,20 +20,28 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children, user, profile }) => {
-  const baseFeeds = ['Amis']
-  const [userFeeds, setUserFeeds] = useState<string[]>([]);
-  const [selectedFeed, setSelectedFeed] = useState(baseFeeds[0]);
-  const userData: TUserDb = { id: user?.id ?? "", name: profile?.name ?? "", username: profile?.username ?? "", avatar_url: '/nico.jpeg', created_at: user?.created_at ?? "" }
+  const baseFeed: TFeed = {
+    name: 'Amis',
+    kapsId: 'kaps0',
+    id: '0'
+  }
+  const [userFeeds, setUserFeeds] = useState<TFeed[]>([baseFeed]);
+  const [selectedFeed, setSelectedFeed] = useState(baseFeed);
+  const userData: TUserDb = { id: user?.id ?? "", name: profile?.name ?? "", username: profile?.username ?? "", avatar_url: profile?.avatar_url || '/mrderka.png', created_at: user?.created_at ?? "" }
 
 
   const fetchUserFeeds = (_userId: string) => {
 
     //todo: fetch user feeds from the server
-    const fetchedFeeds = ['IIMPACT', 'Paris 15'];
-    const userFeeds = [...baseFeeds, ...fetchedFeeds];
+    const fetchedFeeds = mockedFeeds
+    const userFeeds = [baseFeed, ...fetchedFeeds];
     // Mocked user feeds
     setUserFeeds(userFeeds);
   }
+
+  useEffect(() => {
+    console.log({ selectedFeed })
+  }, [selectedFeed])
 
 
   useEffect(() => {
@@ -41,7 +49,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children, user, prof
   }, []);
 
   return (
-    <UserContext.Provider value={{ userFeeds, baseFeeds, selectedFeed, setSelectedFeed, userData }}>
+    <UserContext.Provider value={{ userFeeds, selectedFeed, setSelectedFeed, userData }}>
       {children}
     </UserContext.Provider>
   );

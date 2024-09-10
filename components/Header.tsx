@@ -1,7 +1,4 @@
 import Link from "next/link";
-import React from "react";
-
-import Image from "next/image";
 
 const Header: React.FC = () => {
   return (
@@ -14,3 +11,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+

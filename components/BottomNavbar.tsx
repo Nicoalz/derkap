@@ -36,8 +36,8 @@ const   BottomNavbar: React.FC = () => {
   const { currentPath } = usePWA();
 
   return (
-    <div className='w-full px-2 fixed bottom-6 left-1/2 transform -translate-x-1/2'>
-      <nav className="w-full bg-white/60 bg-blur text-black/70 rounded-lg shadow-lg flex justify-around items-center p-4">
+    <div className='w-full fixed bottom-0 left-1/2 transform -translate-x-1/2'>
+      <nav className="w-full bg-white/60 bg-blur text-black/70 rounded-lg shadow-lg flex justify-around items-center pt-4 py-8">
         {tabs.map((tab, index) => {
           const IconComponent = tab.icon;
           const isActive = currentPath === tab.route;

@@ -1,6 +1,6 @@
 'use client';
 // import Capture from '@/components/Capture';
-import Feed from '@/components/Feed';
+import FeedSwipe from '@/components/FeedSwipe';
 import { TPostDb } from '@/types';
 import { User } from '@supabase/supabase-js';
 import React, { useEffect, useState } from 'react';
@@ -59,7 +59,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
           {/* <button className='mb-2 text-sm px-6 py-2 rounded border-2 border-custom-primary' onClick={handleSignOut}>Se déconnecter</button> */}
         </>
       }
-      <Feed />
+      <FeedSwipe />
     </div>
   );
 };

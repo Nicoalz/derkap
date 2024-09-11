@@ -14,7 +14,10 @@ import { useUser } from '../contexts/user-context';
 import { deletePost } from '../functions/supabase/post/delete-post';
 import { cn } from '../lib/utils';
 import AspectRatioImage from './AspectRatioImage';
+import { SwiperSlide } from 'swiper/react';
 
+import 'swiper/css';
+import 'swiper/css/effect-cards';
 
 const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
 
@@ -47,8 +50,8 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
 
 
   return (
-    <div className='flex flex-col w-full bg-custom-white rounded-lg'>
-      <div className='w-full justify-between flex p-4 items-center '>
+    <div className='flex flex-col w-full swiper-slide no-scrollbar bg-custom-white border-custom-black rounded-xl border text-custom-black shadow-card'>
+      <div className='w-full justify-between flex py-2 px-4 items-center '>
         <div className='flex justify-center items-center gap-4'>
           <Image
             alt={postData.user?.name ?? ""}
@@ -58,18 +61,18 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
             className='rounded-lg w-8 h-8 object-cover'
           />
           <div className='flex flex-col'>
-            <p className='text-champ'>{postData.user?.name ?? postData.user.username}</p>
+            <p className='text-champ text-xs text-custom-black'>{postData.user?.name ?? postData.user.username}</p>
             {/* <p className='text-dmsans text-sm'>Location</p> */}
 
           </div>
         </div>
         <Drawer >
           <DrawerTrigger>
-            <EllipsisHorizontalIcon className='w-8 h-8' onClick={() => setIsDrawerOpen(true)} />
+            <EllipsisHorizontalIcon className='w-8 h-8 text-custom-black' onClick={() => setIsDrawerOpen(true)} />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerDescription>
-              <div className='w-full flex items-center justify-center gap-4 p-8 mb-16'>
+              <div className='w-full flex items-center justify-center gap-4 p-8 mb-16 text-custom-black'>
                 <button type='button' disabled={isLoading}>Signaler</button>
                 <button type='button' disabled={isLoading}>Partager</button>
                 <button type='button' disabled={isLoading}>Enregistrer</button>

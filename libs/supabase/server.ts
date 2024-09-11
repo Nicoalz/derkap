@@ -2,6 +2,9 @@ import { Database } from "@/types/supabase"
 import { createServerClient } from '@supabase/ssr/dist/main/createServerClient'
 import { cookies } from "next/headers"
 
+console.log({supabseUrl : process.env.NEXT_PUBLIC_SUPABASE_URL})
+console.log({supabseUrl : process.env.NEXT_PUBLIC_SUPABASE_KEY})
+
 export function createSupabaseAppServerClient() {
 	const cookieStore = cookies()
 

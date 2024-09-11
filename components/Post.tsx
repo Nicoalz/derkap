@@ -50,8 +50,10 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
 
 
   return (
-    <div className='flex flex-col w-full swiper-slide no-scrollbar bg-custom-white border-custom-black rounded-xl border text-custom-black shadow-card'>
-      <div className='w-full justify-between flex py-2 px-4 items-center '>
+
+
+    <div className='flex flex-col w-full swiper-slide no-scrollbar rounded-xl h-fit text-custom-black'>
+      <div className='w-full justify-between flex py-2 px-4 items-center'>
         <div className='flex justify-center items-center gap-4'>
           <Image
             alt={postData.user?.name ?? ""}
@@ -82,20 +84,15 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
           </DrawerContent>
         </Drawer>
       </div>
-
       {postData.is_photo ? (
         <AspectRatioImage
           alt={postData.description ?? ""}
           src={postData.file_url ?? ""}
+          username={postData.user.username}
+          description={postData.description}
         />
       ) : (
         <video width={postWitdh} height={postHeight} src={postData.file_url ?? ""} controls />
-      )}
-
-      {postData.description && (
-        <div className='p-4'>
-          <p><span className='font-bold mr-2'>{postData.user.username}</span>{postData.description}</p>
-        </div>
       )}
     </div>
   );

@@ -105,3 +105,7 @@ body {
   font-weight: bold;
   color: #fff;
 }
+
+.swiper {
+  overflow: visible!important;
+}

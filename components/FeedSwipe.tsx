@@ -4,8 +4,6 @@ import { TFeed, TPostDb } from '@/types';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from "react";
 import PullToRefresh from 'react-simple-pull-to-refresh';
-import { EffectCards,  } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { getPosts as fetchPostsDb } from '../functions/supabase/post/get-post';
 import { mockedChallenges } from '../libs/mockedChallenges';
 import { postsMocked } from '../libs/postsData';
@@ -93,8 +91,8 @@ const Feed: React.FC = () => {
   }
 
   return (
-    <PullToRefresh pullingContent={""} onRefresh={handleRefresh}>
-      <div className='relative flex flex-col w-full gap-8'>
+    <PullToRefresh className='no-scollbar' pullingContent={""} onRefresh={handleRefresh}>
+      <div className='relative flex flex-col w-full gap-8 no-scrollbar'>
 
         <div className='w-full px-2'>
           <ChallengerBox
@@ -111,16 +109,6 @@ const Feed: React.FC = () => {
           {
             activePosts.length > 0 ?
               (
-                // <Swiper
-                //   effect={'cards'}
-                //   grabCursor={true}
-                //   modules={[EffectCards]}
-                //   className="swiper"
-                // >
-                //   {activePosts.map((post, index) => (
-                //     <Post key={index} postData={post} />
-                //   ))}
-                // </Swiper>
                 <SwipeComponent posts={activePosts} />
               ) : (
                 <div className='flex flex-col justify-center items-center w-full'>

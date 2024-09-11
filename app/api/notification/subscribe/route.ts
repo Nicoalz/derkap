@@ -6,10 +6,7 @@ export async function POST(req:Request): Promise<NextResponse> {
   try {
 
     const { subscription } = await req.json();
-    console.log({
-        step:'post sub',
-        subscription
-      });
+   
     // // const id = req.headers['uid'] as UUID;
 
     // // if (!id) throw InvalidRequestPayloadError;

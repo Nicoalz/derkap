@@ -2,12 +2,17 @@
 import { useUser } from '@/contexts/user-context';
 import { mockedKaps } from '@/libs/mockedKaps';
 import { TKaps } from '@/types/Kaps';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { useDebounce } from 'use-debounce';
+import Button from '../components/Button';
 import { AddCommunity, Loop } from '../components/Icon';
+import Loader from '../components/Loader';
 import { Skeleton } from '../components/ui/skeleton';
 import { getUserByUsername } from '../functions/supabase/post/user/get-user';
+import { sendFriendRequest } from '../functions/supabase/post/user/send-friend-request';
 import { mockedSponsorised } from '../libs/mockedSponsorised';
 import { TSponsorised, TUserDb } from '../types';
 
@@ -42,6 +47,8 @@ const KapsScreen: React.FC = () => {
     }
   }, [searchValueDebounced]);
 
+
+
   return (
     <div className="w-full mb-32 px-2">
       <div className='w-full flex flex-col gap-4'>
@@ -66,15 +73,13 @@ const KapsScreen: React.FC = () => {
               <div className='flex flex-col gap-4'>
                 <h2 className='font-champ text-custom-black text-2xl'>Résultat de la recherche</h2>
                 <div className='flex flex-col gap-4'>
-                  {usersSearched.map((user, i) => (
-                    <div key={i} className='flex items-center gap-2'>
-                      <img src={user.avatar_url ?? "/mrderka.png"} className='w-10 h-10 rounded-full' />
-                      <div className='flex flex-col gap-1'>
-                        <span className='font-champ text-custom-black text-lg'>{user.username}</span>
-                        <span className='font-champ text-custom-black text-sm'>{user.name}</span>
-                      </div>
-                    </div>
-                  ))}
+                  {usersSearched.map((user, i) => {
+
+                    return (
+                      <UserCard key={i} {...user} />
+                    )
+                  }
+                  )}
                 </div>
               </div>
             }
@@ -90,6 +95,40 @@ const KapsScreen: React.FC = () => {
 };
 
 export default KapsScreen;
+
+const UserCard = (user: TUserDb) => {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = async () => {
+    setIsLoading(true);
+    const { error } = await sendFriendRequest(user.id);
+    if (error) {
+      console.error(error);
+      toast.error('Erreur lors de l\'envoi de la demande');
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(false);
+    setIsFollowing(!isFollowing);
+
+  }
+  return (
+    <div className='flex items-center gap-2 justify-between'>
+      <div className='flex gap-x-2 items-center'>
+
+        <Image src={user.avatar_url ?? "/mrderka.png"} alt='' width={200} height={200} className='w-10 h-10 rounded-full object-cover' />
+        <div className='flex flex-col gap-1'>
+          <span className='font-champ text-custom-black text-lg'>{user.username}</span>
+          <span className='font-champ text-custom-black text-sm'>{user.name}</span>
+        </div>
+      </div>
+      {isLoading ? <Loader /> : <Button text={isFollowing ? 'Supprimer' : 'Ajouter'} className='bg-custom-primary text-white' onClick={handleClick} />}
+
+    </div>
+  )
+}
 
 interface KapsCardProps {
   sponsorisedKaps: TSponsorised[];

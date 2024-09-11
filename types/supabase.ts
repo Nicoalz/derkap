@@ -9,6 +9,78 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      challenge: {
+        Row: {
+          category: string | null
+          date_used: string | null
+          description: string | null
+          emoji: string | null
+          id: number
+          is_active: boolean | null
+          is_already_used: boolean | null
+          title: string | null
+        }
+        Insert: {
+          category?: string | null
+          date_used?: string | null
+          description?: string | null
+          emoji?: string | null
+          id?: number
+          is_active?: boolean | null
+          is_already_used?: boolean | null
+          title?: string | null
+        }
+        Update: {
+          category?: string | null
+          date_used?: string | null
+          description?: string | null
+          emoji?: string | null
+          id?: number
+          is_active?: boolean | null
+          is_already_used?: boolean | null
+          title?: string | null
+        }
+        Relationships: []
+      }
+      friendship: {
+        Row: {
+          accept_user: string | null
+          created_at: string
+          id: number
+          request_user: string | null
+          status: Database["public"]["Enums"]["status"] | null
+        }
+        Insert: {
+          accept_user?: string | null
+          created_at?: string
+          id?: number
+          request_user?: string | null
+          status?: Database["public"]["Enums"]["status"] | null
+        }
+        Update: {
+          accept_user?: string | null
+          created_at?: string
+          id?: number
+          request_user?: string | null
+          status?: Database["public"]["Enums"]["status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "friendship_accept_user_fkey"
+            columns: ["accept_user"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "friendship_request_user_fkey"
+            columns: ["request_user"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       NotificationSubscription: {
         Row: {
           created_at: string
@@ -105,10 +177,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      cron_schedule: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      status: "waiting" | "accepted" | "declined"
     }
     CompositeTypes: {
       [_ in never]: never

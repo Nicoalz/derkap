@@ -13,7 +13,7 @@ export const getUserByUsername = async (username: string) => {
 
   try {
     console.log('username', username)
-  const { data, error } = await supabase.from('profile').select('*').ilike('username', `%${username}%`)
+  const { data, error } = await supabase.from('profile').select('*, accept_user:friendship!friendship_accept_user_fkey(*)').ilike('username', `%${username}%`)
 
     console.log('data', data)
     console.log('error', error)

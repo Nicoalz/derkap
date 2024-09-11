@@ -1,26 +1,35 @@
 "use client";
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ChallengerBox from '../../components/ChallengeBox';
 import FriendDemandBox from '../../components/FriendDemandBox';
 import Switch from '../../components/Switch';
 import Title from '../../components/Title';
+import { getFriendRequests } from '../../functions/supabase/post/user/friend-request';
 import { useChallengeStore } from '../../lib/store/useChallengeStore';
 import { mockedChallenges as challenges } from '../../libs/mockedChallenges';
-import { TChallenge, TUserDb } from '../../types';
+import { TChallenge, TFriendshipDB } from '../../types';
+
 export default function Notifications() {
   const [isFirstSwitchActive, setIsFirstSwitchActive] = useState(true)
   const { setChallenge } = useChallengeStore();
+  const [friendsRequets, setFriendsRequest] = useState<TFriendshipDB[]>([])
   const router = useRouter();
-  const demands: TUserDb[] = [
-    {
-      id: "1",
-      username: 'pelix_panot87',
-      avatar_url: '/pelix.jpeg',
-      created_at: '2021-09-01',
-      name: 'Pelix Panot'
+
+
+  const handleGetFriendsRequests = async () => {
+    const { data, error } = await getFriendRequests()
+    if (error) {
+      console.error(error)
+      return
     }
-  ]
+    data && setFriendsRequest(data)
+    console.log({ data })
+  }
+
+  useEffect(() => {
+    handleGetFriendsRequests()
+  }, [])
 
   const redirectToChallenge = ({ challenge }: { challenge: TChallenge }) => {
     if (!challenge) return
@@ -37,8 +46,8 @@ export default function Notifications() {
       {isFirstSwitchActive ? challenges.map(challenge => (
         <ChallengerBox key={challenge.id} challenge={challenge} className='mt-4' onClick={() => redirectToChallenge({ challenge: challenge })} />
       )) :
-        demands.map(demand => (
-          <FriendDemandBox key={demand.id} demand={demand} className='mt-4' />
+        friendsRequets.map(request => (
+          <FriendDemandBox key={request.id} request={request} className='mt-4' />
         ))
       }
     </div>

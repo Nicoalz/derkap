@@ -1,6 +1,6 @@
 'use client';
 // import Capture from '@/components/Capture';
-import Feed from '@/components/Feed';
+import FeedSwipe from '@/components/FeedSwipe';
 import { TPostDb } from '@/types';
 import { User } from '@supabase/supabase-js';
 import React, { useEffect, useState } from 'react';
@@ -52,14 +52,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
   // }, [user])
 
   return (
-    <div className="w-full flex flex-col items-center relative flex-1 mb-32">
+    <div className="w-full flex flex-col items-center relative flex-1 mb-32 no-scrollbar">
       {user &&
         <>
           {/* <p className='pb-2'>Salut <span className=' text-custom-primary'>{user?.email}</span> !</p> */}
           {/* <button className='mb-2 text-sm px-6 py-2 rounded border-2 border-custom-primary' onClick={handleSignOut}>Se déconnecter</button> */}
         </>
       }
-      <Feed />
+      <FeedSwipe />
     </div>
   );
 };

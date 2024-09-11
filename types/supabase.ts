@@ -18,6 +18,7 @@ export type Database = {
           id: number
           is_active: boolean | null
           is_already_used: boolean | null
+          notification_sent: boolean | null
           title: string | null
         }
         Insert: {
@@ -28,6 +29,7 @@ export type Database = {
           id?: number
           is_active?: boolean | null
           is_already_used?: boolean | null
+          notification_sent?: boolean | null
           title?: string | null
         }
         Update: {
@@ -38,6 +40,7 @@ export type Database = {
           id?: number
           is_active?: boolean | null
           is_already_used?: boolean | null
+          notification_sent?: boolean | null
           title?: string | null
         }
         Relationships: []
@@ -48,21 +51,21 @@ export type Database = {
           created_at: string
           id: number
           request_user: string | null
-          status: Database["public"]["Enums"]["status"] | null
+          status: Database["public"]["Enums"]["status_friendship"] | null
         }
         Insert: {
           accept_user?: string | null
           created_at?: string
           id?: number
           request_user?: string | null
-          status?: Database["public"]["Enums"]["status"] | null
+          status?: Database["public"]["Enums"]["status_friendship"] | null
         }
         Update: {
           accept_user?: string | null
           created_at?: string
           id?: number
           request_user?: string | null
-          status?: Database["public"]["Enums"]["status"] | null
+          status?: Database["public"]["Enums"]["status_friendship"] | null
         }
         Relationships: [
           {
@@ -181,12 +184,152 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      http: {
+        Args: {
+          request: Database["public"]["CompositeTypes"]["http_request"]
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_delete:
+        | {
+            Args: {
+              uri: string
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+        | {
+            Args: {
+              uri: string
+              content: string
+              content_type: string
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+      http_get:
+        | {
+            Args: {
+              uri: string
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+        | {
+            Args: {
+              uri: string
+              data: Json
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+      http_head: {
+        Args: {
+          uri: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_header: {
+        Args: {
+          field: string
+          value: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_header"]
+      }
+      http_list_curlopt: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          curlopt: string
+          value: string
+        }[]
+      }
+      http_patch: {
+        Args: {
+          uri: string
+          content: string
+          content_type: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_post:
+        | {
+            Args: {
+              uri: string
+              content: string
+              content_type: string
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+        | {
+            Args: {
+              uri: string
+              data: Json
+            }
+            Returns: Database["public"]["CompositeTypes"]["http_response"]
+          }
+      http_put: {
+        Args: {
+          uri: string
+          content: string
+          content_type: string
+        }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_reset_curlopt: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      http_set_curlopt: {
+        Args: {
+          curlopt: string
+          value: string
+        }
+        Returns: boolean
+      }
+      send_challenge_notification: {
+        Args: {
+          title: string
+          message: string
+        }
+        Returns: undefined
+      }
+      urlencode:
+        | {
+            Args: {
+              data: Json
+            }
+            Returns: string
+          }
+        | {
+            Args: {
+              string: string
+            }
+            Returns: string
+          }
+        | {
+            Args: {
+              string: string
+            }
+            Returns: string
+          }
     }
     Enums: {
-      status: "waiting" | "accepted" | "declined"
+      status_friendship: "pending" | "accepted" | "declined" | "canceled"
     }
     CompositeTypes: {
-      [_ in never]: never
+      http_header: {
+        field: string | null
+        value: string | null
+      }
+      http_request: {
+        method: unknown | null
+        uri: string | null
+        headers: Database["public"]["CompositeTypes"]["http_header"][] | null
+        content_type: string | null
+        content: string | null
+      }
+      http_response: {
+        status: number | null
+        content_type: string | null
+        headers: Database["public"]["CompositeTypes"]["http_header"][] | null
+        content: string | null
+      }
     }
   }
 }

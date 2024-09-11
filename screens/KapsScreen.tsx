@@ -196,7 +196,7 @@ const UserCard = (user: TUserDBWithFriendshipAndFriendStatus) => {
           <div className='flex h-full items-center justify-center flex-col py-[10vh]'>
 
             <DrawerHeader>
-              <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+              <DrawerTitle>Êtes-vous sûr de vouloir annuler cette demande ?</DrawerTitle>
               <DrawerDescription>This action cannot be undone.</DrawerDescription>
             </DrawerHeader>
             <div className='flex items-center justify-center gap-x-2'>

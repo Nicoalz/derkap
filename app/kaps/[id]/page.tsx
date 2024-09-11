@@ -29,9 +29,8 @@ export default function KapsDetailScreen({ params }: { params: { id: string } })
   useEffect(() => {
     if (kaps) {
       const selectedImages = kaps.derkapImages;
-      console.log({
-        selectedImages
-      })
+  
+
       if (selectedImages) setDerkarpImages(selectedImages);
 
       const challengeForKaps = challenges.find(challenge => challenge.kapsId === "kaps" + kaps.id)

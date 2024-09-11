@@ -33,7 +33,6 @@ export const SwipeComponent: React.FC<{ posts: TPostDb[] }> = ({
           </SwiperSlide>
         ))
       }
-
     </Swiper>
   </div>
 );

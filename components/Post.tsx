@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 import { useUser } from '../contexts/user-context';
 import { deletePost } from '../functions/supabase/post/delete-post';
 import { cn } from '../lib/utils';
-import AspectRatioImage from './AspectRatioImage';
+import PostImage from './PostImage';
 import { SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -85,7 +85,7 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
         </Drawer>
       </div>
       {postData.is_photo ? (
-        <AspectRatioImage
+        <PostImage
           alt={postData.description ?? ""}
           src={postData.file_url ?? ""}
           username={postData.user.username}

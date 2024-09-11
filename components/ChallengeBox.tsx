@@ -89,7 +89,7 @@ const ChallengerBox = ({ challenge, className, ...props }: props) => {
         onClick={() => {
           requestPermission();
         }}
-        className='flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-custom-black shadow-card gap-4 items-center'>
+        className='flex w-full px-4 bg-card border border-custom-black rounded-xl py-2 text-custom-black gap-4 items-center'>
         {/* <Image className=' ' src='/visage.svg' width={60} height={60} alt='mrderka' /> */}
         <p className='text-[3rem] '>
           {emoji ?? '📭'}

@@ -14,7 +14,7 @@ import Post from './Post';
 export const SwipeComponent: React.FC<{ posts: TPostDb[] }> = ({
   posts
 }) => (
-  <div className='flex justify-center items-center w-full no-scrollbar h-[32rem]'>
+  <div className='flex justify-center items-center w-full no-scrollbar h-[31rem]'>
     <Swiper
       slidesPerView={1.2}
       centeredSlides={true}

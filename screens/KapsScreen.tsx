@@ -10,11 +10,12 @@ import { useDebounce } from 'use-debounce';
 import Button from '../components/Button';
 import { AddCommunity, Loop } from '../components/Icon';
 import Loader from '../components/Loader';
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '../components/ui/drawer';
 import { Skeleton } from '../components/ui/skeleton';
+import { cancelFriendRequest, deleteFriendDB, sendFriendRequest } from '../functions/supabase/post/user/friend-request';
 import { getUserByUsername } from '../functions/supabase/post/user/get-user';
-import { sendFriendRequest } from '../functions/supabase/post/user/send-friend-request';
 import { mockedSponsorised } from '../libs/mockedSponsorised';
-import { TSponsorised, TUserDb } from '../types';
+import { DBStatusType, TSponsorised, TUserDBWithFriendshipAndFriendStatus } from '../types';
 
 const KapsScreen: React.FC = () => {
   const { userData } = useUser();
@@ -25,7 +26,7 @@ const KapsScreen: React.FC = () => {
   const [sponsorisedKaps, setSponsorisedKaps] = useState(mockedSponsorised);
   const [searchValue, setSearchValue] = useState('');
   const [searchValueDebounced, setSearchValueDebounced] = useDebounce(searchValue, 500);
-  const [usersSearched, setUsersSearched] = useState<TUserDb[]>([]);
+  const [usersSearched, setUsersSearched] = useState<TUserDBWithFriendshipAndFriendStatus[]>([]);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
 
   const handleSearch = async () => {
@@ -96,11 +97,46 @@ const KapsScreen: React.FC = () => {
 
 export default KapsScreen;
 
-const UserCard = (user: TUserDb) => {
-  const [isFollowing, setIsFollowing] = useState(false);
+const UserCard = (user: TUserDBWithFriendshipAndFriendStatus) => {
+  const [status, setStatus] = useState(user.friendStatus);
   const [isLoading, setIsLoading] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const statusLabel: [DBStatusType, string][] =
+    [
+      ['accepted', 'Ami'],
+      ['declined', 'Demande refusée'],
+      ['pending', 'Demande envoyée'],
+      [null, 'Ajouter']
+    ];
 
   const handleClick = async () => {
+    if (status === 'accepted') {
+      if (!openDrawer) {
+        setOpenDrawer(true);
+        return;
+      }
+      await deleteFriend();
+      setStatus(null);
+      setOpenDrawer(false);
+      return;
+
+    }
+    if (status === 'pending') {
+      if (!openDrawer) {
+        setOpenDrawer(true);
+        return;
+      }
+      await cancelDemand();
+      setStatus(null);
+      setOpenDrawer(false);
+
+      return;
+    }
+    await addFriend();
+  }
+
+
+  const addFriend = async () => {
     setIsLoading(true);
     const { error } = await sendFriendRequest(user.id);
     if (error) {
@@ -109,24 +145,73 @@ const UserCard = (user: TUserDb) => {
       setIsLoading(false);
       return;
     }
-
     setIsLoading(false);
-    setIsFollowing(!isFollowing);
+    setStatus('pending');
+
+  }
+
+  const cancelDemand = async () => {
+    setIsLoading(true);
+    const { error } = await cancelFriendRequest(user.id);
+    if (error) {
+      console.error(error);
+      toast.error('Erreur lors de l\'annulation de la demande');
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(false);
+
+  }
+
+  const deleteFriend = async () => {
+    setIsLoading(true);
+    const { error } = await deleteFriendDB(user.id);
+    if (error) {
+      console.error(error);
+      toast.error('Erreur lors de la suppression de l\'ami');
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(false);
 
   }
   return (
-    <div className='flex items-center gap-2 justify-between'>
-      <div className='flex gap-x-2 items-center'>
+    <>
+      <div className='flex items-center gap-2 justify-between'>
+        <div className='flex gap-x-2 items-center'>
 
-        <Image src={user.avatar_url ?? "/mrderka.png"} alt='' width={200} height={200} className='w-10 h-10 rounded-full object-cover' />
-        <div className='flex flex-col gap-1'>
-          <span className='font-champ text-custom-black text-lg'>{user.username}</span>
-          <span className='font-champ text-custom-black text-sm'>{user.name}</span>
+          <Image src={user.avatar_url ?? "/mrderka.png"} alt='' width={200} height={200} className='w-10 h-10 rounded-full object-cover' />
+          <div className='flex flex-col gap-1'>
+            <span className='font-champ text-custom-black text-lg'>{user.username}</span>
+            <span className='font-champ text-custom-black text-sm'>{user.name}</span>
+          </div>
         </div>
-      </div>
-      {isLoading ? <Loader /> : <Button text={isFollowing ? 'Supprimer' : 'Ajouter'} className='bg-custom-primary text-white' onClick={handleClick} />}
+        {isLoading ? <Loader /> : <Button text={
+          statusLabel.find(([key]) => key === status)?.[1] ?? 'Ajouter'
+        } className='bg-custom-primary text-white' onClick={handleClick} />}
 
-    </div>
+      </div>
+      <Drawer open={openDrawer} onOpenChange={setOpenDrawer}>
+        <DrawerContent >
+          <div className='flex h-full items-center justify-center flex-col py-[10vh]'>
+
+            <DrawerHeader>
+              <DrawerTitle>Êtes-vous sûr de vouloir annuler cette demande ?</DrawerTitle>
+              <DrawerDescription>This action cannot be undone.</DrawerDescription>
+            </DrawerHeader>
+            <div className='flex items-center justify-center gap-x-2'>
+              <Button className='w-fit' disabled={isLoading} text={isLoading ? "Chargement" : 'Confirmer'} onClick={handleClick} />
+              <DrawerClose>
+
+                <Button disabled={isLoading} text='Annuler' />
+              </DrawerClose>
+            </div>
+          </div>
+
+        </DrawerContent>
+      </Drawer>
+    </>
+
   )
 }
 
@@ -134,6 +219,9 @@ interface KapsCardProps {
   sponsorisedKaps: TSponsorised[];
   kaps: TKaps[];
 }
+
+
+
 
 const KapsDefaultContent = ({ sponsorisedKaps, kaps }: KapsCardProps) => {
   return (

@@ -17,7 +17,7 @@ export const getUserByUsername = async (username: string) => {
   }
 
   try {
-  const { data, error } = await supabase.from('profile').select('*, accept_user:friendship!friendship_accept_user_fkey(accept_user, status), request_user:friendship!friendship_request_user_fkey(request_user, status)').ilike('username', `%${username}%`)
+  const { data, error } = await supabase.from('profile').select('*, accept_user:friendship!friendship_accept_user_fkey(accept_user, status), request_user:friendship!friendship_request_user_fkey(request_user, status)').ilike('username', `%${username}%`).neq('id', user.id)
 
     const userFriend = data?.map((user: TUserDBWithFriendship) => {
       const userAlreadyFriendWith = user.request_user.find((requestUser) => requestUser.request_user === user.id && requestUser.status == "accepted") || user.accept_user.find((acceptUser) => acceptUser.accept_user === user.id && acceptUser.status == "accepted")

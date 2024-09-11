@@ -91,7 +91,7 @@ const Feed: React.FC = () => {
   return (
     <PullToRefresh pullingContent={""} onRefresh={handleRefresh}>
       <div className='relative flex flex-col w-full gap-8'>
-        <ul className='mobile-container w-full flex justify-start items-end gap-2 overflow-scroll no-scrollbar'>
+        {/* <ul className='mobile-container w-full flex justify-start items-end gap-2 overflow-scroll no-scrollbar'>
           {userFeeds.map((feed, index) => (
             <li
               key={index}
@@ -107,7 +107,7 @@ const Feed: React.FC = () => {
               {feed.name}
             </li>
           ))}
-        </ul>
+        </ul> */}
         <div className='w-full px-2'>
           <ChallengerBox
             onClick={() => {

@@ -76,14 +76,22 @@ body {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
+
 .bg-blur-light {
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   background-image: linear-gradient(to bottom, rgba(246, 213, 247, 0.8) 0%, rgba(251, 233, 215, 0.8) 100%);
 }
 
+.bg-card{
+  border-radius: 0.8rem;
+  border: 1px solid #1B0A32;
+  background: #F5F5F5;
+  box-shadow: 4px 4px 0px 0px #1B0A32;
+}
+
 .mobile-container {
- margin: auto;
+  margin: auto;
   max-width: 90%;
 }
 

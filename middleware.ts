@@ -10,9 +10,6 @@ export async function middleware(request: NextRequest) {
       if (url.pathname != "/inscription") url.pathname = "/connexion";
         return NextResponse.rewrite(url);
   }
-
-
-
 }
 
 export const config = {

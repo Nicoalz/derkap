@@ -14,12 +14,14 @@ export interface TPost {
 
 type TPostPick = Pick<
   Database["public"]["Tables"]["post"]["Row"],
-  "description" | "feed" | "file_url" | "id" | "is_photo" | "created_at" | "file_name"
+  "description" | "feed" | "file_url" | "id" | "is_photo" | "created_at" | "file_name" | "reactions"
 >;
 
 export type TPostDb = TPostPick & {
   user: TUserDb;
 };
+
+export type TReaction = Database["public"]["CompositeTypes"]["reaction_type"];
 
 
 

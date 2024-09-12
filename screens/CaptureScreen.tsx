@@ -8,10 +8,13 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import { toast } from 'sonner';
+import { getRandomAudio } from '../app/audio/audioManager';
+import { useSoundStore } from '../app/audio/useSoundStore';
 import Button from '../components/Button';
 import Title from '../components/Title';
 import { pushPostToDb } from '../functions/supabase/post/push-post-db';
 import { mockedChallenges } from '../libs/mockedChallenges';
+
 import { getRandomAudio } from '../app/audio/audioManager';
 import { useSoundStore } from '../app/audio/useSoundStore';
 import Loader from '../components/Loader'; 
@@ -79,6 +82,7 @@ const CaptureScreen: React.FC = () => {
 
       const post: TPostDb = {
         id: 0,
+        reactions: [],
         is_photo: true,
         file_url: imgTaken,
         description: newDescription,

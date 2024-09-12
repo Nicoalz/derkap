@@ -15,7 +15,7 @@ export const getPosts = async () => {
   console.log('user', user)
 
   try {
-  const { data, error } = await supabase.from('post').select('created_at, description, feed, file_url, id, is_photo, user:profile(*)').order('created_at', {ascending: false})
+  const { data, error } = await supabase.from('post').select('created_at, reactions, description, feed, file_url, id, is_photo, user:profile(*)').order('created_at', {ascending: false})
 
     console.log('data', data)
     console.log('error', error)

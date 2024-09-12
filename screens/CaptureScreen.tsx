@@ -15,12 +15,17 @@ import Title from '../components/Title';
 import { pushPostToDb } from '../functions/supabase/post/push-post-db';
 import { mockedChallenges } from '../libs/mockedChallenges';
 
+import { getRandomAudio } from '../app/audio/audioManager';
+import { useSoundStore } from '../app/audio/useSoundStore';
+import Loader from '../components/Loader'; 
+
 const CaptureScreen: React.FC = () => {
   const router = useRouter();
   const { isSoundEnabled } = useSoundStore();
-  const [challenge, setChallenge] = useState<TChallenge | null>();
+  const [challenge, setChallenge] = useState<TChallenge | null>(null);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
   const [imgTaken, setImgTaken] = useState<string | null>(null);
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
   const webcamRef = React.useRef<Webcam>(null);
   const validateRef = React.useRef<HTMLButtonElement>(null);
 
@@ -36,7 +41,7 @@ const CaptureScreen: React.FC = () => {
   );
 
   const [newDescription, setNewDescription] = useState<string>('');
-  const { userFeeds, selectedFeed, setSelectedFeed, userData } = useUser();
+  const { userFeeds, selectedFeed, userData } = useUser();
   const [isValidatingFile, setIsValidatingFile] = useState<boolean>(false);
 
   const initChallenge = () => {
@@ -92,7 +97,9 @@ const CaptureScreen: React.FC = () => {
         toast.error(error);
         return;
       }
-      console.log(data);
+
+
+      setIsRedirecting(true);
       router.push('/');
     } catch (error) {
       console.error(error);
@@ -144,13 +151,17 @@ const CaptureScreen: React.FC = () => {
 
       {imgTaken && (
         <div className='flex flex-col items-center justify-center w-full mt-2'>
-          {isValidatingFile ? (
-            <p className='mb-32 mt-4'>
-              Chargement...
-            </p>
+          {isValidatingFile || isRedirecting ? (
+            <Loader className='mb-32 mt-4' />
           ) : (
-            <Button ref={validateRef}
-              id='validateCapture' disabled={isValidatingFile} onClick={() => validatePhoto()} text='Poster mon derkap de fou' className='mt-4 mb-32 mx-auto w-full font-champ text-xl' />
+            <Button
+              ref={validateRef}
+              id='validateCapture'
+              disabled={isValidatingFile || isRedirecting}
+              onClick={() => validatePhoto()}
+              text='Poster mon derkap de fou'
+              className='mt-4 mb-32 mx-auto w-full font-champ text-xl'
+            />
           )}
         </div>
       )}

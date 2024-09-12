@@ -100,12 +100,11 @@ export const UserCard = ({ friendStatus, user_id, username, name, avatar_url, is
     }
     // HIDE PREVIOUS FRIEND WHICH IS DELETED
     isOnProfile && setIsDeletedIdOnDb(user_id);
-    isOnProfile && rerender()
-
     setIsLoading(false);
 
   }
   return (
+    console.log('user_id', friendStatus),
     <div className={
       cn('w-full h-full', {
         'hidden': isDeletedIdOnDb == user_id

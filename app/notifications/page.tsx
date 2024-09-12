@@ -47,9 +47,11 @@ export default function Notifications() {
       {isFirstSwitchActive ? challenges.map(challenge => (
         <ChallengerBox key={challenge.id} challenge={challenge} className='mt-4' onClick={() => redirectToChallenge({ challenge: challenge })} />
       )) :
-        friendsRequets.map(request => (
-          <FriendDemandBox key={request.id} request={request} className='mt-4' />
-        ))
+        friendsRequets.length === 0 ? <p className='text-center mt-4'>Aucune demande d'amis</p> :
+          friendsRequets.map(request => (
+
+            <FriendDemandBox key={request.id} request={request} className='mt-4' />
+          ))
       }
     </div>
   )

@@ -10,6 +10,8 @@ import { postsMocked } from '../libs/postsData';
 import { TChallenge } from '../types/Challenge';
 import Post from "./Post";
 import { Skeleton } from './ui/skeleton';
+import { SwipeComponent } from './SwipeComponent';
+//components/Feed.tsx
 
 const Feed: React.FC = () => {
   const router = useRouter();
@@ -89,25 +91,9 @@ const Feed: React.FC = () => {
   }
 
   return (
-    <PullToRefresh pullingContent={""} onRefresh={handleRefresh}>
-      <div className='relative flex flex-col w-full gap-8'>
-        {/* <ul className='mobile-container w-full flex justify-start items-end gap-2 overflow-scroll no-scrollbar'>
-          {userFeeds.map((feed, index) => (
-            <li
-              key={index}
-              onClick={() => {
-                if (selectedFeed === feed) return;
-                setActivePosts([]);
-                setSelectedFeed(feed)
-              }}
-              className={`px-4 py-2 whitespace-nowrap cursor-pointer text-lg ${selectedFeed.id === feed.id ? 'border-b-2 border-custom-black font-bold text-custom-black'
-                : 'border-b-0 text-custom-gray'
-                }`}
-            >
-              {feed.name}
-            </li>
-          ))}
-        </ul> */}
+    <PullToRefresh className='no-scollbar' pullingContent={""} onRefresh={handleRefresh}>
+      <div className='relative flex flex-col w-full gap-8 no-scrollbar'>
+
         <div className='w-full px-2'>
           <ChallengerBox
             onClick={() => {
@@ -117,23 +103,29 @@ const Feed: React.FC = () => {
             challenge={challenge} />
         </div>
 
+
+
         <div className='w-full flex flex-col items-center justify-center gap-4'>
-          {activePosts.length > 0 ? activePosts.map((post, index) => (
-            <Post key={index} postData={post} />
-          )) :
-            <div className='flex flex-col justify-center items-center w-full'>
-              {isLoading ? (
-                <div className='w-full flex flex-col items-center justify-center'>
-                  <Skeleton className="w-full h-14" />
-                  <Skeleton className="w-full h-96 my-2" />
-                  <Skeleton className="w-full h-20" />
-                </div>
+          {
+            activePosts.length > 0 ?
+              (
+                <SwipeComponent posts={activePosts} />
               ) : (
-                <><p className='text-4xl font-bold mt-4'>😢</p><p className='text-gray-500 text-xl mt-2'>Aucun post pour le moment </p></>
-              )}
-            </div>
+                <div className='flex flex-col justify-center items-center w-full'>
+                  {isLoading ? (
+                    <div className='w-full flex flex-col items-center justify-center'>
+                      <Skeleton className="w-full h-14" />
+                      <Skeleton className="w-full h-96 my-2" />
+                      <Skeleton className="w-full h-20" />
+                    </div>
+                  ) : (
+                    <><p className='text-4xl font-bold mt-4'>😢</p><p className='text-gray-500 text-xl mt-2'>Aucun post pour le moment </p></>
+                  )}
+                </div>
+              )
           }
         </div>
+
       </div>
     </PullToRefresh>
   );

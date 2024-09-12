@@ -7,6 +7,7 @@ import { ChevronLeft, SettingsIcon, Users } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import useRerender from '../app/store/useRerender';
+import SettingsPopup from '../app/profile/SettingsPopup';
 import Button from '../components/Button';
 import CategoriesFilter from '../components/CategoriesFilter';
 import { ScrollArea } from '../components/ui/scroll-area';
@@ -15,7 +16,8 @@ import { UserCard } from '../components/UserCard';
 import { getMyFriends } from '../functions/supabase/post/user/friend-request';
 import { signoutSupabase } from '../functions/supabase/signout-supabase';
 import { mockedCategories } from '../libs/mockedCategories';
-import { TUserFriend } from '../types';
+
+import { TUserFriend } from '../types/User';
 
 const ProfileScreen = ({ friendsCount }: { friendsCount: number }) => {
   const { userData } = useUser();
@@ -24,6 +26,9 @@ const ProfileScreen = ({ friendsCount }: { friendsCount: number }) => {
   const [kaps] = useState<TKaps[]>(mockedKaps.slice(0, 2))
   const { render } = useRerender()
   const [open, setOpen] = useState(false)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+
 
   const handleSignOut = async () => {
     await signoutSupabase()
@@ -42,6 +47,7 @@ const ProfileScreen = ({ friendsCount }: { friendsCount: number }) => {
   useEffect(() => {
     handleGetMyFriends()
   }, [])
+
 
   return (
     <div className="w-full flex flex-col items-center mb-32 px-2">
@@ -86,12 +92,16 @@ const ProfileScreen = ({ friendsCount }: { friendsCount: number }) => {
         <h2 className='font-champ text-custom-black text-[16px]' > {name || username || ""}</h2>
         <p className='text-[10px] text-slate-400'>@{username}</p>
         <button className=' flex flex-col items-center gap-x-12 my-4' onClick={() => setOpen(true)}>
+
           <p>
             Amis
           </p>
           <h2 className='font-champ text-custom-black text-[16px]'>{friendsCount}</h2>
         </button>
-      </div>
+
+
+      </div >
+
       <div className='w-full flex flex-col my-4'>
         <h2 className='font-champ text-custom-black text-[22px]'>Kaps</h2>
         <CategoriesFilter categories={mockedCategories} withAdmin={true} />
@@ -108,6 +118,7 @@ const ProfileScreen = ({ friendsCount }: { friendsCount: number }) => {
     </div>
   )
 }
+
 
 export default ProfileScreen;
 

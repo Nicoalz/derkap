@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     images: [{ url: socialBannerUrl }],
   },
   icons: {
-    icon: "/icons/favicon-16x16.png",
+    icon: "/icons/favicon-32x32.png",
     apple: "/icons/apple-touch-icon-180x180.png",
   },
 };

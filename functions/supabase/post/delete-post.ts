@@ -19,15 +19,13 @@ export const deletePost = async ({ post }: { post: TPostDb }) => {
   }
 const _file_name = file_name ?? `${user_id}/${created_at}`
 
-console.log(file_name)
+
 const { error:storageError } = await supabase
   .storage
   .from('posts')
   .remove([_file_name])
   .then((r) => r)
 
-
-  console.log(storageError)
 
   if (storageError) {
     return {error: storageError.message};

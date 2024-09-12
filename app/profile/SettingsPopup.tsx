@@ -20,7 +20,6 @@ const SettingsPopup: React.FC<SettingsPopupProps> = ({ isOpen, onClose }) => {
   const { isSoundEnabled, toggleSound } = useSoundStore();
 
   const handleToggle = () => {
-    console.log('Toggle clicked');
     toggleSound();
   };
 

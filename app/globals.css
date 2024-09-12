@@ -18,10 +18,10 @@
 }
 
 
-@font-face {
+/* @font-face {
   font-family: 'Champ';
   src: url('/public/fonts/champs/champs-Black.ttf') format('truetype');
-}
+} */
 
 @layer utilities {
       /* Hide scrollbar for Chrome, Safari and Opera */

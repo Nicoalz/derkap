@@ -42,7 +42,6 @@ const CaptureScreen: React.FC = () => {
   const initChallenge = () => {
     const urlparams = new URLSearchParams(window.location.search);
     const challengeId = urlparams.get('challengeId');
-    console.log({ challengeId });
     let challenge = mockedChallenges[0];
     if (challengeId) {
       challenge = mockedChallenges.find(ch => ch.id.toString() === challengeId) || mockedChallenges[0];
@@ -59,12 +58,10 @@ const CaptureScreen: React.FC = () => {
   };
 
   const playRandomSound = () => {
-    if (isSoundEnabled) { 
+    if (isSoundEnabled) {
       const audioFile = getRandomAudio();
       const audio = new Audio(audioFile);
       audio.play();
-    } else {
-      console.log("Le son est désactivé.");
     }
   };
 
@@ -91,7 +88,7 @@ const CaptureScreen: React.FC = () => {
         toast.error(error);
         return;
       }
-      console.log(data);
+
       router.push('/');
     } catch (error) {
       console.error(error);

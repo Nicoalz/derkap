@@ -28,7 +28,6 @@ export default function SignInForm() {
       }
 
     } catch (error) {
-      console.log({ "Error : ": error })
       toast.error("Une erreur inattendue est survenue")
       console.error(error)
 

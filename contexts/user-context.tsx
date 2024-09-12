@@ -40,11 +40,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children, user, prof
   }
 
   useEffect(() => {
-    console.log({ selectedFeed })
-  }, [selectedFeed])
-
-
-  useEffect(() => {
     fetchUserFeeds('123');
   }, []);
 

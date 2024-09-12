@@ -32,7 +32,6 @@ const KapsScreen: React.FC = () => {
   const handleSearch = async () => {
     setIsSearchLoading(true);
     const { data } = await getUserByUsername(searchValueDebounced);
-    console.log(data);
     if (!data) {
       setIsSearchLoading(false);
       setUsersSearched([]);

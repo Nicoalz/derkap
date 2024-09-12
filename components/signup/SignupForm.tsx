@@ -71,7 +71,6 @@ export default function SignUpForm() {
 
       }
     } catch (error) {
-      console.log({ "Error : ": error })
       if (error instanceof z.ZodError) {
         error.errors.map((error) => {
           error.path[0] === "email" && setEmailError(error.message)

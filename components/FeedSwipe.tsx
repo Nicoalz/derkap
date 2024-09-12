@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { getPosts as fetchPostsDb } from '../functions/supabase/post/get-post';
 import { mockedChallenges } from '../libs/mockedChallenges';
-import { postsMocked } from '../libs/postsData';
 import { TChallenge } from '../types/Challenge';
 import Post from "./Post";
 import { Skeleton } from './ui/skeleton';
@@ -24,12 +23,12 @@ const Feed: React.FC = () => {
   const fetchFeedPosts = async (feed: TFeed): Promise<TPostDb[]> => {
     await new Promise((resolve) => setTimeout(resolve, 2000)); // represents a fetch call
 
-    const postsLocal = postsMocked
+
 
     const { data: fetchedPosts } = await fetchPostsDb();
 
-    if (fetchedPosts === null) return postsMocked
-    const allPosts = [...fetchedPosts, ...postsLocal];
+    if (fetchedPosts === null) return [];
+    const allPosts = [...fetchedPosts];
     localStorage.setItem('posts', JSON.stringify(allPosts));
     return allPosts.filter(post => post.feed === feed.name) as TPostDb[];
   }
@@ -38,13 +37,7 @@ const Feed: React.FC = () => {
     const localStoredPosts = localStorage.getItem('posts');
     if (localStoredPosts) {
       const posts = JSON.parse(localStoredPosts);
-      console.log({ posts })
       const feedPosts = posts.filter((post: TPostDb) => post.feed === feed.name);
-      console.log({
-        step: "getLocalPosts",
-        feedPosts,
-        posts,
-      })
       return feedPosts;
     }
     return []
@@ -54,7 +47,6 @@ const Feed: React.FC = () => {
     try {
       setisLoading(true);
       const localStoredPosts = getLocalPosts(selectedFeed);
-      console.log({ localStoredPosts })
       if (localStoredPosts?.length > 0) {
         setActivePosts(localStoredPosts);
       }
@@ -86,7 +78,6 @@ const Feed: React.FC = () => {
   }, [selectedFeed]);
 
   const handleRefresh = async () => {
-    console.log('refreshing');
     await updatePosts();
   }
 

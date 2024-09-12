@@ -1,6 +1,8 @@
 const withPWAInit = require("next-pwa");
 const isDev = process.env.NODE_ENV !== "production";
 const withPWA = withPWAInit({
+  register: true,
+  skipWaiting: true,
   dest: "public",
     exclude: [
         // add buildExcludes here

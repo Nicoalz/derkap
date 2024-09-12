@@ -24,7 +24,6 @@ export default function Notifications() {
       return
     }
     data && setFriendsRequest(data)
-    console.log({ data })
   }
 
   useEffect(() => {
@@ -34,7 +33,6 @@ export default function Notifications() {
   const redirectToChallenge = ({ challenge }: { challenge: TChallenge }) => {
     if (!challenge) return
     if (!challenge.id) return
-    console.log({ challenge })
     setChallenge(challenge)
     router.push(`/capture?challengeId=${challenge.id}`)
   }

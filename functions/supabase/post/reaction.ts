@@ -21,12 +21,9 @@ export const insertReactionToPost = async ({post_id, emoji}: {post_id: number, e
 
   // CHECK IF USER ALREADY REACTED
 
-  let newEmoji: any[] = [];
-
-  newEmoji = post.reactions?.filter((reaction) => reaction.user_id !== user.id) ?? [];
-
-  newEmoji = post.reactions ? [...newEmoji, {emoji, user_id: user.id}] : [{emoji, user_id: user.id}];
-
+ const newEmoji = post.reactions
+  ? [...(post.reactions?.filter((reaction: any) => reaction?.user_id !== user.id) ?? []), {emoji, user_id: user.id}]
+  : [{emoji, user_id: user.id}];
 
 
   console.log(newEmoji);

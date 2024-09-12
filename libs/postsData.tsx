@@ -2,6 +2,7 @@ import { TPostDb } from '@/types';
 export const postsMocked: TPostDb[] = [{
   is_photo: true,
   description: 'Sacré crâne',
+  reactions: [],
   user: { name: 'Thomas', username: 'N0roo', avatar_url: '/toto.jpeg', created_at: '2021-06-01', id: "1" },
   feed: 'Amis',
   file_name: 'totofun.JPG',
@@ -14,6 +15,7 @@ export const postsMocked: TPostDb[] = [{
   user: { name: 'Augustin', username: '10gust10', avatar_url: '/aug.jpeg', created_at: '2021-06-01', id: "2" },
   feed: 'Amis',
   file_name: 'totofun.JPG',
+  reactions: [],
   file_url: '/posts/augustin.JPG',
   id: 2,
   is_photo: true,
@@ -22,7 +24,7 @@ export const postsMocked: TPostDb[] = [{
 {
   description: "Avec le COAT",
   user: { name: 'Lorenzo', username: 'lorenzoavr_', avatar_url: '/lore.jpg', created_at: '2021-06-01', id: "3" },
-
+  reactions: [],
   feed: 'Amis',
   file_name: 'totofun.JPG',
   file_url: '/posts/lorefun.JPG',
@@ -34,6 +36,7 @@ export const postsMocked: TPostDb[] = [{
   description: "Crane d'oeuf t'as peur",
   user: { name: 'Félix', username: 'plix_panot', avatar_url: '/pelix.jpeg', created_at: '2021-06-01', id: "4" },
   feed: 'Amis',
+  reactions: [],
   file_name: 'totofun.JPG',
   file_url: '/posts/felixfun.JPG',
   id: 4,

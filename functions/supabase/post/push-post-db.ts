@@ -54,7 +54,7 @@ export const pushPostToDb = async ({ post }: { post: TPostDb }) => {
       file_url: publicUrl,
       file_name: _file_name,
     }
-  ).select('created_at, description, feed, file_url, id, is_photo, file_name, user:profile(*)').single()
+  ).select('created_at, description, feed, reactions, file_url, id, is_photo, file_name, user:profile(*)').single()
 
   if (errorPost) {
     return {
@@ -72,6 +72,7 @@ export const pushPostToDb = async ({ post }: { post: TPostDb }) => {
 
   const dataFormatted: TPostDb = {
     id: data.id,
+    reactions: data.reactions,
     created_at: data.created_at,
     description: data.description,
     feed: data.feed,

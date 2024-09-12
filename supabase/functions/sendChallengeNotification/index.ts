@@ -3,6 +3,7 @@ import { serve } from 'https://deno.land/std/http/server.ts';
 serve(async (req) => {
   try {
     const { title, message } = await req.json();
+  const APIKEY = Deno.env.get("apiKey") ;
 
     if (!title || !message) {
       return new Response(JSON.stringify({ error: 'Invalid request payload' }), { status: 400 });
@@ -13,7 +14,7 @@ serve(async (req) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhya3R4cXBzcWJqbm9ja2dnbmljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc3NDgzMTksImV4cCI6MjAzMzMyNDMxOX0.vnNh1kwokAi43XuAArlkyhlAFxDuKVzYkPKOvnOoRp4'  // Insère le token directement ici
+        'Authorization': `Bearer ${APIKEY}`  // Insère le token directement ici
       },
       body: JSON.stringify({ title, message }),
     });

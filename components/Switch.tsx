@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '../lib/utils';
+import { cn } from '../libs/utils';
 import Button from './Button';
 
 interface SwitchProps extends React.HTMLAttributes<HTMLDivElement> {

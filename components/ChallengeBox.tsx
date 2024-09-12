@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { getActiveChallenge } from '../functions/supabase/post/challenge/get-challenge';
 import { cn } from '../lib/utils';
-import { Skeleton } from './ui/skeleton'; // Assurez-vous d'importer le composant Skeleton
+import { Skeleton } from './ui/skeleton'; 
+
 
 interface props extends React.HTMLAttributes<HTMLDivElement> { }
 

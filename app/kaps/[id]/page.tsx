@@ -1,9 +1,9 @@
 "use client";
 import KapsDay from '@/components/KapsDay';
 import KapsImage from '@/components/KapsImage';
-import { useChallengeStore } from '@/lib/store/useChallengeStore';
 import { mockedChallenges as challenges } from '@/libs/mockedChallenges';
 import { mockedKaps } from '@/libs/mockedKaps';
+import { useChallengeStore } from '@/libs/store/useChallengeStore';
 import { TChallenge } from '@/types';
 import { TKaps } from '@/types/Kaps';
 import { ChevronLeftIcon } from 'lucide-react'; // Import de l'icône de flèche gauche de Lucide Icons
@@ -29,7 +29,7 @@ export default function KapsDetailScreen({ params }: { params: { id: string } })
   useEffect(() => {
     if (kaps) {
       const selectedImages = kaps.derkapImages;
-  
+
 
       if (selectedImages) setDerkarpImages(selectedImages);
 

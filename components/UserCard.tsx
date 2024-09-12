@@ -3,9 +3,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import useRerender from '../app/store/useRerender';
 import { cancelFriendRequest, deleteFriendDB, sendFriendRequest } from '../functions/supabase/post/user/friend-request';
-import { cn } from '../lib/utils';
+import { cn } from '../libs/utils';
 import { DBStatusType } from '../types';
 import Button from './Button';
 import Loader from './Loader';
@@ -22,7 +21,6 @@ export const UserCard = ({ friendStatus, user_id, username, name, avatar_url, is
   const [status, setStatus] = useState(friendStatus);
   const [isLoading, setIsLoading] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const { rerender } = useRerender()
 
   // DELETED FRIEND ON FRONTEND (IMMEDIALTY)
   const [isDeletedIdOnDb, setIsDeletedIdOnDb] = useState<string>();

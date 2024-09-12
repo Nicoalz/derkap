@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 
 // eslint-disable-next-line no-undef
 function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {

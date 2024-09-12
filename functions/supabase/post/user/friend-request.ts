@@ -174,6 +174,7 @@ export const acceptFriend = async (requestId: number) => {
         error: error.message
       }
     }
+    revalidatePath('/notifications')
     return {
       error: null
     }
@@ -210,6 +211,8 @@ export const rejectFriend = async (requestId: number) => {
         error: error.message
       }
     }
+  revalidatePath('/notifications')
+
     return {
       error: null
     }

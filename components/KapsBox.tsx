@@ -1,8 +1,8 @@
 "use client";
 import Image from 'next/image';
-import { cn } from '../lib/utils';
-import { TKaps } from '../types/Kaps';
 import Link from 'next/link';
+import { cn } from '../libs/utils';
+import { TKaps } from '../types/Kaps';
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
   kaps: TKaps;

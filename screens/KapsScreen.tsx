@@ -7,9 +7,10 @@ import { useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import { AddCommunity, Loop } from '../components/Icon';
 import { Skeleton } from '../components/ui/skeleton';
+import { UserCard } from '../components/UserCard';
 import { getUserByUsername } from '../functions/supabase/post/user/get-user';
 import { mockedSponsorised } from '../libs/mockedSponsorised';
-import { TSponsorised, TUserDb } from '../types';
+import { TSponsorised, TUserDBWithFriendshipAndFriendStatus } from '../types';
 
 const KapsScreen: React.FC = () => {
   const { userData } = useUser();
@@ -20,7 +21,7 @@ const KapsScreen: React.FC = () => {
   const [sponsorisedKaps, setSponsorisedKaps] = useState(mockedSponsorised);
   const [searchValue, setSearchValue] = useState('');
   const [searchValueDebounced, setSearchValueDebounced] = useDebounce(searchValue, 500);
-  const [usersSearched, setUsersSearched] = useState<TUserDb[]>([]);
+  const [usersSearched, setUsersSearched] = useState<TUserDBWithFriendshipAndFriendStatus[]>([]);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
 
   const handleSearch = async () => {
@@ -41,6 +42,8 @@ const KapsScreen: React.FC = () => {
       handleSearch();
     }
   }, [searchValueDebounced]);
+
+
 
   return (
     <div className="w-full mb-32 px-2">
@@ -66,15 +69,13 @@ const KapsScreen: React.FC = () => {
               <div className='flex flex-col gap-4'>
                 <h2 className='font-champ text-custom-black text-2xl'>Résultat de la recherche</h2>
                 <div className='flex flex-col gap-4'>
-                  {usersSearched.map((user, i) => (
-                    <div key={i} className='flex items-center gap-2'>
-                      <img src={user.avatar_url ?? "/mrderka.png"} className='w-10 h-10 rounded-full' />
-                      <div className='flex flex-col gap-1'>
-                        <span className='font-champ text-custom-black text-lg'>{user.username}</span>
-                        <span className='font-champ text-custom-black text-sm'>{user.name}</span>
-                      </div>
-                    </div>
-                  ))}
+                  {usersSearched.map((user, i) => {
+
+                    return (
+                      <UserCard key={i} avatar_url={user.avatar_url ?? '/mrderka.png'} friendStatus={user.friendStatus} name={user.name ?? ""} user_id={user.id} username={user.username ?? ""} />
+                    )
+                  }
+                  )}
                 </div>
               </div>
             }
@@ -91,10 +92,15 @@ const KapsScreen: React.FC = () => {
 
 export default KapsScreen;
 
+
+
 interface KapsCardProps {
   sponsorisedKaps: TSponsorised[];
   kaps: TKaps[];
 }
+
+
+
 
 const KapsDefaultContent = ({ sponsorisedKaps, kaps }: KapsCardProps) => {
   return (

@@ -19,7 +19,6 @@ export default function Challenge({ params }: { params: { id: number } }) {
     }
   }, [])
 
-  console.log({ challenge });
 
   return (
     <div>

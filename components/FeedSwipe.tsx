@@ -8,16 +8,15 @@ import { getPosts as fetchPostsDb } from '../functions/supabase/post/get-post';
 import { mockedChallenges } from '../libs/mockedChallenges';
 import { postsMocked } from '../libs/postsData';
 import { TChallenge } from '../types/Challenge';
-import Post from "./Post";
-import { Skeleton } from './ui/skeleton';
 import { SwipeComponent } from './SwipeComponent';
+import { Skeleton } from './ui/skeleton';
 //components/Feed.tsx
 
 const Feed: React.FC = () => {
   const router = useRouter();
   const [isLoading, setisLoading] = useState(true);
   const [challenge, setChallenge] = useState<TChallenge>(mockedChallenges[0]);
-  const { userFeeds, selectedFeed, setSelectedFeed } = useUser();
+  const { selectedFeed } = useUser();
 
   const [activePosts, setActivePosts] = useState<TPostDb[]>([]);
 

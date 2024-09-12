@@ -89,6 +89,8 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
           src={postData.file_url ?? ""}
           username={postData.user.username}
           description={postData.description}
+          id={postData.id}
+          reactions={postData.reactions}
         />
       ) : (
         <video width={postWitdh} height={postHeight} src={postData.file_url ?? ""} controls />

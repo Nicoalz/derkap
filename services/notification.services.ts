@@ -91,7 +91,7 @@ const getNotificationSubscriptions = async (params?: { ids?: UUID[] }): Promise<
   const { ids } = params || {};
   let request = supabaseAdminClient.from('NotificationSubscription').select('*');
 
-  if (ids && ids.length > 0) request = request.in('userId', ids);
+  if (ids && ids.length > 0) request = request.in('user_id', ids);
 
   const { data, error } = await request;
 

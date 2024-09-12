@@ -1,15 +1,20 @@
+import { cn } from '../libs/utils';
 import { TPostDb } from '../types';
 
-interface ReactionEmojiProps {
+interface ReactionEmojiProps extends React.HTMLProps<HTMLButtonElement> {
   post?: TPostDb;
   emoji: string;
+  emojiUsed: string | null;
 }
 
-const ReactionEmoji: React.FC<ReactionEmojiProps> = ({ post, emoji }) => {
+const ReactionEmoji: React.FC<ReactionEmojiProps> = ({ emoji, onClick, emojiUsed }) => {
   return (
-      <p className='bg-white/60 bg-blur text-4xl flex items-center justify-center text-black/70 w-14 h-14 rounded-full'>
-        {emoji}
-      </p>
+    <button onClick={onClick} className={cn('bg-white/60 bg-blur text-4xl flex items-center justify-center text-black/70 w-14 h-14 rounded-full', {
+      'bg-white': emojiUsed !== emoji,
+      'bg-custom-pink': emojiUsed === emoji
+    })}>
+      {emoji}
+    </button>
   );
 };
 

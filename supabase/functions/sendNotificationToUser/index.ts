@@ -23,7 +23,8 @@ serve(async (req) => {
     //   return new Response(JSON.stringify({ error: 'Title or message missing' }), { status: 400 });
     // }
 
-    const APIKEY = Deno.env.get("apiKey");
+    const APIKEY = Deno.env.get("APIKEY");
+
 
     if (!APIKEY) {
       return new Response(JSON.stringify({ error: 'Missing API key' }), { status: 500 });

@@ -6,6 +6,8 @@ export async function POST(req: Request): Promise<NextResponse> {
   try {
     const { userId, title, message } = await req.json();
 
+    console.log('Request:', { userId, title, message });
+
     if (!title || !message) throw InvalidRequestPayloadError;
 
     await sendCustomNotificationToUser({ userId, title, message });

@@ -1,6 +1,7 @@
 import { InvalidRequestPayloadError } from '@/libs/errors';
 import { sendCustomNotificationToAll } from '@/services/notification.services';
 import { NextResponse } from 'next/server';
+
 export async function POST(req: Request): Promise<NextResponse> {
   try {
     const { title, message } = await req.json();

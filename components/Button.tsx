@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
-import { cn } from '../lib/utils';
+import { cn } from '../libs/utils';
 
 // property) JSX.IntrinsicElements.button: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 

@@ -1,7 +1,7 @@
 "use client"
 import { fetchWithToken } from '@/libs/fetch';
 import { useEffect, useState } from "react";
-import { cn } from '../lib/utils';
+import { cn } from '../libs/utils';
 import { TChallenge } from '../types/Challenge';
 
 

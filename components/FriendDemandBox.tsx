@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { acceptFriend, rejectFriend } from '../functions/supabase/post/user/friend-request';
-import { cn } from '../lib/utils';
+import useRerender from '../libs/store/useRerender';
+import { cn } from '../libs/utils';
 import { TFriendshipDB } from '../types';
 import Button from './Button';
 
@@ -16,6 +17,7 @@ export default function FriendDemandBox({ request, className, ...props }: Friend
   const requestid = request.id
   const [isAccepting, setIsAccepting] = useState(false)
   const [isRejecting, setIsRejecting] = useState(false)
+  const { rerender } = useRerender()
 
   const handleAccept = async () => {
     setIsAccepting(true)
@@ -26,6 +28,7 @@ export default function FriendDemandBox({ request, className, ...props }: Friend
       return
     }
     toast.success("Demande d'amis acceptée")
+    rerender()
     setIsAccepting(false)
 
   }
@@ -38,6 +41,7 @@ export default function FriendDemandBox({ request, className, ...props }: Friend
       setIsRejecting(false)
       return
     }
+    rerender()
     toast.info("Demande d'amis rejetée")
   }
 

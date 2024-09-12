@@ -15,8 +15,8 @@ export type TUserDBWithFriendship = TUserDb & {
 }
 
 export type TUserFriend = Database['public']['Tables']['friendship']['Row'] & {
-  user_a: TUserDb[] | null,
-  user_r: TUserDb[] | null,
+  user_a: TUserDb | null,
+  user_r: TUserDb | null,
 }
 
 

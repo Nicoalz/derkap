@@ -12,9 +12,8 @@ import React, { useState } from "react";
 import { toast } from 'sonner';
 import { useUser } from '../contexts/user-context';
 import { deletePost } from '../functions/supabase/post/delete-post';
-import { cn } from '../lib/utils';
+import { cn } from '../libs/utils';
 import PostImage from './PostImage';
-import { SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/effect-cards';

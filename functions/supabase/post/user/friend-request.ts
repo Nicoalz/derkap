@@ -1,6 +1,8 @@
 'use server';
 
 import { createSupabaseAppServerClient } from '@/libs/supabase/server';
+import { revalidatePath } from 'next/cache';
+import { TUserFriend } from '../../../../types';
 
 export const sendFriendRequest = async (demand_user_id: string) => {
   const supabase = createSupabaseAppServerClient();
@@ -101,6 +103,7 @@ export const deleteFriendDB = async (demand_user_id: string) => {
         error: error.message
       }
     }
+    revalidatePath('/profile')
     return {
       error: null
     }
@@ -171,6 +174,7 @@ export const acceptFriend = async (requestId: number) => {
         error: error.message
       }
     }
+    revalidatePath('/notifications')
     return {
       error: null
     }
@@ -207,6 +211,8 @@ export const rejectFriend = async (requestId: number) => {
         error: error.message
       }
     }
+  revalidatePath('/notifications')
+
     return {
       error: null
     }
@@ -219,3 +225,44 @@ export const rejectFriend = async (requestId: number) => {
 
   }
 }
+
+export const getMyFriends = async () => {
+  const supabase = createSupabaseAppServerClient();
+
+  const {user} = (await supabase.auth.getUser()).data
+
+  if (!user) {
+    return {
+      data: null,
+      error: 'No user'
+    }
+  }
+
+  try {
+  const { data: friends, error } = await supabase
+    .from('friendship')
+    .select('*, user_a:accept_user(*), user_r:request_user(*)')
+    .or(`accept_user.eq.${user.id}, request_user.eq.${user.id}`)
+    .eq('status', 'accepted')
+    .order('created_at', { ascending: false })
+    .returns<TUserFriend[]>()
+
+    if (error) {
+      return {
+        data: null,
+        error: error.message
+      }
+    }
+    return {
+      data: friends
+    }
+  } catch (error) {
+    console.error(error)
+    return {
+      data: null,
+      error: error
+    }
+
+  }
+}
+

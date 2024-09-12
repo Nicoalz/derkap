@@ -1,28 +1,47 @@
-"use client"
-import { fetchWithToken } from '@/libs/fetch';
+'use client'
 import { useEffect, useState } from "react";
+import { getActiveChallenge } from '../functions/supabase/post/challenge/get-challenge';
 import { cn } from '../lib/utils';
-import { TChallenge } from '../types/Challenge';
+import { Skeleton } from './ui/skeleton'; 
 
 
-interface props extends React.HTMLAttributes<HTMLDivElement> {
-  challenge?: TChallenge
-}
+interface props extends React.HTMLAttributes<HTMLDivElement> { }
 
-const ChallengerBox = ({ challenge, className, ...props }: props) => {
+const ChallengerBox = ({ className, ...props }: props) => {
+  const [challenge, setChallenge] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
 
-  useEffect(() => { // todo change subscription
+  const fetchActiveChallenge = async () => {
+    try {
+      setIsLoading(true);
+      const { data, error } = await getActiveChallenge();
+      if (error) {
+        console.error('Error fetching challenge:', error);
+        return;
+      }
+      console.log('Active challenge:', data);
+      setChallenge(data);
+    } catch (err) {
+      console.error('Error fetching challenge:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     setIsNotificationSupported('Notification' in window);
+    fetchActiveChallenge();
   }, []);
+
   const requestPermission = async () => {
     if (!isNotificationSupported || Notification?.permission === 'granted') return;
 
     const permission = await Notification.requestPermission();
     console.log({
-      step: 'permisiondone',
+      step: 'permission done',
       permission
-    })
+    });
     if (permission === 'granted') {
       await subscribeUser();
     }
@@ -39,31 +58,16 @@ const ChallengerBox = ({ challenge, className, ...props }: props) => {
         return;
       }
 
-      console.log('Service workers are supported by this browser.');
-
-      // Wait for the service worker to be ready
       const registration = await navigator.serviceWorker.ready;
-
-
 
       if (!registration) {
         console.error('Service worker registration failed or is not ready.');
         return;
       }
 
-      console.log({
-        step: 'registration2',
-        registration,
-      });
-
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-      });
-
-      console.log({
-        step: 'registration3',
-        subscription,
       });
 
       await fetchWithToken('/api/notification/subscribe', {
@@ -80,30 +84,32 @@ const ChallengerBox = ({ challenge, className, ...props }: props) => {
     }
   };
 
-  const { description, emoji, title, subtitle } = challenge ?? {};
-
+  const { description, emoji, title, category } = challenge ?? {};
 
   return (
     <div {...props} className={cn('w-full', className)}>
-      <div
-        onClick={() => {
-          requestPermission();
-        }}
-        className='flex w-full px-4 bg-card border rounded-xl py-2 text-custom-black gap-4 items-center'>
-        {/* <Image className=' ' src='/visage.svg' width={60} height={60} alt='mrderka' /> */}
-        <p className='text-[3rem] '>
-          {emoji ?? '📭'}
-        </p>
-        <div className='text-left'>
-          <h1 className='font-bold uppercase text-lg font-champ'>{title ?? 'Derkap du jour'}</h1>
-          <p className='text-sm font-champ text-custom-black'>
-            {subtitle ?? 'Pas de défis pour le moment'}
+      {isLoading ? (
+        <Skeleton className="w-full h-20" />
+      ) : (
+        <div
+          onClick={() => {
+            requestPermission();
+          }}
+          className='flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-custom-black shadow-card gap-4 items-center'>
+          <p className='text-[3rem] '>
+            {emoji ?? '📭'}
           </p>
-          <p className='text-sm'>
-            {description ?? 'Reviens plus tard'}
-          </p>
+          <div className='text-left'>
+            <h1 className='font-bold uppercase text-lg font-champ'>{title ?? 'Derkap du jour'}</h1>
+            <p className='text-sm font-champ text-custom-black'>
+              {category ?? 'Pas de défis pour le moment'}
+            </p>
+            <p className='text-sm'>
+              {description ?? 'Reviens plus tard'}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

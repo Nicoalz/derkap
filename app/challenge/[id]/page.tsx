@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useChallengeStore } from '../../../lib/store/useChallengeStore';
+import { useChallengeStore } from '../../../libs/store/useChallengeStore';
 
 
 export default function Challenge({ params }: { params: { id: number } }) {

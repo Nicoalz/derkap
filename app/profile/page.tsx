@@ -13,9 +13,11 @@ export default async function Profile() {
   if (!user) {
     redirect('/login')
   }
-  const { data: friends, count } = await supabase
+
+  // GET ONLY COUNT IN SERVER TO DONT HAVE BROWSER LOAD
+  const { count } = await supabase
     .from('friendship')
-    .select('*, user_a:accept_user(*), user_r:request_user(*)', { count: 'exact' })
+    .select('id', { count: 'exact' })
     .or(`accept_user.eq.${user.id}, request_user.eq.${user.id}`)
     .eq('status', 'accepted')
     .order('created_at', { ascending: false })
@@ -27,7 +29,7 @@ export default async function Profile() {
         <title>Profile</title>
         <meta name="description" content="Profile" />
       </Head>
-      <ProfileScreen friends={friends} friendsCount={count ?? 0} />
+      <ProfileScreen friendsCount={count ?? 0} />
     </>
   );
 

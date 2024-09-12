@@ -27,8 +27,6 @@ const { error:storageError } = await supabase
   .then((r) => r)
 
 
-  console.log(storageError)
-
   if (storageError) {
     return {error: storageError.message};
   }

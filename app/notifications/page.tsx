@@ -1,4 +1,5 @@
 "use client";
+import useRerender from '@/libs/store/useRerender';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ChallengerBox from '../../components/ChallengeBox';
@@ -6,8 +7,8 @@ import FriendDemandBox from '../../components/FriendDemandBox';
 import Switch from '../../components/Switch';
 import Title from '../../components/Title';
 import { getFriendRequests } from '../../functions/supabase/post/user/friend-request';
-import { useChallengeStore } from '../../lib/store/useChallengeStore';
 import { mockedChallenges as challenges } from '../../libs/mockedChallenges';
+import { useChallengeStore } from '../../libs/store/useChallengeStore';
 import { TChallenge, TFriendshipDB } from '../../types';
 
 export default function Notifications() {
@@ -15,6 +16,7 @@ export default function Notifications() {
   const { setChallenge } = useChallengeStore();
   const [friendsRequets, setFriendsRequest] = useState<TFriendshipDB[]>([])
   const router = useRouter();
+  const { render } = useRerender()
 
 
   const handleGetFriendsRequests = async () => {
@@ -24,12 +26,11 @@ export default function Notifications() {
       return
     }
     data && setFriendsRequest(data)
-    console.log({ data })
   }
 
   useEffect(() => {
     handleGetFriendsRequests()
-  }, [])
+  }, [render])
 
   const redirectToChallenge = ({ challenge }: { challenge: TChallenge }) => {
     if (!challenge) return
@@ -46,9 +47,11 @@ export default function Notifications() {
       {isFirstSwitchActive ? challenges.map(challenge => (
         <ChallengerBox key={challenge.id} challenge={challenge} className='mt-4' onClick={() => redirectToChallenge({ challenge: challenge })} />
       )) :
-        friendsRequets.map(request => (
-          <FriendDemandBox key={request.id} request={request} className='mt-4' />
-        ))
+        friendsRequets.length === 0 ? <p className='text-center mt-4'>Aucune demande d'amis</p> :
+          friendsRequets.map(request => (
+
+            <FriendDemandBox key={request.id} request={request} className='mt-4' />
+          ))
       }
     </div>
   )

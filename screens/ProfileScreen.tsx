@@ -6,7 +6,6 @@ import { TKaps } from '@/types/Kaps';
 import { ChevronLeft, SettingsIcon, Users } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import useRerender from '../app/store/useRerender';
 import SettingsPopup from '../app/profile/SettingsPopup';
 import Button from '../components/Button';
 import CategoriesFilter from '../components/CategoriesFilter';
@@ -24,7 +23,6 @@ const ProfileScreen = ({ friendsCount }: { friendsCount: number }) => {
   const { username, name } = userData
   const [friends, setFriends] = useState<TUserFriend[]>([])
   const [kaps] = useState<TKaps[]>(mockedKaps.slice(0, 2))
-  const { render } = useRerender()
   const [open, setOpen] = useState(false)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 

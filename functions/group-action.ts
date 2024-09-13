@@ -60,7 +60,8 @@ export const createGroup = async ({ name }: { name: string }) => {
   const { data: group_profile, error: errorGroupProfil } = await supabase
     .from('group_profile')
     .insert({ profile_id: user.id, group_id: group.id })
-    .select('group(*, members:group_profile(profile(*)))');
+    .select('group(*, members:group_profile(profile(*)))')
+    .single();
   if (errorGroupProfil) {
     return {
       data: null,
@@ -68,12 +69,8 @@ export const createGroup = async ({ name }: { name: string }) => {
     };
   }
 
-  const groups = group_profile
-    .map(item => item.group)
-    .filter(group => group !== null);
-
   return {
-    data: groups,
+    data: group_profile.group,
     error: null,
   };
 };

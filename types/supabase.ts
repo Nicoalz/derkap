@@ -11,73 +11,100 @@ export type Database = {
     Tables: {
       challenge: {
         Row: {
-          category: string | null
-          date_used: string | null
-          description: string | null
-          emoji: string | null
-          id: number
-          is_active: boolean | null
-          is_already_used: boolean | null
-          notification_sent: boolean | null
-          title: string | null
-        }
-        Insert: {
-          category?: string | null
-          date_used?: string | null
-          description?: string | null
-          emoji?: string | null
-          id?: number
-          is_active?: boolean | null
-          is_already_used?: boolean | null
-          notification_sent?: boolean | null
-          title?: string | null
-        }
-        Update: {
-          category?: string | null
-          date_used?: string | null
-          description?: string | null
-          emoji?: string | null
-          id?: number
-          is_active?: boolean | null
-          is_already_used?: boolean | null
-          notification_sent?: boolean | null
-          title?: string | null
-        }
-        Relationships: []
-      }
-      friendship: {
-        Row: {
-          accept_user: string | null
           created_at: string
+          creator_id: string | null
+          description: string
+          group_id: number
           id: number
-          request_user: string | null
-          status: Database["public"]["Enums"]["status_friendship"] | null
+          status: Database["public"]["Enums"]["challenge_status"]
         }
         Insert: {
-          accept_user?: string | null
           created_at?: string
+          creator_id?: string | null
+          description: string
+          group_id: number
           id?: number
-          request_user?: string | null
-          status?: Database["public"]["Enums"]["status_friendship"] | null
+          status: Database["public"]["Enums"]["challenge_status"]
         }
         Update: {
-          accept_user?: string | null
           created_at?: string
+          creator_id?: string | null
+          description?: string
+          group_id?: number
           id?: number
-          request_user?: string | null
-          status?: Database["public"]["Enums"]["status_friendship"] | null
+          status?: Database["public"]["Enums"]["challenge_status"]
         }
         Relationships: [
           {
-            foreignKeyName: "friendship_accept_user_fkey"
-            columns: ["accept_user"]
+            foreignKeyName: "challenge_creator_id_fkey"
+            columns: ["creator_id"]
             isOneToOne: false
             referencedRelation: "profile"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "friendship_request_user_fkey"
-            columns: ["request_user"]
+            foreignKeyName: "challenge_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "group"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group: {
+        Row: {
+          created_at: string
+          id: number
+          img_url: string | null
+          invite_code: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          img_url?: string | null
+          invite_code: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          img_url?: string | null
+          invite_code?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      group_profile: {
+        Row: {
+          created_at: string
+          group_id: number
+          id: number
+          profile_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          group_id: number
+          id?: number
+          profile_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          group_id?: number
+          id?: number
+          profile_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_profile_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "group"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_profile_profile_id_fkey"
+            columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profile"
             referencedColumns: ["id"]
@@ -115,42 +142,37 @@ export type Database = {
       }
       post: {
         Row: {
+          challenge_id: number
           created_at: string
-          description: string | null
-          feed: string
-          file_name: string
-          file_url: string | null
           id: number
-          is_photo: boolean | null
-          reactions: Json[] | null
-          user_id: string | null
+          img_url: string
+          profile_id: string | null
         }
         Insert: {
+          challenge_id: number
           created_at?: string
-          description?: string | null
-          feed?: string
-          file_name: string
-          file_url?: string | null
           id?: number
-          is_photo?: boolean | null
-          reactions?: Json[] | null
-          user_id?: string | null
+          img_url: string
+          profile_id?: string | null
         }
         Update: {
+          challenge_id?: number
           created_at?: string
-          description?: string | null
-          feed?: string
-          file_name?: string
-          file_url?: string | null
           id?: number
-          is_photo?: boolean | null
-          reactions?: Json[] | null
-          user_id?: string | null
+          img_url?: string
+          profile_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "post_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "post_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "challenge"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_profile_id_fkey"
+            columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profile"
             referencedColumns: ["id"]
@@ -161,23 +183,23 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string
+          email: string
           id: string
-          name: string | null
-          username: string | null
+          username: string
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          email: string
           id: string
-          name?: string | null
-          username?: string | null
+          username: string
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
+          email?: string
           id?: string
-          name?: string | null
-          username?: string | null
+          username?: string
         }
         Relationships: [
           {
@@ -200,13 +222,10 @@ export type Database = {
       }
     }
     Enums: {
-      status_friendship: "pending" | "accepted" | "declined" | "canceled"
+      challenge_status: "posting" | "voting" | "ended"
     }
     CompositeTypes: {
-      reaction_type: {
-        emoji: string | null
-        user_id: string | null
-      }
+      [_ in never]: never
     }
   }
 }

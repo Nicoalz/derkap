@@ -1,7 +1,6 @@
 "use client"
 
 import Image from 'next/image';
-import { TSponsorised } from '../types';
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
   isOfficial?: boolean

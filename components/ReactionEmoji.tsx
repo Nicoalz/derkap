@@ -1,8 +1,7 @@
 import { cn } from '../libs/utils';
-import { TPostDb } from '../types';
 
 interface ReactionEmojiProps extends React.HTMLProps<HTMLButtonElement> {
-  post?: TPostDb;
+  post?: any;
   emoji: string;
   emojiUsed: string | null;
 }

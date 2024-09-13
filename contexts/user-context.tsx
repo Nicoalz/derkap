@@ -1,10 +1,10 @@
 "use client";
 import { User } from '@supabase/supabase-js';
-import { ReactNode, createContext, useContext} from 'react';
-import { TUserDb } from '../types';
+import { ReactNode, createContext, useContext } from 'react';
+import { TProfileDB } from '../types/types';
 
 interface UserContextType {
-  userData: TUserDb,
+  userData: TProfileDB,
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -12,12 +12,12 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 interface UserProviderProps {
   children: ReactNode;
   user: User | null;
-  profile: TUserDb | null;
+  profile: TProfileDB | null;
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children, user, profile }) => {
 
-  const userData: TUserDb = { id: user?.id ?? "", name: profile?.name ?? "", username: profile?.username ?? "", avatar_url: profile?.avatar_url || '/mrderka.png', created_at: user?.created_at ?? "" }
+  const userData: TProfileDB = { id: user?.id ?? "", username: profile?.username ?? "", avatar_url: profile?.avatar_url || '/mrderka.png', created_at: user?.created_at ?? "", email: profile?.email ?? "" }
 
   return (
     <UserContext.Provider value={{ userData }}>

@@ -7,11 +7,9 @@ import 'swiper/css';
 import 'swiper/css/effect-cards';
 
 // import required modules
-import { TPostDb } from '@/types';
 import { Pagination } from 'swiper/modules';
-import Post from './Post';
 
-export const SwipeComponent: React.FC<{ posts: TPostDb[] }> = ({
+export const SwipeComponent: React.FC<{ posts: [] }> = ({
   posts
 }) => (
   <div className='flex justify-center items-center w-full no-scrollbar h-[31rem]'>
@@ -29,7 +27,7 @@ export const SwipeComponent: React.FC<{ posts: TPostDb[] }> = ({
       {
         posts.map((post, index) => (
           <SwiperSlide className='no-scrollbar h-fit bg-card overflow-x-hidden' key={index}>
-            <Post postData={post} />
+            {/* <Post postData={post} /> */}
           </SwiperSlide>
         ))
       }

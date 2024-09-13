@@ -1,11 +1,9 @@
 "use client"
 
-import Image from 'next/image';
-import { TKaps } from '../types';
 import { useState } from 'react';
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
-  kaps: TKaps
+  kaps: any
 }
 
 const KapsImage = ({ kaps, className, ...props }: props) => {

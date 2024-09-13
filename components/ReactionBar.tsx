@@ -2,8 +2,6 @@
 "use client";
 import { useState } from 'react';
 import { useUser } from '../contexts/user-context';
-import { insertReactionToPost } from '../functions/supabase/post/reaction';
-import { TReaction } from '../types';
 import { Json } from '../types/supabase';
 import ReactionEmoji from './ReactionEmoji';
 
@@ -17,16 +15,10 @@ const ReactionBar: React.FC<ReactionBar> = ({ post_id, reactions }) => {
 
   const { userData } = useUser();
   const { id: user_id } = userData
-  const userEmojiUsed = (reactions?.find((reaction: any) => reaction?.user_id === user_id) as TReaction)?.emoji;
+  const userEmojiUsed = (reactions?.find((reaction: any) => reaction?.user_id === user_id) as any)?.emoji;
   const [emojiUsed] = useState(userEmojiUsed);
 
   const handleClick = async (emoji: string) => {
-    if (!post_id) return;
-    const { error } = await insertReactionToPost({ post_id, emoji })
-    if (error) {
-      console.error(error)
-    }
-
   }
 
   return (

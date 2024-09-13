@@ -1,8 +1,9 @@
 import { UUID } from 'crypto';
 
 import { supabaseAdminClient } from '@/libs/supabaseAdmin';
+import { TVapidDetails } from '@/types/types';
 import webPush from 'web-push';
-import { TVapidDetails } from '../types';
+
 
 
 export const sendCustomNotificationToAll = async ({

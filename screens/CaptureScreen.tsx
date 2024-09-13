@@ -3,23 +3,22 @@
 import Button from '@/components/Button';
 import ChallengerBox from '@/components/ChallengeBox';
 import { useUser } from '@/contexts/user-context';
-import { TChallenge, TPostDb } from '@/types';
+
 import { XIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Webcam from "react-webcam";
 import { toast } from 'sonner';
 import { getRandomAudio } from '../app/audio/audioManager';
 import { useSoundStore } from '../app/audio/useSoundStore';
 import Title from '../components/Title';
-import { pushPostToDb } from '../functions/supabase/post/push-post-db';
 
 import Loader from '../components/Loader';
 
 const CaptureScreen: React.FC = () => {
   const router = useRouter();
   const { isSoundEnabled } = useSoundStore();
-  const [challenge, setChallenge] = useState<TChallenge | null>(null);
+  const [challenge, setChallenge] = useState<any | null>(null);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
   const [imgTaken, setImgTaken] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
@@ -63,25 +62,6 @@ const CaptureScreen: React.FC = () => {
       if (!imgTaken) return;
 
       playRandomSound();
-
-      const post: TPostDb = {
-        id: 0,
-        reactions: [],
-        is_photo: true,
-        file_url: imgTaken,
-        description: newDescription,
-        user: userData,
-        created_at: new Date().toISOString(),
-        feed: "",
-        file_name: userData.id + '/' + new Date().toISOString(),
-      };
-
-      const { data, error } = await pushPostToDb({ post: post });
-      if (error) {
-        toast.error(error);
-        return;
-      }
-
 
       setIsRedirecting(true);
       router.push('/');

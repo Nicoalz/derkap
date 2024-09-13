@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useState } from "react";
 import { getActiveChallenge } from '../functions/supabase/post/challenge/get-challenge';
-import { cn } from '../lib/utils';
-import { Skeleton } from './ui/skeleton'; 
+import { fetchWithToken } from '../libs/fetch';
+import { cn } from '../libs/utils';
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement> { }
@@ -89,7 +89,7 @@ const ChallengerBox = ({ className, ...props }: props) => {
   return (
     <div {...props} className={cn('w-full', className)}>
       {isLoading ? (
-        <Skeleton className="w-full h-20" />
+        <p>Loading ...</p>
       ) : (
         <div
           onClick={() => {

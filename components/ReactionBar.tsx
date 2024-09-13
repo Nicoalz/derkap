@@ -18,7 +18,7 @@ const ReactionBar: React.FC<ReactionBar> = ({ post_id, reactions }) => {
   const { userData } = useUser();
   const { id: user_id } = userData
   const userEmojiUsed = (reactions?.find((reaction: any) => reaction?.user_id === user_id) as TReaction)?.emoji;
-  const [emojiUsed, setEmojiUsed] = useState(userEmojiUsed);
+  const [emojiUsed] = useState(userEmojiUsed);
 
   const handleClick = async (emoji: string) => {
     if (!post_id) return;

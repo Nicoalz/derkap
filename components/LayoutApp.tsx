@@ -2,7 +2,6 @@
 
 import { usePWA } from "@/contexts/pwa-context";
 import React from "react";
-import BottomNavbar from "./BottomNavbar";
 import Header from "./Header";
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,12 +23,10 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className=" flex flex-col min-h-screen dark">
-      <Header />
       <>
         <main className="container mx-auto flex-1 flex flex-col">
           {children}
         </main>
-        <BottomNavbar />
       </>
 
       {/* {isPWA ? (

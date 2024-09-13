@@ -1,0 +1,30 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Lancer Prettier pour formater le code
+echo "Running Prettier to format code..."
+npm run format
+
+# Vérifier le code avec ESLint
+echo "Running ESLint to check for errors..."
+npm run lint:fix
+
+# Vérifier si ESLint a échoué
+if [ $? -ne 0 ]; then
+  echo "ESLint failed, commit aborted."
+  exit 1
+fi
+
+# Lancer le build
+echo "Running build script..."
+npm run build
+
+# Vérifier si le build a échoué
+if [ $? -ne 0 ]; then
+  echo "Build failed, commit aborted."
+  exit 1
+fi
+
+# Si tout est réussi, continuer avec le commit
+echo "All checks passed, continuing with commit."
+exit 0

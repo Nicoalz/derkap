@@ -8,14 +8,14 @@ export async function POST(req: Request): Promise<NextResponse> {
     const rawBody = await req.text();
     console.log('Raw Body:', rawBody);
 
-    if (!rawBody) throw  InvalidRequestPayloadError;
+    if (!rawBody) throw InvalidRequestPayloadError;
 
     // Parse the raw body manually
     const { userId, title, message } = JSON.parse(rawBody);
     console.log('Parsed Body:', { userId, title, message });
 
     // Validate the presence of required fields
-    if (!title || !message) throw  InvalidRequestPayloadError;
+    if (!title || !message) throw InvalidRequestPayloadError;
 
     // Send the custom notification
     await sendCustomNotificationToUser({ userId, title, message });

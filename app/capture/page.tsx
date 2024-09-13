@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
+import type { NextPage } from 'next';
 
-import Head from "next/head";
+import Head from 'next/head';
 
-import CaptureScreen from "@/screens/CaptureScreen";
+import CaptureScreen from '@/screens/CaptureScreen';
 
 const Profile: NextPage = () => (
   <>

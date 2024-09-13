@@ -33,7 +33,7 @@ export async function updateSession(request: NextRequest) {
   if (!user) {
     const url = request.nextUrl.clone();
 
-    if (url.pathname != '/inscription' && !url.pathname.startsWith('/api'))
+    if (url.pathname !== '/inscription' && !url.pathname.startsWith('/api'))
       url.pathname = '/connexion';
     return NextResponse.rewrite(url);
   }

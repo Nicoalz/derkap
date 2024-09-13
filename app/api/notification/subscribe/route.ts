@@ -1,11 +1,8 @@
-
-
 import { saveSubscription } from '@/services/notification.services';
 import { NextResponse } from 'next/server';
 
-export async function POST(req:Request): Promise<NextResponse> {
+export async function POST(req: Request): Promise<NextResponse> {
   try {
-
     const { subscription } = await req.json();
 
     // // const id = req.headers['uid'] as UUID;
@@ -18,8 +15,7 @@ export async function POST(req:Request): Promise<NextResponse> {
   } catch (error: any) {
     console.error(error);
 
-
-   return  NextResponse.json({
+    return NextResponse.json({
       error: error.message,
     });
   }

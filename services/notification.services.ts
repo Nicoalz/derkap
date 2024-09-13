@@ -4,8 +4,6 @@ import { supabaseAdminClient } from '@/libs/supabaseAdmin';
 import { TVapidDetails } from '@/types/types';
 import webPush from 'web-push';
 
-
-
 export const sendCustomNotificationToAll = async ({
   title,
   message,
@@ -17,19 +15,19 @@ export const sendCustomNotificationToAll = async ({
 
   const subscriptions = await getNotificationSubscriptions();
   console.log({
-    step:'subscriptions',
-    subscriptions
-
-  })
+    step: 'subscriptions',
+    subscriptions,
+  });
   const sentNotifs = await Promise.allSettled(
-    subscriptions.map(subscription => sendCustomNotification({ subscription, vapidDetails, title, message })),
+    subscriptions.map(subscription =>
+      sendCustomNotification({ subscription, vapidDetails, title, message }),
+    ),
   );
 
   return sentNotifs;
 };
 
 const getVapidDetails = (): TVapidDetails => {
-
   const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || '';
   const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY || '';
 
@@ -58,7 +56,9 @@ const sendCustomNotification = async ({
   try {
     const payload = JSON.stringify({ title, message });
 
-    const sentNotif = await webPush.sendNotification(subscription, payload, { vapidDetails });
+    const sentNotif = await webPush.sendNotification(subscription, payload, {
+      vapidDetails,
+    });
 
     return sentNotif;
   } catch (error) {
@@ -76,21 +76,30 @@ export const sendCustomNotificationToUser = async (params: {
 
   const subscriptions = await getNotificationSubscriptions({ ids: [userId] });
 
-  if (subscriptions.length === 0) throw new Error('No subscriptions found for user');
+  if (subscriptions.length === 0)
+    throw new Error('No subscriptions found for user');
 
   const subscription = subscriptions[0];
 
   const vapidDetails = getVapidDetails();
 
-  const sentNotif = await sendCustomNotification({ subscription, vapidDetails, title, message });
+  const sentNotif = await sendCustomNotification({
+    subscription,
+    vapidDetails,
+    title,
+    message,
+  });
 
   return sentNotif;
 };
 
-const getNotificationSubscriptions = async (params?: { ids?: UUID[] }): Promise<webPush.PushSubscription[]> => {
-
+const getNotificationSubscriptions = async (params?: {
+  ids?: UUID[];
+}): Promise<webPush.PushSubscription[]> => {
   const { ids } = params || {};
-  let request = supabaseAdminClient.from('NotificationSubscription').select('*');
+  let request = supabaseAdminClient
+    .from('NotificationSubscription')
+    .select('*');
 
   if (ids && ids.length > 0) request = request.in('user_id', ids);
 
@@ -98,7 +107,9 @@ const getNotificationSubscriptions = async (params?: { ids?: UUID[] }): Promise<
 
   if (error) throw error;
 
-  const subscriptions = data.map((sub: { subscription: webPush.PushSubscription }) => sub.subscription);
+  const subscriptions = data.map(
+    (sub: { subscription: webPush.PushSubscription }) => sub.subscription,
+  );
 
   return subscriptions;
 };
@@ -108,11 +119,13 @@ export const saveSubscription = async ({
 }: {
   subscription: webPush.PushSubscription;
 }): Promise<void> => {
-  const { error } = await supabaseAdminClient.from('NotificationSubscription').insert([{ subscription }]);
+  const { error } = await supabaseAdminClient
+    .from('NotificationSubscription')
+    .insert([{ subscription }]);
   console.log({
-    step:'saveSubscription',
-    error
-  })
+    step: 'saveSubscription',
+    error,
+  });
   if (error) throw error;
 };
 

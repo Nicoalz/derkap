@@ -1,0 +1,14 @@
+# Ignore service worker
+sw.js
+
+# Ignore files starting with worker
+worker*.js
+
+# Ignore workbox files
+workbox-*.js
+
+# Other common ignore patterns
+node_modules/
+build/
+dist/
+.next/

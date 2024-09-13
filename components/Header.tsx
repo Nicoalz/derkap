@@ -1,6 +1,5 @@
 import { ChevronLeft, User } from 'lucide-react';
 import Link from "next/link";
-import { title } from 'process';
 import React from 'react';
 
 interface HeaderProps {

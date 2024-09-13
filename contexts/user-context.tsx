@@ -1,10 +1,10 @@
-"use client";
+'use client';
 import { User } from '@supabase/supabase-js';
 import { ReactNode, createContext, useContext } from 'react';
 import { TProfileDB } from '../types/types';
 
 interface UserContextType {
-  userData: TProfileDB,
+  userData: TProfileDB;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -15,21 +15,28 @@ interface UserProviderProps {
   profile: TProfileDB | null;
 }
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children, user, profile }) => {
-
-  const userData: TProfileDB = { id: user?.id ?? "", username: profile?.username ?? "", avatar_url: profile?.avatar_url || '/mrderka.png', created_at: user?.created_at ?? "", email: profile?.email ?? "" }
+export const UserProvider: React.FC<UserProviderProps> = ({
+  children,
+  user,
+  profile,
+}) => {
+  const userData: TProfileDB = {
+    id: user?.id ?? '',
+    username: profile?.username ?? '',
+    avatar_url: profile?.avatar_url || '/mrderka.png',
+    created_at: user?.created_at ?? '',
+    email: profile?.email ?? '',
+  };
 
   return (
-    <UserContext.Provider value={{ userData }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ userData }}>{children}</UserContext.Provider>
   );
 };
 
 export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (context === undefined) {
-    throw new Error("useUser must be used within a UserProvider");
+    throw new Error('useUser must be used within a UserProvider');
   }
   return context;
 };

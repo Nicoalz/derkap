@@ -13,8 +13,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import Button from '@/components/Button';
-
 
 
 const HomeScreen = () => {
@@ -34,7 +32,7 @@ const HomeScreen = () => {
         <div className='relative flex flex-col w-full gap-8 no-scrollbar'>
           <Drawer>
             <DrawerTrigger>
-              <Button text='Open' />
+              Open
             </DrawerTrigger>
             <DrawerContent>
               <DrawerHeader>
@@ -43,7 +41,7 @@ const HomeScreen = () => {
               </DrawerHeader>
               <DrawerFooter>
                 <DrawerClose>
-                  <Button text='Cancel' isCancel />
+                  Cancel
                 </DrawerClose>
               </DrawerFooter>
             </DrawerContent>

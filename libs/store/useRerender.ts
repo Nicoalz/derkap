@@ -1,13 +1,13 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 interface RerenderState {
-  render: boolean
-  rerender: () => void
+  render: boolean;
+  rerender: () => void;
 }
 
-const useRerender = create<RerenderState>((set) => ({
+const useRerender = create<RerenderState>(set => ({
   render: false,
-  rerender: () => set((state) => ({ render: !state.render })),
-}))
+  rerender: () => set(state => ({ render: !state.render })),
+}));
 
-export default useRerender
+export default useRerender;

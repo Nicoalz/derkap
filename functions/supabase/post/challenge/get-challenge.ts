@@ -6,9 +6,10 @@ export const getActiveChallenge = async () => {
   const supabase = createSupabaseAppServerClient();
 
   try {
-    const { data, error } = await supabase.from('challenge')
+    const { data, error } = await supabase
+      .from('challenge')
       .select('*')
-      .eq('is_active', true)
+      .eq('is_active', true);
 
     if (error) {
       console.error('Supabase error:', error);

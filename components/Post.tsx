@@ -1,5 +1,3 @@
-
-
 // import { TPostDb, postHeight, postWitdh } from '@/types';
 // import Image from 'next/image';
 // import React, { useState } from "react";
@@ -30,7 +28,6 @@
 //         toast.success('Post supprimé')
 //         setIsDrawerOpen(false)
 
-
 //       }
 //     } catch (error) {
 //       console.error(error)
@@ -40,9 +37,7 @@
 //     }
 //   }
 
-
 //   return (
-
 
 //     <div className='flex flex-col w-full swiper-slide no-scrollbar rounded-xl h-fit text-custom-black'>
 //       <div className='w-full justify-between flex py-2 px-4 items-center'>

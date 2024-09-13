@@ -5,7 +5,7 @@ interface SoundState {
   toggleSound: () => void;
 }
 
-export const useSoundStore = create<SoundState>((set) => ({
+export const useSoundStore = create<SoundState>(set => ({
   isSoundEnabled: true,
-  toggleSound: () => set((state) => ({ isSoundEnabled: !state.isSoundEnabled })),
+  toggleSound: () => set(state => ({ isSoundEnabled: !state.isSoundEnabled })),
 }));

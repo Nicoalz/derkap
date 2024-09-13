@@ -5,7 +5,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
 
-  const APIKEY = Deno.env.get("apiKey") ;
+  const APIKEY = Deno.env.get('apiKey');
 
   // Comparer avec ton vrai jeton
   if (!token || token !== APIKEY) {

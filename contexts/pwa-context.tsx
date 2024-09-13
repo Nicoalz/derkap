@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
-"use client";
-import { usePathname } from "next/navigation";
+'use client';
+import { usePathname } from 'next/navigation';
 import React, {
   ReactNode,
   createContext,
   useContext,
   useEffect,
   useState,
-} from "react";
+} from 'react';
 
 interface PWAContextType {
   isPWA: boolean;
@@ -24,7 +24,7 @@ interface PWAProviderProps {
 export const PWAProvider: React.FC<PWAProviderProps> = ({ children }) => {
   const [isPWA, setIsPWA] = useState<boolean>(false);
   const [isReady, setIsReady] = useState<boolean>(false);
-  const [currentPath, setCurrentPath] = useState<string>("");
+  const [currentPath, setCurrentPath] = useState<string>('');
   const pathname = usePathname();
 
   useEffect(() => {
@@ -32,9 +32,9 @@ export const PWAProvider: React.FC<PWAProviderProps> = ({ children }) => {
   }, [pathname]);
 
   const isStandaloneAndroid = () =>
-    window.matchMedia("(display-mode: standalone)").matches;
+    window.matchMedia('(display-mode: standalone)').matches;
   const isStandaloneiOS = () =>
-    ("standalone" in window.navigator &&
+    ('standalone' in window.navigator &&
       window.navigator.standalone) as boolean;
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const usePWA = (): PWAContextType => {
   const context = useContext(PWAContext);
 
   if (context === undefined) {
-    throw new Error("usePWA must be used within a PWAProvider");
+    throw new Error('usePWA must be used within a PWAProvider');
   }
 
   return context;

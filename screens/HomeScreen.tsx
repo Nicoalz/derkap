@@ -1,8 +1,5 @@
 'use client';
 
-import { User } from 'lucide-react';
-import Link from 'next/link';
-import PullToRefresh from 'react-simple-pull-to-refresh';
 import {
   Drawer,
   DrawerClose,
@@ -14,6 +11,9 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import Button from '@/components/Button';
+import Link from 'next/link';
+import { User } from 'lucide-react';
+import PullToRefresh from 'react-simple-pull-to-refresh';
 
 const HomeScreen = () => {
   const handleRefresh = async () => {

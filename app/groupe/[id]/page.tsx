@@ -1,11 +1,10 @@
 'use client';
 
-import React from "react";
-import Head from "next/head";
-import GroupScreen from "../../../screens/GroupScreen";
+import React from 'react';
+import Head from 'next/head';
+import GroupScreen from '../../../screens/GroupScreen';
 
 export default function Groupe({ params }: { params: { id: string } }) {
-
   const { id } = params;
 
   return (
@@ -16,5 +15,5 @@ export default function Groupe({ params }: { params: { id: string } }) {
       </Head>
       <GroupScreen id={id} />
     </>
-  )
+  );
 }

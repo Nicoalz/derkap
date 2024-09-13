@@ -1,16 +1,5 @@
 'use client';
 
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer';
-import Button from '@/components/Button';
 import Link from 'next/link';
 import { User } from 'lucide-react';
 import PullToRefresh from 'react-simple-pull-to-refresh';
@@ -33,24 +22,7 @@ const HomeScreen = () => {
         onRefresh={handleRefresh}
       >
         <div className="relative flex flex-col w-full gap-8 no-scrollbar">
-          <Drawer>
-            <DrawerTrigger asChild>
-              <Button text="Open" />
-            </DrawerTrigger>
-            <DrawerContent>
-              <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>
-                  This action cannot be undone.
-                </DrawerDescription>
-              </DrawerHeader>
-              <DrawerFooter>
-                <DrawerClose asChild>
-                  <Button  text="Cancel" isCancel />
-                </DrawerClose>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
+          <Link href={'/groupe/1'}>Lien vers le page Groupe 1</Link>
         </div>
       </PullToRefresh>
     </div>

@@ -1,3 +1,4 @@
+"use client";
 import Link from 'next/link';
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import { cn } from '../libs/utils';
@@ -14,10 +15,10 @@ export default function Button({ text, url, isCancel, asLink, className, ...prop
 
   if (asLink) {
     return (
-      <Link href={url ?? ""} className={cn(" bg-custom-primary text-white py-2 px-4 rounded-xl  text-sm", className, { "bg-gray-200 text-custom-black": isCancel })}> {text} </Link>
+      <Link href={url ?? ""} className={cn(" bg-custom-primary text-white py-2 px-4 rounded-xl w-fit text-sm", className, { "bg-gray-200 text-custom-black": isCancel })}> {text} </Link>
     )
   }
   return (
-    <button  {...props} className={cn(" bg-custom-primary text-white py-2 px-4 rounded-xl  text-sm", className, { "bg-gray-200 text-custom-black": isCancel })} > {text} </button >
+    <button  {...props} className={cn(" bg-custom-primary text-white py-2 px-4 rounded-xl w-fit text-sm", className, { "bg-gray-200 text-custom-black": isCancel })} > {text} </button >
   )
 }

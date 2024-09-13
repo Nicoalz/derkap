@@ -115,3 +115,8 @@ body {
     --radius: 0.5rem;
   }
 }
+
+.profile-item:not(:last-child)::after {
+  content: "•";
+  margin-left: 8px;
+}

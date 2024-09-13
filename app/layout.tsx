@@ -5,7 +5,6 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans } from 'next/font/google';
 import localFont from 'next/font/local';
 import { Toaster } from "sonner";
-import { ThemeProvider } from '../components/ui/theme-provider';
 import { createSupabaseAppServerClient } from '../libs/supabase/server';
 import "./globals.css";
 const title = "Derkap";
@@ -32,6 +31,7 @@ export const metadata: Metadata = {
     title,
     images: [{ url: socialBannerUrl }],
   },
+
   twitter: {
     card: "summary_large_image",
     title,
@@ -69,23 +69,14 @@ export default async function RootLayout({
   const profile = user && (await supabase.from('profile').select('*').eq('id', user?.id).single()).data;
   return (
     <PWAProvider>
-      <UserProvider user={user} profile={profile}>
-        <html lang="fr" className={`${dmSans.variable} ${champ.variable}`}>
-
-          <body className='bg-gradient-linear'>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="light"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <LayoutApp>{children}</LayoutApp>
-              <Toaster position="top-center" richColors />
-            </ThemeProvider>
-
-          </body>
-        </html>
-      </UserProvider>
-    </PWAProvider>
+      <html lang="fr" className={`${dmSans.variable} ${champ.variable}`}>
+        <body className='bg-gradient-linear'>
+          <UserProvider user={user} profile={profile}>
+            <LayoutApp>{children}</LayoutApp>
+            <Toaster position="top-center" richColors />
+          </UserProvider>
+        </body>
+      </html>
+    </PWAProvider >
   );
 }

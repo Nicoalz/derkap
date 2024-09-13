@@ -1,5 +1,6 @@
 'use client';
 
+import Button from '@/components/Button';
 import ChallengerBox from '@/components/ChallengeBox';
 import { useUser } from '@/contexts/user-context';
 import { TChallenge, TPostDb } from '@/types';
@@ -10,14 +11,10 @@ import Webcam from "react-webcam";
 import { toast } from 'sonner';
 import { getRandomAudio } from '../app/audio/audioManager';
 import { useSoundStore } from '../app/audio/useSoundStore';
-import Button from '../components/Button';
 import Title from '../components/Title';
 import { pushPostToDb } from '../functions/supabase/post/push-post-db';
-import { mockedChallenges } from '../libs/mockedChallenges';
 
-import { getRandomAudio } from '../app/audio/audioManager';
-import { useSoundStore } from '../app/audio/useSoundStore';
-import Loader from '../components/Loader'; 
+import Loader from '../components/Loader';
 
 const CaptureScreen: React.FC = () => {
   const router = useRouter();
@@ -41,23 +38,10 @@ const CaptureScreen: React.FC = () => {
   );
 
   const [newDescription, setNewDescription] = useState<string>('');
-  const { userFeeds, selectedFeed, userData } = useUser();
+  const { userData } = useUser();
   const [isValidatingFile, setIsValidatingFile] = useState<boolean>(false);
 
-  const initChallenge = () => {
-    const urlparams = new URLSearchParams(window.location.search);
-    const challengeId = urlparams.get('challengeId');
-    console.log({ challengeId });
-    let challenge = mockedChallenges[0];
-    if (challengeId) {
-      challenge = mockedChallenges.find(ch => ch.id.toString() === challengeId) || mockedChallenges[0];
-    }
-    setChallenge(challenge);
-  };
 
-  useEffect(() => {
-    initChallenge();
-  }, []);
 
   const resetPhoto = () => {
     setImgTaken(null);
@@ -88,7 +72,7 @@ const CaptureScreen: React.FC = () => {
         description: newDescription,
         user: userData,
         created_at: new Date().toISOString(),
-        feed: selectedFeed.name,
+        feed: "",
         file_name: userData.id + '/' + new Date().toISOString(),
       };
 
@@ -113,7 +97,7 @@ const CaptureScreen: React.FC = () => {
     <div className="flex flex-col w-full items-center">
       <Title text='Capture ton Derkap !' />
       <div className='px-2'>
-        {challenge && !imgTaken && (<ChallengerBox challenge={challenge} />)}
+        {challenge && !imgTaken && (<ChallengerBox />)}
       </div>
 
       <div className="w-full mt-4 relative h-0 pb-[125%]">

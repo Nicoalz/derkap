@@ -1,18 +1,11 @@
 
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerTrigger
-} from "@/components/ui/drawer";
+
 import { TPostDb, postHeight, postWitdh } from '@/types';
-import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import React, { useState } from "react";
 import { toast } from 'sonner';
 import { useUser } from '../contexts/user-context';
 import { deletePost } from '../functions/supabase/post/delete-post';
-import { cn } from '../libs/utils';
 import PostImage from './PostImage';
 
 import 'swiper/css';
@@ -67,21 +60,7 @@ const Post: React.FC<{ postData: TPostDb }> = ({ postData }) => {
 
           </div>
         </div>
-        <Drawer >
-          <DrawerTrigger>
-            <EllipsisHorizontalIcon className='w-8 h-8 text-custom-black' onClick={() => setIsDrawerOpen(true)} />
-          </DrawerTrigger>
-          <DrawerContent>
-            <DrawerDescription>
-              <div className='w-full flex items-center justify-center gap-4 p-8 mb-16 text-custom-black'>
-                <button type='button' disabled={isLoading}>Signaler</button>
-                <button type='button' disabled={isLoading}>Partager</button>
-                <button type='button' disabled={isLoading}>Enregistrer</button>
-                {userData.id == postData.user.id && <button type='button' className={cn({ "text-opacity-80": isLoading })} onClick={handleDeletePost} disabled={isLoading}>{isLoading ? "Suppression..." : "Supprimer"}</button>}
-              </div>
-            </DrawerDescription>
-          </DrawerContent>
-        </Drawer>
+
       </div>
       {postData.is_photo ? (
         <PostImage

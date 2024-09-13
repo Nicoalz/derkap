@@ -17,7 +17,7 @@ const Home: NextPage = async () => {
         <title>Accueil</title>
         <meta name="description" content="Accueil" />
       </Head>
-      <HomeScreen user={user} />
+      <HomeScreen />
     </>
   );
 }

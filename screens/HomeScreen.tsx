@@ -34,8 +34,16 @@ const HomeScreen = () => {
       name: 'Groupe 1',
       img_url: 'https://via.placeholder.com/150',
       profiles: [
-        { id: 1, username: 'Alice', avatar_url: 'https://via.placeholder.com/40' },
-        { id: 2, username: 'Bob', avatar_url: 'https://via.placeholder.com/40' },
+        {
+          id: 1,
+          username: 'Alice',
+          avatar_url: 'https://via.placeholder.com/40',
+        },
+        {
+          id: 2,
+          username: 'Bob',
+          avatar_url: 'https://via.placeholder.com/40',
+        },
       ],
     },
     {
@@ -66,20 +74,31 @@ const HomeScreen = () => {
 
   return (
     <div className="w-full flex flex-col items-center relative flex-1 mb-32 no-scrollbar">
-      <div className='w-full flex justify-end p-8'>
-        <Link href={"/profile"} className='flex items-center gap-x-2'>
+      <div className="w-full flex justify-end p-8">
+        <Link href={'/profile'} className="flex items-center gap-x-2">
           <User size={24} />
         </Link>
       </div>
 
-      <PullToRefresh className='no-scollbar' pullingContent={""} onRefresh={handleRefresh}>
-        <div className='relative flex flex-col w-full gap-8 no-scrollbar'>
-          <div className='flex justify-center w-full gap-4'> {/* Row class */}
-            <DrawerComponent buttonText="Créer un groupe" title="Créer un groupe">
+      <PullToRefresh
+        className="no-scollbar"
+        pullingContent={''}
+        onRefresh={handleRefresh}
+      >
+        <div className="relative flex flex-col w-full gap-8 no-scrollbar">
+          <div className="flex justify-center w-full gap-4">
+            {' '}
+            {/* Row class */}
+            <DrawerComponent
+              buttonText="Créer un groupe"
+              title="Créer un groupe"
+            >
               <GroupForm onCreateGroup={createGroup} />
             </DrawerComponent>
-
-            <DrawerComponent buttonText="Rejoindre un groupe" title="Rejoindre un groupe">
+            <DrawerComponent
+              buttonText="Rejoindre un groupe"
+              title="Rejoindre un groupe"
+            >
               <p>Rejoins un groupe ici (fonctionnalité à venir).</p>
             </DrawerComponent>
           </div>

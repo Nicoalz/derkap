@@ -6,8 +6,8 @@ import { useUser } from '@/contexts/user-context';
 
 import { XIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React, { useState } from "react";
-import Webcam from "react-webcam";
+import React, { useState } from 'react';
+import Webcam from 'react-webcam';
 import { toast } from 'sonner';
 import { getRandomAudio } from '../app/audio/audioManager';
 import { useSoundStore } from '../app/audio/useSoundStore';
@@ -25,22 +25,18 @@ const CaptureScreen: React.FC = () => {
   const webcamRef = React.useRef<Webcam>(null);
   const validateRef = React.useRef<HTMLButtonElement>(null);
 
-  const capture = React.useCallback(
-    () => {
-      if (!webcamRef.current) return;
-      const imageSrc = webcamRef.current.getScreenshot();
-      if (!imageSrc) return;
-      setImgTaken(imageSrc);
-      if (validateRef.current) validateRef.current.scrollIntoView({ behavior: 'smooth' });
-    },
-    [webcamRef]
-  );
+  const capture = React.useCallback(() => {
+    if (!webcamRef.current) return;
+    const imageSrc = webcamRef.current.getScreenshot();
+    if (!imageSrc) return;
+    setImgTaken(imageSrc);
+    if (validateRef.current)
+      validateRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [webcamRef]);
 
   const [newDescription, setNewDescription] = useState<string>('');
   const { userData } = useUser();
   const [isValidatingFile, setIsValidatingFile] = useState<boolean>(false);
-
-
 
   const resetPhoto = () => {
     setImgTaken(null);
@@ -52,7 +48,7 @@ const CaptureScreen: React.FC = () => {
       const audio = new Audio(audioFile);
       audio.play();
     } else {
-      console.log("Le son est désactivé.");
+      console.log('Le son est désactivé.');
     }
   };
 
@@ -75,25 +71,31 @@ const CaptureScreen: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full items-center">
-      <Title text='Capture ton Derkap !' />
-      <div className='px-2'>
-        {challenge && !imgTaken && (<ChallengerBox />)}
-      </div>
+      <Title text="Capture ton Derkap !" />
+      <div className="px-2">{challenge && !imgTaken && <ChallengerBox />}</div>
 
       <div className="w-full mt-4 relative h-0 pb-[125%]">
         {imgTaken ? (
-          <div className='absolute rounded-xl object-cover inset-0 h-full w-full bg-green-300'>
+          <div className="absolute rounded-xl object-cover inset-0 h-full w-full bg-green-300">
             <div
               onClick={() => resetPhoto()}
-              className='absolute top-2 left-2 p-2 bg-custom-black text-white rounded-xl'>
-              <XIcon className='w-6 h-6' />
+              className="absolute top-2 left-2 p-2 bg-custom-black text-white rounded-xl"
+            >
+              <XIcon className="w-6 h-6" />
             </div>
-            <img src={imgTaken} alt='img taken' className='object-cover w-full h-full rounded-xl' />
+            <img
+              src={imgTaken}
+              alt="img taken"
+              className="object-cover w-full h-full rounded-xl"
+            />
           </div>
         ) : (
           <div>
-            <Webcam className='absolute rounded-xl object-cover inset-0 h-full w-full'
-              onDoubleClick={() => setFacingMode(facingMode === 'user' ? 'environment' : 'user')}
+            <Webcam
+              className="absolute rounded-xl object-cover inset-0 h-full w-full"
+              onDoubleClick={() =>
+                setFacingMode(facingMode === 'user' ? 'environment' : 'user')
+              }
               mirrored={facingMode === 'user'}
               videoConstraints={{
                 facingMode: facingMode,
@@ -102,29 +104,29 @@ const CaptureScreen: React.FC = () => {
               screenshotFormat="image/jpeg"
               screenshotQuality={1}
             />
-            <div className='flex justify-center items-center'>
+            <div className="flex justify-center items-center">
               <div
                 onClick={() => capture()}
-                id='capture'
-                className='absolute w-20 h-20 border-[5px] border-gray-200 bg-blur-light bg bottom-2 rounded-full'>
-              </div>
+                id="capture"
+                className="absolute w-20 h-20 border-[5px] border-gray-200 bg-blur-light bg bottom-2 rounded-full"
+              ></div>
             </div>
           </div>
         )}
       </div>
 
       {imgTaken && (
-        <div className='flex flex-col items-center justify-center w-full mt-2'>
+        <div className="flex flex-col items-center justify-center w-full mt-2">
           {isValidatingFile || isRedirecting ? (
-            <Loader className='mb-32 mt-4' />
+            <Loader className="mb-32 mt-4" />
           ) : (
             <Button
               ref={validateRef}
-              id='validateCapture'
+              id="validateCapture"
               disabled={isValidatingFile || isRedirecting}
               onClick={() => validatePhoto()}
-              text='Poster mon derkap de fou'
-              className='mt-4 mb-32 mx-auto w-full font-champ text-xl'
+              text="Poster mon derkap de fou"
+              className="mt-4 mb-32 mx-auto w-full font-champ text-xl"
             />
           )}
         </div>

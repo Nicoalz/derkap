@@ -1,8 +1,11 @@
 "use client"
+
+
 import { fetchWithToken } from '@/libs/fetch';
 import { useEffect, useState } from "react";
 import { cn } from '../lib/utils';
 import { TChallenge } from '../types/Challenge';
+import ScratchCard from "react-scratchcard-v2";
 
 
 interface props extends React.HTMLAttributes<HTMLDivElement> {
@@ -11,10 +14,12 @@ interface props extends React.HTMLAttributes<HTMLDivElement> {
 
 const ChallengerBox = ({ challenge, className, ...props }: props) => {
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
+  const [isCardScratched, setIsCardScratched] = useState(false);
 
   useEffect(() => { // todo change subscription
     setIsNotificationSupported('Notification' in window);
   }, []);
+
   const requestPermission = async () => {
     if (!isNotificationSupported || Notification?.permission === 'granted') return;
 
@@ -84,26 +89,34 @@ const ChallengerBox = ({ challenge, className, ...props }: props) => {
 
 
   return (
-    <div {...props} className={cn('w-full', className)}>
-      <div
-        onClick={() => {
-          requestPermission();
-        }}
-        className='flex w-full px-4 bg-card border rounded-xl py-2 text-custom-black gap-4 items-center'>
-        {/* <Image className=' ' src='/visage.svg' width={60} height={60} alt='mrderka' /> */}
-        <p className='text-[3rem] '>
-          {emoji ?? '📭'}
-        </p>
-        <div className='text-left'>
-          <h1 className='font-bold uppercase text-lg font-champ'>{title ?? 'Derkap du jour'}</h1>
-          <p className='text-sm font-champ text-custom-black'>
-            {subtitle ?? 'Pas de défis pour le moment'}
+    <div {...props} className={cn('w-full  border border-black overflow-hidden rounded-xl', className)}>
+      <ScratchCard
+        width={window.innerWidth-10}
+        height={106}
+        image={'/scratchCard.png'}
+        finishPercent={80}
+        onComplete={() => {
+          setIsCardScratched(true);
+        }
+        }
+      >
+        <div
+          onClick={() => requestPermission()}
+          className='flex w-full px-4 bg-card border rounded-xl py-2 text-custom-black gap-4 items-center overflow-hidden'>
+          <p className='text-[3rem] '>
+            {emoji ?? '📭'}
           </p>
-          <p className='text-sm'>
-            {description ?? 'Reviens plus tard'}
-          </p>
+          <div className='text-left'>
+            <h1 className='font-bold uppercase text-lg font-champ'>{title ?? 'Derkap du jour'}</h1>
+            <p className='text-sm font-champ text-custom-black'>
+              {subtitle ?? 'Pas de défis pour le moment'}
+            </p>
+            <p className='text-sm'>
+              {description ?? 'Reviens plus tard'}
+            </p>
+          </div>
         </div>
-      </div>
+      </ScratchCard>
     </div>
   );
 };

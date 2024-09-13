@@ -37,8 +37,8 @@
 
 
 body {
-  background: linear-gradient(to bottom, #F6D5F7 0%, #FBE9D7 100%);
   color: #1b0a32 !important;
+  background-attachment: fixed;
 
   /* font-family: 'Champ', sans-serif; */
 }
@@ -108,4 +108,10 @@ body {
 
 .swiper {
   overflow: visible!important;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
 }

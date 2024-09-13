@@ -60,7 +60,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({ title, children }) => {
               <p className="text-center text-lg font-semibold">{title}</p>
               <span className="text-gray-500 text-sm">9/10 memebres</span>
               <div className="flex flex-col items-center mt-32 gap-4">
-                <h2 className="text-3xl">Code d'accès</h2>
+                <h2 className="text-3xl">Code d&apos;accès</h2>
                 <h3 className="text-xl font-bold font-champ">23SFR4</h3>
                 <Button text="Partager" onClick={handleShare} />
               </div>

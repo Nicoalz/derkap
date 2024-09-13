@@ -56,21 +56,21 @@ export type Database = {
           created_at: string
           id: number
           img_url: string | null
-          invite_code: string
+          invite_code: string | null
           name: string
         }
         Insert: {
           created_at?: string
           id?: number
           img_url?: string | null
-          invite_code: string
+          invite_code?: string | null
           name: string
         }
         Update: {
           created_at?: string
           id?: number
           img_url?: string | null
-          invite_code?: string
+          invite_code?: string | null
           name?: string
         }
         Relationships: []

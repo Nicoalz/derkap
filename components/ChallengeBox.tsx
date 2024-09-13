@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { getActiveChallenge } from '../functions/supabase/post/challenge/get-challenge';
+
 import { fetchWithToken } from '../libs/fetch';
 import { cn } from '../libs/utils';
 
@@ -13,20 +13,20 @@ const ChallengerBox = ({ className, ...props }: props) => {
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
 
   const fetchActiveChallenge = async () => {
-    try {
-      setIsLoading(true);
-      const { data, error } = await getActiveChallenge();
-      if (error) {
-        console.error('Error fetching challenge:', error);
-        return;
-      }
-      console.log('Active challenge:', data);
-      setChallenge(data);
-    } catch (err) {
-      console.error('Error fetching challenge:', err);
-    } finally {
-      setIsLoading(false);
-    }
+    // try {
+    //   setIsLoading(true);
+    //   const { data, error } = await getActiveChallenge();
+    //   if (error) {
+    //     console.error('Error fetching challenge:', error);
+    //     return;
+    //   }
+    //   console.log('Active challenge:', data);
+    //   setChallenge(data);
+    // } catch (err) {
+    //   console.error('Error fetching challenge:', err);
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   useEffect(() => {

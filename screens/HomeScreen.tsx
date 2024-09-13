@@ -1,8 +1,6 @@
 'use client';
 
-import { User } from 'lucide-react';
-import Link from 'next/link';
-import PullToRefresh from 'react-simple-pull-to-refresh';
+import Button from '@/components/Button';
 import {
   Drawer,
   DrawerClose,
@@ -12,8 +10,10 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer"
-import Button from '@/components/Button';
+} from "@/components/ui/drawer";
+import { User } from 'lucide-react';
+import Link from 'next/link';
+import PullToRefresh from 'react-simple-pull-to-refresh';
 
 
 

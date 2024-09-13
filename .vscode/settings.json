@@ -50,7 +50,7 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
   "[solidity]": {
     "editor.tabSize": 4,
@@ -74,5 +74,8 @@
   "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "eslint.nodePath": ".yarn/sdks",
   "solidity.compileUsingRemoteVersion": "v0.8.24+commit.e11b9ed9",
-  "files.autoSave": "afterDelay"
+  "files.autoSave": "afterDelay",
+  "[jsonc]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  }
 }

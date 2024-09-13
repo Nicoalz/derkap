@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Run the build script
+echo "Running build script"
+npm run build
+
+# Check if the build script failed
+if [ $? -ne 0 ]; then
+  echo "Build failed, commit aborted"
+  exit 1
+fi
+
+# If the build script succeeded, continue with the commit
+echo "Build succeeded, continuing with commit"
+exit 0

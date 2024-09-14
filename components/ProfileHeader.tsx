@@ -18,7 +18,9 @@ interface GroupeHeaderProps {
 
 const ProfileHeader: React.FC<GroupeHeaderProps> = ({ userData, children }) => {
   const [isInfoChanged, setIsInfoChanged] = useState(false);
-  const [userImage, setUserImage] = useState<File | string | null>(userData.avatar_url);
+  const [userImage, setUserImage] = useState<File | string | null>(
+    userData.avatar_url,
+  );
   const [preview, setPreview] = useState<string | null>(userData.avatar_url);
   const [userName, setUserName] = useState(userData.username);
   const [userEmail, setUserEmail] = useState(userData.email);
@@ -42,7 +44,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({ userData, children }) => {
     } else {
       toast.error('Veuillez remplir tous les champs');
     }
-  }
+  };
 
   const membreSince = () => {
     const date = new Date(userData.created_at);
@@ -51,7 +53,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({ userData, children }) => {
       month: 'long',
       day: 'numeric',
     });
-  }
+  };
 
   return (
     <header className="w-full flex justify-between items-center p-6 md:px-12 h-fit relative">
@@ -63,15 +65,9 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({ userData, children }) => {
         {userData.username}
       </h1>
 
-      <SheetComponent
-        trigger={
-          <Ellipsis />
-        }
-        title="Mes infos"
-      >
+      <SheetComponent trigger={<Ellipsis />} title="Mes infos">
         <div className="flex flex-col justify-between h-full">
-
-          <div className='flex flex-col gap-4 items-start justify-center'>
+          <div className="flex flex-col gap-4 items-start justify-center">
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <p>Mon avatar</p>
               <div className="relative w-full p-2 bg-white border rounded-lg flex flex-col gap-2 items-center justify-center">
@@ -84,16 +80,13 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({ userData, children }) => {
                 ) : (
                   <ImageIcon size={24} className="text-gray-400" />
                 )}
-                <p
-                  className="text-gray-600 text-center text-sm"
-                >
+                <p className="text-gray-600 text-center text-sm">
                   Changer de photo
                 </p>
                 <label
                   htmlFor="image-upload"
                   className="absolute h-full w-full"
-                >
-                </label>
+                ></label>
                 <Input
                   type="file"
                   id="image-upload"
@@ -106,24 +99,40 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({ userData, children }) => {
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <p>Surnom</p>
-              <Input type="name" id="name" placeholder="DerkapUser" value={userName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setUserName(e.target.value); setIsInfoChanged(true); }} />
+              <Input
+                type="name"
+                id="name"
+                placeholder="DerkapUser"
+                value={userName}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setUserName(e.target.value);
+                  setIsInfoChanged(true);
+                }}
+              />
             </div>
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <p>Email</p>
-              <Input type="name" id="name" placeholder="thomas@derkap.com" value={userEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setUserEmail(e.target.value); setIsInfoChanged(true); }} />
+              <Input
+                type="name"
+                id="name"
+                placeholder="thomas@derkap.com"
+                value={userEmail}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setUserEmail(e.target.value);
+                  setIsInfoChanged(true);
+                }}
+              />
             </div>
           </div>
 
           <div className="flex flex-col gap-2">
-            <p
-              className="text-gray-600 text-center text-sm"
-            >
+            <p className="text-gray-600 text-center text-sm">
               Membre depuis le {membreSince()}
             </p>
             <Button
               text="Modifier"
-              className={cn("w-full", !isInfoChanged && "bg-gray-300")}
+              className={cn('w-full', !isInfoChanged && 'bg-gray-300')}
               disabled={!isInfoChanged}
               onClick={handleSubmit}
             />
@@ -138,9 +147,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({ userData, children }) => {
               }
             />
           </div>
-
         </div>
-
       </SheetComponent>
 
       {children}

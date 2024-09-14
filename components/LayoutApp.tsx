@@ -22,9 +22,9 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
   }
 
   return (
-    <div className=" flex flex-col min-h-screen dark">
+    <div className="flex flex-col min-h-screen dark">
       <>
-        <main className="container mx-auto flex-1 flex flex-col">
+        <main className="h-full container mx-auto flex-1 flex flex-col">
           {children}
         </main>
       </>

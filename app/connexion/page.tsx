@@ -11,8 +11,8 @@ export default async function page() {
     redirect('/');
   }
   return (
-    <div className="h-full flex-grow flex pt-[5vh] flex-col">
-      <h2 className="text-center w-full">Se connecter</h2>
+    <div className="h-screen flex items-center justify-evenly pt-[5vh] flex-col p-5 gap-5">
+      <h2 className="text-center text-3xl w-full">Se connecter</h2>
       <SignInForm />
     </div>
   );

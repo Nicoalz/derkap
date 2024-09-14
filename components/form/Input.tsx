@@ -29,7 +29,8 @@ export default function Input({
           type={inputType}
           placeholder={placeholder}
           className={cn(
-            ' bg-white rounded-[10px] text-sm pl-[18px] text-black pr-[18px]  border-[1px] w-full border-transparent focus:outline-none shadow-base py-[12px]',
+            // ' bg-white rounded-[10px] text-sm pl-[18px] text-black pr-[18px]  border-[1px] w-full border-transparent focus:outline-none shadow-base py-[12px]',
+            'bg-white flex h-9 w-full rounded-md border border-zinc-200  px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-zinc-500 ',
             className,
             { 'border-red-500': errorMsg },
             { 'pr-[50px]': type === 'password' },

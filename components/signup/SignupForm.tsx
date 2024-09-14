@@ -1,19 +1,19 @@
 'use client';
 
-import { ChevronRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { ChevronRight } from 'lucide-react';
 import { signupSupabase } from '../../functions/supabase/signup-supabase';
 import { cn } from '../../libs/utils';
+import { default as Input } from '../form/Input';
 import {
   signUpEmailSchema,
   signUpPasswordSchema,
   signUpSchema,
   signUpUsernameSchema,
 } from '../../libs/zod/UserSchema';
-import { default as Input } from '../form/Input';
 
 export default function SignUpForm() {
   const [emailError, setEmailError] = useState<string>('');
@@ -74,7 +74,6 @@ export default function SignUpForm() {
         router.push('/connexion');
       }
     } catch (error) {
-      console.log({ 'Error : ': error });
       if (error instanceof z.ZodError) {
         error.errors.map(error => {
           if (error.path[0] === 'email') {
@@ -105,35 +104,37 @@ export default function SignUpForm() {
     <form
       action={handleSignUp}
       onSubmit={() => setIsLoading(true)}
-      className="max-w-[550px] flex self-center gap-y-[26px] flex-col w-full px-[50px] pt-[28px]"
+      className="max-w-[550px] flex self-center gap-6 flex-col w-full"
     >
-      <Input
-        placeholder="Pseudo"
-        type="text"
-        name="username"
-        errorMsg={usernameError}
-        onChange={e => checkUsernameSchema(e.target.value)}
-      />
-      <Input
-        placeholder="Email"
-        type="email"
-        name="email"
-        errorMsg={emailError}
-        onChange={e => checkEmailSchema(e.target.value)}
-      />
-      <Input
-        placeholder="Mot de passe"
-        type="password"
-        name="password"
-        errorMsg={passwordError}
-        onChange={e => checkPasswordSchema(e.target.value)}
-      />
+      <div className="flex flex-col gap-3">
+        <Input
+          placeholder="Pseudo"
+          type="text"
+          name="username"
+          errorMsg={usernameError}
+          onChange={e => checkUsernameSchema(e.target.value)}
+        />
+        <Input
+          placeholder="Email"
+          type="email"
+          name="email"
+          errorMsg={emailError}
+          onChange={e => checkEmailSchema(e.target.value)}
+        />
+        <Input
+          placeholder="Mot de passe"
+          type="password"
+          name="password"
+          errorMsg={passwordError}
+          onChange={e => checkPasswordSchema(e.target.value)}
+        />
+      </div>
       <input
         disabled={isLoading}
         type="submit"
         value={isLoading ? 'Chargement...' : "S'inscrire"}
         className={cn(
-          'bg-red-500 cursor-pointer text-white px-20 py-2 transition-transform rounded',
+          'bg-red-500 cursor-pointer text-white py-1 transition-transform rounded',
           { 'bg-gray-200 ': isLoading },
         )}
       />

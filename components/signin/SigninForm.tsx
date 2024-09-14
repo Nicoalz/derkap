@@ -11,12 +11,17 @@ export default function SignInForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSignUp = async (formData: FormData) => {
-    setIsLoading(true);
-
     const formValues = {
       email: formData.get('email')?.toString() || '',
       password: formData.get('password')?.toString() || '',
     };
+
+    if (!formValues.email || !formValues.password) {
+      return toast.error('Veuillez remplir tous les champs');
+    }
+
+    setIsLoading(true);
+
     try {
       const error = await signinSupabase({ formValues });
 
@@ -24,9 +29,7 @@ export default function SignInForm() {
         toast.error(error);
       }
     } catch (error) {
-      console.log({ 'Error : ': error });
       toast.error('Une erreur inattendue est survenue');
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -35,17 +38,22 @@ export default function SignInForm() {
   return (
     <form
       action={handleSignUp}
-      onSubmit={() => setIsLoading(true)}
-      className="max-w-[550px] flex self-center gap-y-[26px] flex-col w-full px-[50px] pt-[28px]"
+      onSubmit={e => {
+        e.preventDefault();
+        handleSignUp(new FormData(e.target as HTMLFormElement));
+      }}
+      className="max-w-[550px] flex self-center gap-6 flex-col w-full"
     >
-      <Input placeholder="Email" type="email" name="email" />
-      <Input placeholder="Mot de passe" type="password" name="password" />
+      <div className="flex flex-col gap-3">
+        <Input placeholder="Email" type="email" name="email" />
+        <Input placeholder="Mot de passe" type="password" name="password" />
+      </div>
       <input
         disabled={isLoading}
         type="submit"
         value={isLoading ? 'Chargement...' : 'Se connecter'}
         className={cn(
-          'bg-red-500 cursor-pointer text-white px-20 py-2 transition-transform rounded',
+          'bg-red-500 cursor-pointer text-white py-1 transition-transform rounded',
           { 'bg-gray-200 ': isLoading },
         )}
       />

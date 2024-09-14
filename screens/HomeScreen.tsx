@@ -22,7 +22,7 @@ const HomeScreen = () => {
         onRefresh={handleRefresh}
       >
         <div className="relative flex flex-col w-full gap-8 no-scrollbar">
-          <Link href='/groupe/1'>Lien vers le page Groupe 1</Link>
+          <Link href="/groupe/1">Lien vers le page Groupe 1</Link>
         </div>
       </PullToRefresh>
     </div>

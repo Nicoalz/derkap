@@ -78,8 +78,7 @@ const GroupScreen = ({ id }: { id: string }) => {
         )}
       </div>
 
-      {
-        !isChallenge && !isVoting && !isEnded &&
+      {!isChallenge && !isVoting && !isEnded && (
         <div className="w-full h-[80%] flex flex-col items-center justify-around">
           <p>
             Pas de challenge pour le moment... <br /> Lancer le premier dès
@@ -87,26 +86,26 @@ const GroupScreen = ({ id }: { id: string }) => {
           </p>
           <Button text="+" onClick={() => setIsChallenge(true)} />
         </div>
-      }
+      )}
 
-      {isChallenge &&
+      {isChallenge && (
         <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
           <ChallengerBox />
           <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
             <p className="text-white">C’est le moment réaliser ton défi !</p>
           </div>
-          <Button text="Prends ton Derkap" onClick={
-            () => {
+          <Button
+            text="Prends ton Derkap"
+            onClick={() => {
               setIsVoting(true);
               setIsChallenge(false);
               setChallengeStatus('voting');
-            }
-          } />
+            }}
+          />
         </div>
-      }
+      )}
 
-      {
-        isVoting &&
+      {isVoting && (
         <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
           <ChallengerBox />
           <CarouselComponent>
@@ -118,32 +117,33 @@ const GroupScreen = ({ id }: { id: string }) => {
               </CarouselItem>
             ))}
           </CarouselComponent>
-          <Button text="Voter" onClick={
-            () => {
+          <Button
+            text="Voter"
+            onClick={() => {
               setIsEnded(true);
               setIsVoting(false);
               setChallengeStatus('ended');
-            }
-          } />
+            }}
+          />
         </div>
-      }
+      )}
 
-      {
-        isEnded &&
+      {isEnded && (
         <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
           <ChallengerBox />
           <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
             <p className="text-white">Le défi est terminé !</p>
           </div>
-          <Button text="Relancer dès mainteant un défi !" onClick={
-            () => {
+          <Button
+            text="Relancer dès mainteant un défi !"
+            onClick={() => {
               setIsChallenge(true);
               setIsEnded(false);
               setChallengeStatus('posting');
-            }
-          } />
+            }}
+          />
         </div>
-      }
+      )}
     </div>
   );
 };

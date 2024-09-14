@@ -10,7 +10,7 @@ interface ButtonProps
     ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
-  text: string;
+  text: string | React.ReactNode;
   isCancel?: boolean;
   asLink?: boolean;
   url?: string;

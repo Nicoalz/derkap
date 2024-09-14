@@ -18,13 +18,13 @@ const Header: React.FC<HeaderProps> = ({
   children,
 }) => {
   return (
-    <header className="w-full flex px-10 justify-between items-center py-6 md:px-12 h-fit">
+    <header className="w-full flex px-10 justify-between items-center py-6 md:px-12 h-fit relative">
       <Link href={'/'} className="flex items-center gap-x-2">
         <ChevronLeft size={24} />
         {withText && 'Retour'}
       </Link>
 
-      <h1 className="font-champ text-xl tracking-wider capitalize max-w-52 text-wrap overflow-hidden text-ellipsis text-center">
+      <h1 className="abs-center font-champ text-xl tracking-wider capitalize max-w-52 text-wrap overflow-hidden text-ellipsis text-center">
         {title}
       </h1>
 

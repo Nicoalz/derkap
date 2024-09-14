@@ -12,7 +12,7 @@ interface CarouselComponentProps {
 
 const CarouselComponent = ({ children }: CarouselComponentProps) => {
   return (
-    <Carousel className="w-full max-w-xs">
+    <Carousel className="w-[75%] max-w-xs">
       <CarouselContent>{children}</CarouselContent>
       <CarouselPrevious className="text-white" />
       <CarouselNext className="text-white" />

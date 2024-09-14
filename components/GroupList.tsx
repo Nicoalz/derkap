@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 interface Profile {
   id: number;
   username: string;
@@ -24,7 +26,8 @@ const GroupList: React.FC<GroupListProps> = ({ groups, currentUser }) => {
       ) : (
         <ul className="space-y-4">
           {groups.map(group => (
-            <li
+            <Link
+              href={`/groupe/${group.id}`}
               key={group.id}
               className="flex flex-col w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-card gap-4"
             >
@@ -54,7 +57,7 @@ const GroupList: React.FC<GroupListProps> = ({ groups, currentUser }) => {
                   ))}
                 </ul>
               </div>
-            </li>
+            </Link>
           ))}
         </ul>
       )}

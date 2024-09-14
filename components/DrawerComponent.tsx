@@ -1,39 +1,39 @@
 import {
   Drawer,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
-  DrawerClose,
 } from '@/components/ui/drawer';
-import Button from '@/components/Button';
 
 interface DrawerComponentProps {
-  buttonText: string;
+  trigger: React.ReactNode;
   title: string;
   children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const DrawerComponent: React.FC<DrawerComponentProps> = ({
-  buttonText,
+  trigger,
   title,
   children,
+  isOpen,
+  onClose,
 }) => {
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
-        <Button text={buttonText} />
-      </DrawerTrigger>
-      <DrawerContent className="w-full max-w-md h-auto rounded-t-xl bg-white">
-        <DrawerHeader>
-          <DrawerTitle className="text-center text-2xl font-bold">
-            {title}
-          </DrawerTitle>
-        </DrawerHeader>
-        {children}
-      </DrawerContent>
-    </Drawer>
+    <>
+      {trigger}
+      <Drawer open={isOpen} onOpenChange={open => !open && onClose()}>
+        <DrawerContent className="w-full max-w-md h-auto rounded-t-xl bg-white">
+          <DrawerHeader>
+            <DrawerTitle className="text-center text-2xl font-bold">
+              {title}
+            </DrawerTitle>
+          </DrawerHeader>
+          {children}
+        </DrawerContent>
+      </Drawer>
+    </>
   );
 };
 

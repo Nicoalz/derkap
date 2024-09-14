@@ -7,6 +7,9 @@ import PullToRefresh from 'react-simple-pull-to-refresh';
 import GroupForm from '@/components/GroupForm';
 import GroupList from '@/components/GroupList';
 import DrawerComponent from '@/components/DrawerComponent';
+import Button from '@/components/Button';
+import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
 interface Profile {
   id: number;
@@ -55,6 +58,10 @@ const HomeScreen = () => {
   ];
 
   const [groups, setGroups] = useState<Group[]>(mockGroups);
+  const [isCreateGroupDrawerOpen, setIsCreateGroupDrawerOpen] =
+    useState<boolean>(false);
+  const [isJoinGroupDrawerOpen, setIsJoinGroupDrawerOpen] =
+    useState<boolean>(false);
 
   const handleRefresh = async () => {
     console.log('refreshing');
@@ -87,19 +94,40 @@ const HomeScreen = () => {
       >
         <div className="relative flex flex-col w-full gap-8 no-scrollbar">
           <div className="flex justify-center w-full gap-4">
-            {' '}
-            {/* Row class */}
+            <Button
+              text="Créer un groupe"
+              onClick={() => setIsCreateGroupDrawerOpen(true)}
+            />
+            <Button
+              text="Rejoindre un groupe"
+              onClick={() => setIsJoinGroupDrawerOpen(true)}
+            />
+
             <DrawerComponent
-              buttonText="Créer un groupe"
+              trigger={null}
               title="Créer un groupe"
+              isOpen={isCreateGroupDrawerOpen}
+              onClose={() => setIsCreateGroupDrawerOpen(false)}
             >
-              <GroupForm onCreateGroup={createGroup} />
+              <GroupForm
+                onCreateGroup={createGroup}
+                onCloseDrawer={() => setIsCreateGroupDrawerOpen(false)}
+              />
             </DrawerComponent>
+
             <DrawerComponent
-              buttonText="Rejoindre un groupe"
+              trigger={null}
               title="Rejoindre un groupe"
+              isOpen={isJoinGroupDrawerOpen}
+              onClose={() => setIsJoinGroupDrawerOpen(false)}
             >
-              <p>Rejoins un groupe ici (fonctionnalité à venir).</p>
+              <div className="w-full flex flex-col p-6 gap-12 mb-12">
+                <Input placeholder="Code d'invitation" />
+                <Button
+                  text="Rejoindre"
+                  onClick={() => toast.info("La fonction n'existe pas encore")}
+                />
+              </div>
             </DrawerComponent>
           </div>
 

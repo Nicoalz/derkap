@@ -8,7 +8,7 @@ const ChallengerBox = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
   const [challenge, setChallenge] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
 
   const fetchActiveChallenge = async () => {

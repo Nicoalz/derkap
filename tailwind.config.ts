@@ -76,6 +76,9 @@ const config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      // gridTemplateColumns: {
+      //   "header-
+      // }
     },
   },
   plugins: [require('tailwindcss-animate')],

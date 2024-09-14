@@ -28,7 +28,7 @@ export default function Button({
       <Link
         href={url ?? ''}
         className={cn(
-          ' bg-custom-primary text-white py-2 px-4 rounded-xl  text-sm',
+          ' bg-custom-primary text-white py-2 px-4 rounded  text-sm',
           className,
           { 'bg-gray-200 text-custom-black': isCancel },
         )}
@@ -42,7 +42,7 @@ export default function Button({
     <button
       {...props}
       className={cn(
-        ' bg-custom-primary text-white py-2 px-4 rounded-xl  text-sm',
+        ' bg-custom-primary text-white py-2 px-4 rounded  text-sm',
         className,
         { 'bg-gray-200 text-custom-black': isCancel },
       )}

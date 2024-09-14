@@ -88,7 +88,7 @@ const HomeScreen = () => {
       </div>
 
       <PullToRefresh
-        className="no-scollbar"
+        className="no-scollbar w-full"
         pullingContent={''}
         onRefresh={handleRefresh}
       >

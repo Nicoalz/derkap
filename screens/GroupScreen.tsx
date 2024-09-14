@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
 
 import Button from '@/components/Button';
@@ -8,8 +8,12 @@ import ChallengerBox from '@/components/ChallengeBox';
 import GroupeHeader from '@/components/GroupeHeader';
 import CarouselComponent from '@/components/CarousselComponent';
 import { CarouselItem } from '@/components/ui/carousel';
+import { getGroups } from '@/functions/group-action';
+import { TGroupDB } from '@/types/types';
 
 const GroupScreen = ({ id }: { id: string }) => {
+  const [isLoadding, setIsLoadding] = useState<boolean>(true);
+  const [groupData, setGroupData] = useState<TGroupDB>();
   const [isChallenge, setIsChallenge] = useState<boolean>(false);
   const [isVoting, setIsVoting] = useState<boolean>(false);
   const [isEnded, setIsEnded] = useState<boolean>(false);
@@ -17,7 +21,6 @@ const GroupScreen = ({ id }: { id: string }) => {
   const [challengeStatus, setChallengeStatus] = useState<
     'posting' | 'voting' | 'ended'
   >('posting');
-  const totalElements = 10;
   const limitElements = 5;
 
   const statusColorMap: { [key in 'posting' | 'voting' | 'ended']: string } = {
@@ -36,9 +39,28 @@ const GroupScreen = ({ id }: { id: string }) => {
     }
   };
 
+  const handleGetGroups = async () => {
+    const { data, error } = await getGroups({});
+    if (error) return console.error(error);
+    if (data) {
+      const group = data.filter((group: TGroupDB) => group.id === Number(id));
+      setGroupData(group[0]);
+      setIsLoadding(false);
+    }
+  };
+
+  useEffect(() => {
+    handleGetGroups();
+  }, []);
+
+  if (isLoadding) {
+    return <div>Chargement...</div>;
+  }
+
+
   return (
     <div className="h-screen">
-      <GroupeHeader title="Groupe Name">
+      <GroupeHeader groupeData={groupData}>
         {(isChallenge || isVoting || isEnded) && (
           <div
             className={cn(
@@ -52,26 +74,26 @@ const GroupScreen = ({ id }: { id: string }) => {
       </GroupeHeader>
 
       <div className="w-full flex items-start justify-center px-6 py-3">
-        {Array.from({ length: totalElements })
+        {groupData?.members
           .slice(0, limitElements)
           .map((_, index) => (
             <div
               className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
-              style={{ zIndex: totalElements - index }}
+              style={{ zIndex: groupData.members.length - index }}
               key={index}
             >
               <img
-                src={`https://picsum.photos/10${index}`}
+                src={groupData.members[index].profile?.avatar_url ?? ''}
                 className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full`}
               />
             </div>
           ))}
 
-        {Array.from({ length: totalElements }).length > limitElements && (
+        {groupData?.members && groupData.members.length > limitElements && (
           <div className="flex flex-col items-center">
             <div className="w-10 h-10 border border-custom-black rounded-full -ml-2 flex items-center justify-center">
               <p className="text-lg text-custom-black">
-                +{totalElements - limitElements}
+                +{groupData.members.length - limitElements}
               </p>
             </div>
           </div>

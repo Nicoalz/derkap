@@ -3,15 +3,19 @@ import Button from '@/components/Button';
 import { ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { Input } from './ui/input';
+import { createGroup } from '@/functions/group-action';
+import { TGroupDB } from '@/types/types';
 
 interface GroupFormProps {
-  onCreateGroup: (name: string, imageFile: File | null) => void;
   onCloseDrawer: () => void;
+  groups: TGroupDB[];
+  setGroups: React.Dispatch<React.SetStateAction<TGroupDB[]>>;
 }
 
 const GroupForm: React.FC<GroupFormProps> = ({
-  onCreateGroup,
   onCloseDrawer,
+  groups,
+  setGroups,
 }) => {
   const [groupName, setGroupName] = useState('');
   const [groupImage, setGroupImage] = useState<File | null>(null);
@@ -25,15 +29,13 @@ const GroupForm: React.FC<GroupFormProps> = ({
     }
   };
 
-  const handleSubmit = () => {
-    if (groupName && groupImage) {
-      onCreateGroup(groupName, groupImage);
-      setGroupName('');
-      setGroupImage(null);
-      setPreview(null);
+  const handleCreateGroup = async () => {
+    const { data, error } = await createGroup({ name: groupName });
+    if (error) return console.error(error);
+    if (data) {
+      setGroups([...groups, data]);
       onCloseDrawer();
-    } else {
-      toast.error('Veuillez remplir tous les champs');
+      toast.success('Groupe créé avec succès');
     }
   };
 
@@ -75,7 +77,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
         />
       </div>
 
-      <Button text="Créer" onClick={handleSubmit} className="w-full" />
+      <Button text="Créer" onClick={handleCreateGroup} className="w-full" />
     </div>
   );
 };

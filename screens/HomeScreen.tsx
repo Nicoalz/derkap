@@ -1,63 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from 'lucide-react';
 import Link from 'next/link';
 import PullToRefresh from 'react-simple-pull-to-refresh';
+import { toast } from 'sonner';
+import { getGroups, joinGroup } from '@/functions/group-action';
+import { TGroupDB } from '@/types/types';
 import GroupForm from '@/components/GroupForm';
 import GroupList from '@/components/GroupList';
 import DrawerComponent from '@/components/DrawerComponent';
 import Button from '@/components/Button';
 import { Input } from '@/components/ui/input';
-import { toast } from 'sonner';
 
-interface Profile {
-  id: number;
-  username: string;
-  avatar_url: string;
-}
-
-interface Group {
-  id: number;
-  name: string;
-  img_url: string;
-  profiles: Profile[];
-}
 
 const HomeScreen = () => {
-  const currentUser: Profile = {
-    id: 999,
-    username: 'MonProfil',
-    avatar_url: 'https://via.placeholder.com/40',
-  };
+  const [isLoadingGettingGroup, setIsLoadingGettingGroup] = useState(true);
+  const [inviteCodeJoin, setInviteCodeJoin] = useState<string>('');
 
-  const mockGroups: Group[] = [
-    {
-      id: 1,
-      name: 'Groupe 1',
-      img_url: 'https://via.placeholder.com/150',
-      profiles: [
-        {
-          id: 1,
-          username: 'Alice',
-          avatar_url: 'https://via.placeholder.com/40',
-        },
-        {
-          id: 2,
-          username: 'Bob',
-          avatar_url: 'https://via.placeholder.com/40',
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Groupe 2',
-      img_url: 'https://via.placeholder.com/150',
-      profiles: [],
-    },
-  ];
-
-  const [groups, setGroups] = useState<Group[]>(mockGroups);
+  const [groups, setGroups] = useState<TGroupDB[]>([]);
   const [isCreateGroupDrawerOpen, setIsCreateGroupDrawerOpen] =
     useState<boolean>(false);
   const [isJoinGroupDrawerOpen, setIsJoinGroupDrawerOpen] =
@@ -67,17 +28,24 @@ const HomeScreen = () => {
     console.log('refreshing');
   };
 
-  const createGroup = (name: string, imageFile: File | null) => {
-    if (imageFile) {
-      const newGroup: Group = {
-        id: groups.length + 1,
-        name,
-        img_url: URL.createObjectURL(imageFile),
-        profiles: [],
-      };
-      setGroups([...groups, newGroup]);
+  const handleGetGroups = async () => {
+    const { data, error } = await getGroups({});
+    setIsLoadingGettingGroup(false);
+    if (error)  {
+      console.error(error)
+      toast.error('Erreur lors de la récupération des groupes')
     }
+    if (data) setGroups(data);
   };
+
+  const handleJoinGroup = async () => {
+    const { error } = await joinGroup({ invite_code: inviteCodeJoin });
+    if (error) return console.error(error);
+  };
+
+  useEffect(() => {
+    handleGetGroups();
+  }, []);
 
   return (
     <div className="w-full flex flex-col items-center relative flex-1 mb-32 no-scrollbar">
@@ -110,8 +78,9 @@ const HomeScreen = () => {
               onClose={() => setIsCreateGroupDrawerOpen(false)}
             >
               <GroupForm
-                onCreateGroup={createGroup}
                 onCloseDrawer={() => setIsCreateGroupDrawerOpen(false)}
+                groups={groups}
+                setGroups={setGroups}
               />
             </DrawerComponent>
 
@@ -122,16 +91,16 @@ const HomeScreen = () => {
               onClose={() => setIsJoinGroupDrawerOpen(false)}
             >
               <div className="w-full flex flex-col p-6 gap-12 mb-12">
-                <Input placeholder="Code d'invitation" />
+                <Input placeholder="Code d'invitation" value={inviteCodeJoin} onChange={e => setInviteCodeJoin(e.target.value)} />
                 <Button
                   text="Rejoindre"
-                  onClick={() => toast.info("La fonction n'existe pas encore")}
+                  onClick={handleJoinGroup}
                 />
               </div>
             </DrawerComponent>
           </div>
 
-          <GroupList groups={groups} currentUser={currentUser} />
+          <GroupList groups={groups} isLoadding={isLoadingGettingGroup} />
         </div>
       </PullToRefresh>
     </div>

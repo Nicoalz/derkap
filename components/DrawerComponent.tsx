@@ -20,7 +20,7 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({
   isOpen,
   onClose,
 }) => {
-  console.log(isOpen)
+  console.log(isOpen);
   return (
     <>
       {trigger}

@@ -13,7 +13,6 @@ import DrawerComponent from '@/components/DrawerComponent';
 import Button from '@/components/Button';
 import { Input } from '@/components/ui/input';
 
-
 const HomeScreen = () => {
   const [isLoadingGettingGroup, setIsLoadingGettingGroup] = useState(true);
   const [inviteCodeJoin, setInviteCodeJoin] = useState<string>('');
@@ -31,9 +30,9 @@ const HomeScreen = () => {
   const handleGetGroups = async () => {
     const { data, error } = await getGroups({});
     setIsLoadingGettingGroup(false);
-    if (error)  {
-      console.error(error)
-      toast.error('Erreur lors de la récupération des groupes')
+    if (error) {
+      console.error(error);
+      toast.error('Erreur lors de la récupération des groupes');
     }
     if (data) setGroups(data);
   };
@@ -91,11 +90,12 @@ const HomeScreen = () => {
               onClose={() => setIsJoinGroupDrawerOpen(false)}
             >
               <div className="w-full flex flex-col p-6 gap-12 mb-12">
-                <Input placeholder="Code d'invitation" value={inviteCodeJoin} onChange={e => setInviteCodeJoin(e.target.value)} />
-                <Button
-                  text="Rejoindre"
-                  onClick={handleJoinGroup}
+                <Input
+                  placeholder="Code d'invitation"
+                  value={inviteCodeJoin}
+                  onChange={e => setInviteCodeJoin(e.target.value)}
                 />
+                <Button text="Rejoindre" onClick={handleJoinGroup} />
               </div>
             </DrawerComponent>
           </div>

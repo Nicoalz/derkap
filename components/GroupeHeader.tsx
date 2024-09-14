@@ -15,7 +15,10 @@ interface GroupeHeaderProps {
   link?: string;
 }
 
-const GroupeHeader: React.FC<GroupeHeaderProps> = ({ groupeData, children }) => {
+const GroupeHeader: React.FC<GroupeHeaderProps> = ({
+  groupeData,
+  children,
+}) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isInfoChanged, setIsInfoChanged] = useState<boolean>(false);
   const [groupeName, setGroupeName] = useState(groupeData?.name);
@@ -90,11 +93,15 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({ groupeData, children }) => 
                 alt="Logo Groupe"
                 className="w-32 rounded-full"
               />
-              <p className="text-center text-lg font-semibold">{groupeData?.name}</p>
+              <p className="text-center text-lg font-semibold">
+                {groupeData?.name}
+              </p>
               <span className="text-gray-500 text-sm">9/10 memebres</span>
               <div className="flex flex-col items-center mt-32 gap-4">
                 <h2 className="text-3xl">Code d&apos;accès</h2>
-                <h3 className="text-xl font-bold font-champ">{groupeData?.invite_code}</h3>
+                <h3 className="text-xl font-bold font-champ">
+                  {groupeData?.invite_code}
+                </h3>
                 <Button text="Partager" onClick={handleShare} />
               </div>
             </div>
@@ -109,11 +116,11 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({ groupeData, children }) => 
                 onClick={handleSubmit}
               />
             ) : (
-              <div className='w-full flex flex-col gap-4'>
+              <div className="w-full flex flex-col gap-4">
                 <p className="text-gray-600 text-center text-sm">
                   Créé le {createAt()}
                 </p>
-                <div className='flex gap-2'>
+                <div className="flex gap-2">
                   <Button
                     text="Modifier"
                     className="w-full"

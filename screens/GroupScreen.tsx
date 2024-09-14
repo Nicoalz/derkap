@@ -57,7 +57,6 @@ const GroupScreen = ({ id }: { id: string }) => {
     return <div>Chargement...</div>;
   }
 
-
   return (
     <div className="h-screen">
       <GroupeHeader groupeData={groupData}>
@@ -74,20 +73,18 @@ const GroupScreen = ({ id }: { id: string }) => {
       </GroupeHeader>
 
       <div className="w-full flex items-start justify-center px-6 py-3">
-        {groupData?.members
-          .slice(0, limitElements)
-          .map((_, index) => (
-            <div
-              className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
-              style={{ zIndex: groupData.members.length - index }}
-              key={index}
-            >
-              <img
-                src={groupData.members[index].profile?.avatar_url ?? ''}
-                className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full`}
-              />
-            </div>
-          ))}
+        {groupData?.members.slice(0, limitElements).map((_, index) => (
+          <div
+            className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
+            style={{ zIndex: groupData.members.length - index }}
+            key={index}
+          >
+            <img
+              src={groupData.members[index].profile?.avatar_url ?? ''}
+              className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full`}
+            />
+          </div>
+        ))}
 
         {groupData?.members && groupData.members.length > limitElements && (
           <div className="flex flex-col items-center">

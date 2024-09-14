@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 
+import { Input } from '@/components/ui/input';
 import SheetComponent from './SheetComponent';
 import Button from './Button';
 
@@ -32,7 +32,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({ title, children }) => {
 
   return (
     <header className="w-full flex justify-between items-center p-6 md:px-12 h-fit relative">
-      <Link href={'/'} className="flex items-center gap-x-2">
+      <Link href='/' className="flex items-center gap-x-2">
         <ChevronLeft size={24} />
       </Link>
 

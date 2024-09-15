@@ -95,19 +95,22 @@ const GroupList = ({
               className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-card"
             >
               <div className="flex gap-4 items-center justify-start relative w-full">
-                {
-                  group.img_url ? (
-                    <img
-                      src={group.img_url}
-                      alt={group.name}
-                      className="w-16 h-16 rounded"
-                    />
-                  ) : (
-                    <div className='flex items-center justify-center border rounded w-16 h-16'>
-                      <p>{group.name.split(' ').map(word => word.charAt(0)).join('')}</p>
-                    </div>
-                  )
-                }
+                {group.img_url ? (
+                  <img
+                    src={group.img_url}
+                    alt={group.name}
+                    className="w-16 h-16 rounded"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center border rounded w-16 h-16">
+                    <p>
+                      {group.name
+                        .split(' ')
+                        .map(word => word.charAt(0))
+                        .join('')}
+                    </p>
+                  </div>
+                )}
 
                 <span className="text-xl font-semibold max-w-48 overflow-hidden truncate">
                   {group.name}
@@ -135,28 +138,29 @@ const GroupList = ({
                       self.findIndex(t => t.profile?.id === member.profile?.id),
                   )
                   .slice(0, limitElements)
-                  .map(
-                    (member, index) =>
-                      member.profile?.avatar_url ? (
-                        <div
-                          className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
-                          style={{ zIndex: group.members.length - index }}
-                          key={index}
-                        >
-                          <img
-                            src={member.profile.avatar_url}
-                            className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full"
-                          />
-                        </div>
-                      ) : (
-                        <div
-                          className={`${index !== 0 && '-ml-2'}`}
-                          style={{ zIndex: group.members.length - index }}
-                          key={index}
-                        >
-                          <p className='flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white'>{member.profile?.username?.charAt(0)}</p>
-                        </div>
-                      ),
+                  .map((member, index) =>
+                    member.profile?.avatar_url ? (
+                      <div
+                        className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
+                        style={{ zIndex: group.members.length - index }}
+                        key={index}
+                      >
+                        <img
+                          src={member.profile.avatar_url}
+                          className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full"
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className={`${index !== 0 && '-ml-2'}`}
+                        style={{ zIndex: group.members.length - index }}
+                        key={index}
+                      >
+                        <p className="flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white">
+                          {member.profile?.username?.charAt(0)}
+                        </p>
+                      </div>
+                    ),
                   )}
 
                 {group.members.length > limitElements && (

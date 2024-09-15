@@ -13,8 +13,7 @@ interface SheetProps {
   children: React.ReactNode;
 }
 
-const SheetComponent: React.FC<SheetProps> = ({ trigger, title, children }) => {  
-
+const SheetComponent: React.FC<SheetProps> = ({ trigger, title, children }) => {
   return (
     <Sheet>
       <SheetTrigger>{trigger}</SheetTrigger>

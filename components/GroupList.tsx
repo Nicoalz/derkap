@@ -95,11 +95,20 @@ const GroupList = ({
               className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-card"
             >
               <div className="flex gap-4 items-center justify-start relative w-full">
-                <img
-                  src={group.img_url ?? ''}
-                  alt={group.name}
-                  className="w-16 h-16 rounded"
-                />
+                {
+                  group.img_url ? (
+                    <img
+                      src={group.img_url}
+                      alt={group.name}
+                      className="w-16 h-16 rounded"
+                    />
+                  ) : (
+                    <div className='flex items-center justify-center border rounded w-16 h-16'>
+                      <p>{group.name.split(' ').map(word => word.charAt(0)).join('')}</p>
+                    </div>
+                  )
+                }
+
                 <span className="text-xl font-semibold max-w-48 overflow-hidden truncate">
                   {group.name}
                 </span>
@@ -118,7 +127,7 @@ const GroupList = ({
                 />
               </div>
               <Separator className="w-full bg-gray-400" />
-              <ul className="list-none flex gap-2">
+              <ul className="list-none flex">
                 {group.members
                   .filter(
                     (member, idx, self) =>
@@ -128,16 +137,24 @@ const GroupList = ({
                   .slice(0, limitElements)
                   .map(
                     (member, index) =>
-                      member.profile && (
+                      member.profile?.avatar_url ? (
                         <div
                           className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
                           style={{ zIndex: group.members.length - index }}
                           key={index}
                         >
                           <img
-                            src={member.profile.avatar_url ?? ''}
+                            src={member.profile.avatar_url}
                             className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full"
                           />
+                        </div>
+                      ) : (
+                        <div
+                          className={`${index !== 0 && '-ml-2'}`}
+                          style={{ zIndex: group.members.length - index }}
+                          key={index}
+                        >
+                          <p className='flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white'>{member.profile?.username?.charAt(0)}</p>
                         </div>
                       ),
                   )}

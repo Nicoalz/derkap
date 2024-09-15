@@ -41,6 +41,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
   const handleSubmit = () => {
     if (groupeName) {
       toast.success('Informations mises à jour');
+      setIsEditing(false);
     } else {
       toast.error('Veuillez remplir tous les champs');
     }
@@ -111,8 +112,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
             {isEditing ? (
               <Button
                 text="Modifier"
-                className={cn('w-full', !isInfoChanged && 'bg-gray-300')}
-                disabled={!isInfoChanged}
+                className="w-full"
                 onClick={handleSubmit}
               />
             ) : (

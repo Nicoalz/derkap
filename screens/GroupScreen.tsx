@@ -49,6 +49,11 @@ const GroupScreen = ({ id }: { id: string }) => {
     }
   };
 
+  const membresGroup = groupData?.members.filter(
+    (member, index, self) =>
+      index === self.findIndex(t => t.profile?.id === member.profile?.id),
+  );
+
   useEffect(() => {
     handleGetGroups();
   }, []);
@@ -73,97 +78,115 @@ const GroupScreen = ({ id }: { id: string }) => {
       </GroupeHeader>
 
       <div className="w-full flex items-start justify-center px-6 py-3">
-        {groupData?.members.slice(0, limitElements).map((_, index) => (
-          <div
-            className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
-            style={{ zIndex: groupData.members.length - index }}
-            key={index}
-          >
-            <img
-              src={groupData.members[index].profile?.avatar_url ?? ''}
-              className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full`}
-            />
-          </div>
+        {membresGroup?.slice(0, limitElements).map((member, index) => (
+          member.profile?.avatar_url ? (
+            <div
+              className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
+              style={{ zIndex: groupData?.members.length ? -index : 0 }}
+              key={index}
+            >
+              <img
+                src={member.profile.avatar_url || undefined}
+                className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full`}
+              />
+            </div>
+          ) : (
+            <div
+              className={`${index !== 0 && '-ml-2'}`}
+              style={{ zIndex: groupData?.members.length ? -index : 0 }}
+              key={index}
+            >
+              <p className='flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white'>{member.profile?.username?.charAt(0)}</p>
+            </div>
+          )
         ))}
 
-        {groupData?.members && groupData.members.length > limitElements && (
-          <div className="flex flex-col items-center">
-            <div className="w-10 h-10 border border-custom-black rounded-full -ml-2 flex items-center justify-center">
-              <p className="text-lg text-custom-black">
-                +{groupData.members.length - limitElements}
-              </p>
-            </div>
+      {membresGroup && membresGroup.length > limitElements && (
+        <div className="flex flex-col items-center">
+          <div className="w-10 h-10 border border-custom-black rounded-full -ml-2 flex items-center justify-center">
+            <p className="text-lg text-custom-black">
+              +{groupData?.members.length ? -limitElements : 0}
+            </p>
           </div>
-        )}
-      </div>
-
-      {!isChallenge && !isVoting && !isEnded && (
-        <div className="w-full h-[80%] flex flex-col items-center justify-around">
-          <p>
-            Pas de challenge pour le moment... <br /> Lancer le premier dès
-            maintenant !
-          </p>
-          <Button text="+" onClick={() => setIsChallenge(true)} />
-        </div>
-      )}
-
-      {isChallenge && (
-        <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
-          <ChallengerBox />
-          <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
-            <p className="text-white">C’est le moment réaliser ton défi !</p>
-          </div>
-          <Button
-            text="Prends ton Derkap"
-            onClick={() => {
-              setIsVoting(true);
-              setIsChallenge(false);
-              setChallengeStatus('voting');
-            }}
-          />
-        </div>
-      )}
-
-      {isVoting && (
-        <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
-          <ChallengerBox />
-          <CarouselComponent>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CarouselItem key={index}>
-                <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
-                  <p className="text-white">{index + 1}</p>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselComponent>
-          <Button
-            text="Voter"
-            onClick={() => {
-              setIsEnded(true);
-              setIsVoting(false);
-              setChallengeStatus('ended');
-            }}
-          />
-        </div>
-      )}
-
-      {isEnded && (
-        <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
-          <ChallengerBox />
-          <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
-            <p className="text-white">Le défi est terminé !</p>
-          </div>
-          <Button
-            text="Relancer dès mainteant un défi !"
-            onClick={() => {
-              setIsChallenge(true);
-              setIsEnded(false);
-              setChallengeStatus('posting');
-            }}
-          />
         </div>
       )}
     </div>
+
+      {
+    !isChallenge && !isVoting && !isEnded && (
+      <div className="w-full h-[80%] flex flex-col items-center justify-around">
+        <p>
+          Pas de challenge pour le moment... <br /> Lancer le premier dès
+          maintenant !
+        </p>
+        <Button text="+" onClick={() => setIsChallenge(true)} />
+      </div>
+    )
+  }
+
+  {
+    isChallenge && (
+      <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
+        <ChallengerBox />
+        <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
+          <p className="text-white">C’est le moment réaliser ton défi !</p>
+        </div>
+        <Button
+          text="Prends ton Derkap"
+          onClick={() => {
+            setIsVoting(true);
+            setIsChallenge(false);
+            setChallengeStatus('voting');
+          }}
+        />
+      </div>
+    )
+  }
+
+  {
+    isVoting && (
+      <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
+        <ChallengerBox />
+        <CarouselComponent>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <CarouselItem key={index}>
+              <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
+                <p className="text-white">{index + 1}</p>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselComponent>
+        <Button
+          text="Voter"
+          onClick={() => {
+            setIsEnded(true);
+            setIsVoting(false);
+            setChallengeStatus('ended');
+          }}
+        />
+      </div>
+    )
+  }
+
+  {
+    isEnded && (
+      <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
+        <ChallengerBox />
+        <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
+          <p className="text-white">Le défi est terminé !</p>
+        </div>
+        <Button
+          text="Relancer dès mainteant un défi !"
+          onClick={() => {
+            setIsChallenge(true);
+            setIsEnded(false);
+            setChallengeStatus('posting');
+          }}
+        />
+      </div>
+    )
+  }
+    </div >
   );
 };
 

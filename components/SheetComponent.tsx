@@ -5,6 +5,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { useEffect } from 'react';
 
 interface SheetProps {
   trigger: React.ReactNode;
@@ -12,7 +13,8 @@ interface SheetProps {
   children: React.ReactNode;
 }
 
-const SheetComponent: React.FC<SheetProps> = ({ trigger, title, children }) => {
+const SheetComponent: React.FC<SheetProps> = ({ trigger, title, children }) => {  
+
   return (
     <Sheet>
       <SheetTrigger>{trigger}</SheetTrigger>

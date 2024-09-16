@@ -63,7 +63,7 @@ const GroupScreen = ({ id }: { id: string }) => {
 
   if (isLoadding) {
     return (
-      <div className='h-screen'>
+      <div className="h-screen">
         <header className="w-full flex justify-between items-center p-6 md:px-12 h-fit relative">
           <Link href="/" className="flex items-center gap-x-2">
             <ChevronLeft size={24} />
@@ -84,16 +84,14 @@ const GroupScreen = ({ id }: { id: string }) => {
         </div>
 
         <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
-
-          <Skeleton className='w-full h-24'/>
-          <Skeleton className='w-full aspect-square'/>
-          <Skeleton className='py-2 px-4 text-sm text-transparent'>
+          <Skeleton className="w-full h-24" />
+          <Skeleton className="w-full aspect-square" />
+          <Skeleton className="py-2 px-4 text-sm text-transparent">
             Prends ton Derkap
           </Skeleton>
         </div>
-
       </div>
-    )
+    );
   }
 
   return (

@@ -65,7 +65,7 @@ const GroupList = ({
               />
             </div>
             <Separator className="w-full bg-gray-400" />
-            <ul className="list-none flex gap-2">
+            <ul className="list-none flex">
               {Array.from({ length: 5 }).map((_, index) => (
                 <div
                   className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}

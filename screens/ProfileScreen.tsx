@@ -33,10 +33,6 @@ const ProfileScreen = () => {
       </div>
 
       <Separator className="w-[80%] bg-gray-400 my-5" />
-
-      <div>
-        <p>Mes Groupes</p>
-      </div>
     </div>
   );
 };

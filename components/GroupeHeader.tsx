@@ -90,7 +90,6 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
   };
 
   console.log(groupeData?.members);
-  
 
   return (
     <header className="w-full flex justify-between items-center p-6 md:px-12 h-fit relative">
@@ -139,10 +138,9 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
                 {groupeData?.name}
               </p>
               <span className="text-gray-500 text-sm">
-                {
-                  membresGroup?.length
-                }
-                /10 memebres</span>
+                {membresGroup?.length}
+                /10 memebres
+              </span>
               <div className="flex flex-col items-center mt-32 gap-4">
                 <h2 className="text-3xl">Code d&apos;accès</h2>
                 <h3 className="text-xl font-bold font-champ">

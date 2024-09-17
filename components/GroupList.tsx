@@ -54,7 +54,7 @@ const GroupList = ({
         {Array.from({ length: 5 }).map((_, index) => (
           <div
             key={index}
-            className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black"
+            className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element"
           >
             <div className="flex gap-4 items-center justify-start relative w-full">
               <Skeleton className="w-16 h-16 rounded" />

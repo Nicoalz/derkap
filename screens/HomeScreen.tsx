@@ -70,12 +70,12 @@ const HomeScreen = () => {
           <div className="flex justify-center w-full gap-4 pt-2">
             <Button
               text="Créer un groupe"
-              className='focus:outline-none focus:ring focus:ring-violet-300'
+              className="focus:outline-none focus:ring focus:ring-violet-300"
               onClick={() => setIsCreateGroupDrawerOpen(true)}
             />
             <Button
               text="Rejoindre un groupe"
-              className='focus:outline-none focus:ring focus:ring-violet-300'
+              className="focus:outline-none focus:ring focus:ring-violet-300"
               onClick={() => setIsJoinGroupDrawerOpen(true)}
             />
 

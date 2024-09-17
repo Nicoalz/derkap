@@ -55,8 +55,8 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
       return;
     }
     const { error } = await deleteGroup({ group_id: groupeData.id });
-    if (!error)  {
-      router.push('/')
+    if (!error) {
+      router.push('/');
       return toast.success('Groupe supprimé avec succès');
     }
     if (error) return console.error(error);
@@ -68,8 +68,8 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
       return;
     }
     const { error } = await leaveGroup({ group_id: groupeData.id?.toString() });
-    if (!error)  {
-      router.push('/')
+    if (!error) {
+      router.push('/');
       return toast.success('Groupe quitté avec succès');
     }
     if (error) return console.error(error);
@@ -159,9 +159,9 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
                     className="w-full"
                     onClick={() => setIsEditing(!isEditing)}
                   />
-                  <Button 
-                    text="Quitter" 
-                    className="w-full bg-red-500" 
+                  <Button
+                    text="Quitter"
+                    className="w-full bg-red-500"
                     onClick={handleLeaveGroup}
                   />
                 </div>

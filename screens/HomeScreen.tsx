@@ -106,9 +106,8 @@ const HomeScreen = () => {
               </div>
             </DrawerComponent>
           </div>
-          <div className="before:absolute before:left-0 before:top-16 before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-b before:from-[#f2daf0] before:to-[#f2daf0]/0 before:content-['']">
-          </div>
-          <div className='w-full h-full overflow-scroll no-scrollbar'>
+          <div className="before:absolute before:left-0 before:top-16 before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-b before:from-[#f2daf0] before:to-[#f2daf0]/0 before:content-['']"></div>
+          <div className="w-full h-full overflow-scroll no-scrollbar">
             <GroupList groups={groups} isLoadding={isLoadingGettingGroup} />
           </div>
         </div>

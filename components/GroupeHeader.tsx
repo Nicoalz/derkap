@@ -25,6 +25,11 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
   const [groupeName, setGroupeName] = useState(groupeData?.name || '');
   const router = useRouter();
 
+  const membresGroup = groupeData?.members.filter(
+    (member, index, self) =>
+      index === self.findIndex(t => t.profile?.id === member.profile?.id),
+  );
+
   const handleShare = () => {
     if (navigator.share) {
       navigator
@@ -84,6 +89,9 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
     });
   };
 
+  console.log(groupeData?.members);
+  
+
   return (
     <header className="w-full flex justify-between items-center p-6 md:px-12 h-fit relative">
       <Link href="/" className="flex items-center gap-x-2">
@@ -130,7 +138,11 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
               <p className="text-center text-lg font-semibold">
                 {groupeData?.name}
               </p>
-              <span className="text-gray-500 text-sm">9/10 memebres</span>
+              <span className="text-gray-500 text-sm">
+                {
+                  membresGroup?.length
+                }
+                /10 memebres</span>
               <div className="flex flex-col items-center mt-32 gap-4">
                 <h2 className="text-3xl">Code d&apos;accès</h2>
                 <h3 className="text-xl font-bold font-champ">

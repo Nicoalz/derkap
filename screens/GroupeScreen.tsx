@@ -16,7 +16,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const GroupScreen = ({ id }: { id: string }) => {
   const [isLoadding, setIsLoadding] = useState<boolean>(true);
-  const [groupData, setGroupData] = useState<TGroupDB>();
+  const [groupeData, setGroupeData] = useState<TGroupDB>();
   const [isChallenge, setIsChallenge] = useState<boolean>(false);
   const [isVoting, setIsVoting] = useState<boolean>(false);
   const [isEnded, setIsEnded] = useState<boolean>(false);
@@ -47,12 +47,12 @@ const GroupScreen = ({ id }: { id: string }) => {
     if (error) return console.error(error);
     if (data) {
       const group = data.filter((group: TGroupDB) => group.id === Number(id));
-      setGroupData(group[0]);
+      setGroupeData(group[0]);
       setIsLoadding(false);
     }
   };
 
-  const membresGroup = groupData?.members.filter(
+  const membresGroup = groupeData?.members.filter(
     (member, index, self) =>
       index === self.findIndex(t => t.profile?.id === member.profile?.id),
   );
@@ -96,7 +96,7 @@ const GroupScreen = ({ id }: { id: string }) => {
 
   return (
     <div className="h-screen">
-      <GroupeHeader groupeData={groupData}>
+      <GroupeHeader groupeData={groupeData}>
         {(isChallenge || isVoting || isEnded) && (
           <div
             className={cn(
@@ -114,7 +114,7 @@ const GroupScreen = ({ id }: { id: string }) => {
           member.profile?.avatar_url ? (
             <div
               className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
-              style={{ zIndex: groupData?.members.length ? -index : 0 }}
+              style={{ zIndex: groupeData?.members.length ? -index : 0 }}
               key={index}
             >
               <img
@@ -125,7 +125,7 @@ const GroupScreen = ({ id }: { id: string }) => {
           ) : (
             <div
               className={`${index !== 0 && '-ml-2'}`}
-              style={{ zIndex: groupData?.members.length ? -index : 0 }}
+              style={{ zIndex: groupeData?.members.length ? -index : 0 }}
               key={index}
             >
               <p className="flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white">
@@ -139,7 +139,7 @@ const GroupScreen = ({ id }: { id: string }) => {
           <div className="flex flex-col items-center">
             <div className="w-10 h-10 border border-custom-black rounded-full -ml-2 flex items-center justify-center">
               <p className="text-lg text-custom-black">
-                +{groupData?.members.length ? -limitElements : 0}
+                +{groupeData?.members.length ? -limitElements : 0}
               </p>
             </div>
           </div>

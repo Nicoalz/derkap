@@ -47,7 +47,7 @@ const HomeScreen = () => {
       router.push(`/groupe/${data?.id}`);
     }
     if (error) {
-      toast.error("Code d'invitation invalide")
+      toast.error("Code d'invitation invalide");
       return console.error(error);
     }
   };

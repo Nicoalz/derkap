@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import Button from '@/components/Button';
-import { ImageIcon } from 'lucide-react';
 import { toast } from 'sonner';
+import { ImageIcon } from 'lucide-react';
 import { Input } from './ui/input';
 import { createGroup } from '@/functions/group-action';
 import { TGroupDB } from '@/types/types';
+import Button from '@/components/Button';
+import { useRouter } from 'next/navigation';
 
 interface GroupFormProps {
   onCloseDrawer: () => void;
@@ -20,6 +21,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
   const [groupName, setGroupName] = useState('');
   const [groupImage, setGroupImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -36,6 +38,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
       setGroups([...groups, data]);
       onCloseDrawer();
       toast.success('Groupe créé avec succès');
+      router.push(`/groupe/${data.id}`);
     }
   };
 

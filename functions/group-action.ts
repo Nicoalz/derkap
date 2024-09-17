@@ -113,6 +113,7 @@ export const joinGroup = async ({ invite_code }: { invite_code: string }) => {
   }
   if (!invite_code) {
     return {
+      data: null,
       error: 'Invite code is required',
     };
   }
@@ -122,7 +123,9 @@ export const joinGroup = async ({ invite_code }: { invite_code: string }) => {
     .select('*')
     .eq('invite_code', invite_code)
     .single();
+
   console.log({ group });
+
   if (errorGroup) {
     return {
       error: errorGroup.message,
@@ -138,6 +141,7 @@ export const joinGroup = async ({ invite_code }: { invite_code: string }) => {
     };
   }
   return {
+    data: group,
     error: null,
   };
 };

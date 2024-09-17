@@ -7,7 +7,8 @@ import SheetComponent from './SheetComponent';
 import Button from './Button';
 import { TGroupDB } from '@/types/types';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
+import { deleteGroup, leaveGroup } from '@/functions/group-action';
+import { useRouter } from 'next/navigation';
 
 interface GroupeHeaderProps {
   groupeData?: TGroupDB;
@@ -21,7 +22,8 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isInfoChanged, setIsInfoChanged] = useState<boolean>(false);
-  const [groupeName, setGroupeName] = useState(groupeData?.name);
+  const [groupeName, setGroupeName] = useState(groupeData?.name || '');
+  const router = useRouter();
 
   const handleShare = () => {
     if (navigator.share) {
@@ -47,6 +49,32 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
     }
   };
 
+  const handleDeleteGroup = async () => {
+    if (!groupeData?.id) {
+      console.error('Group ID is undefined');
+      return;
+    }
+    const { error } = await deleteGroup({ group_id: groupeData.id });
+    if (!error)  {
+      router.push('/')
+      return toast.success('Groupe supprimé avec succès');
+    }
+    if (error) return console.error(error);
+  };
+
+  const handleLeaveGroup = async () => {
+    if (!groupeData?.id) {
+      console.error('Group invite_code is undefined');
+      return;
+    }
+    const { error } = await leaveGroup({ group_id: groupeData.id?.toString() });
+    if (!error)  {
+      router.push('/')
+      return toast.success('Groupe quitté avec succès');
+    }
+    if (error) return console.error(error);
+  };
+
   const createAt = () => {
     const date = new Date(groupeData?.created_at ?? '');
     return date.toLocaleDateString('fr-FR', {
@@ -70,9 +98,9 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
         }
         title="Info du Groupe"
       >
-        <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col justify-between gap-2 h-full">
           {isEditing ? (
-            <div className="flex flex-col gap-4 items-start justify-center">
+            <div className="h-full flex flex-col gap-4 items-start justify-between">
               <div className="grid w-full max-w-sm items-center gap-1.5">
                 <p>Nom du groupe</p>
                 <Input
@@ -86,6 +114,11 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
                   }}
                 />
               </div>
+              <Button
+                text="Supprimer le groupe"
+                className="w-full bg-red-500"
+                onClick={handleDeleteGroup}
+              />
             </div>
           ) : (
             <div className="flex flex-col items-center">
@@ -126,7 +159,11 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
                     className="w-full"
                     onClick={() => setIsEditing(!isEditing)}
                   />
-                  <Button text="Quitter" className="w-full bg-red-500" />
+                  <Button 
+                    text="Quitter" 
+                    className="w-full bg-red-500" 
+                    onClick={handleLeaveGroup}
+                  />
                 </div>
               </div>
             )}

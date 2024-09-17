@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Head from 'next/head';
-import GroupScreen from '../../../screens/GroupScreen';
+import GroupeScreen from '../../../screens/GroupeScreen';
 
 export default function Groupe({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -13,7 +13,7 @@ export default function Groupe({ params }: { params: { id: string } }) {
         <title>{id}</title>
         <meta name="description" content="Accueil" />
       </Head>
-      <GroupScreen id={id} />
+      <GroupeScreen id={id} />
     </>
   );
 }

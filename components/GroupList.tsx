@@ -50,7 +50,7 @@ const GroupList = ({
 
   if (isLoadding) {
     return (
-      <div className="w-full p-4 flex flex-col gap-4">
+      <div className="w-full pt-8 p-4 flex flex-col gap-4">
         {Array.from({ length: 5 }).map((_, index) => (
           <div
             key={index}
@@ -83,7 +83,7 @@ const GroupList = ({
   }
 
   return (
-    <div className="w-full p-4 flex flex-col gap-4">
+    <div className="w-full p-4 pt-8 flex flex-col gap-4">
       {myGroup.length === 0 ? (
         <p className="text-center">No groups at the moment</p>
       ) : (

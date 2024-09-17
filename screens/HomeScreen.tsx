@@ -46,7 +46,10 @@ const HomeScreen = () => {
       setInviteCodeJoin('');
       router.push(`/groupe/${data?.id}`);
     }
-    if (error) return console.error(error);
+    if (error) {
+      toast.error("Code d'invitation invalide")
+      return console.error(error);
+    }
   };
 
   useEffect(() => {

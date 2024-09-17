@@ -19,6 +19,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
   setGroups,
 }) => {
   const [groupName, setGroupName] = useState('');
+  const [missingName, setMissingName] = useState(false)
   const [groupImage, setGroupImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const router = useRouter();
@@ -32,6 +33,9 @@ const GroupForm: React.FC<GroupFormProps> = ({
   };
 
   const handleCreateGroup = async () => {
+    if(!groupName) {
+      return setMissingName(true)
+    }
     const { data, error } = await createGroup({ name: groupName });
     if (error) return console.error(error);
     if (data) {
@@ -43,16 +47,21 @@ const GroupForm: React.FC<GroupFormProps> = ({
   };
 
   return (
-    <div className="p-6 flex flex-col items-center justify-cente h-fit">
-      <Input
-        type="text"
-        placeholder="Nom du groupe"
-        value={groupName}
-        onChange={e => setGroupName(e.target.value)}
-        className="w-full p-2 mb-4 border rounded text-center"
-      />
+    <div className="p-6 flex flex-col items-center justify-cente h-fit gap-4">
 
-      <div className="w-full h-fit p-6 bg-gray-100 rounded-lg flex flex-col items-center justify-center mb-4">
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <p>Nom du groupe</p>
+        <Input
+          type="text"
+          placeholder="Vacances Portugal 🇵🇹"
+          value={groupName}
+          onChange={e => setGroupName(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+        {missingName && <span className='text-red-500 text-xs'>Vous devez remplir ce champs</span>}
+      </div>
+
+      <div className="w-full h-fit p-6 bg-gray-100 rounded-lg flex flex-col items-center justify-center">
         {preview ? (
           <img
             src={preview}

@@ -67,13 +67,15 @@ const HomeScreen = () => {
         onRefresh={handleRefresh}
       >
         <div className="flex flex-col w-full gap-4 h-[90vh] relative">
-          <div className="flex justify-center w-full gap-4">
+          <div className="flex justify-center w-full gap-4 pt-2">
             <Button
               text="Créer un groupe"
+              className='focus:outline-none focus:ring focus:ring-violet-300'
               onClick={() => setIsCreateGroupDrawerOpen(true)}
             />
             <Button
               text="Rejoindre un groupe"
+              className='focus:outline-none focus:ring focus:ring-violet-300'
               onClick={() => setIsJoinGroupDrawerOpen(true)}
             />
 

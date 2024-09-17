@@ -127,3 +127,9 @@ body {
   content: '•';
   margin-left: 8px;
 }
+
+.shadow-element {
+  box-shadow: 5px 5px 0px 1px theme('colors.custom-black');
+  -webkit-box-shadow: 5px 5px 0px 1px theme('colors.custom-black');
+  -moz-box-shadow: 5px 5px 0px 1px theme('colors.custom-black');
+}

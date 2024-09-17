@@ -54,7 +54,7 @@ const GroupList = ({
         {Array.from({ length: 5 }).map((_, index) => (
           <div
             key={index}
-            className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-card"
+            className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black"
           >
             <div className="flex gap-4 items-center justify-start relative w-full">
               <Skeleton className="w-16 h-16 rounded" />
@@ -92,7 +92,7 @@ const GroupList = ({
             <Link
               href={`/groupe/${group.id}`}
               key={group.id}
-              className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-card"
+              className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element"
             >
               <div className="flex gap-4 items-center justify-start relative w-full">
                 {group.img_url ? (
@@ -117,7 +117,7 @@ const GroupList = ({
                 </span>
                 <Button
                   text={<SquareArrowOutUpRight size={14} />}
-                  className="absolute right-0 rounded-full aspect-square px-2 py-2"
+                  className="absolute right-0 rounded-full aspect-square px-2 py-2 focus:outline-none focus:ring focus:ring-violet-300"
                   onClick={e => {
                     e.preventDefault();
                     e.stopPropagation();

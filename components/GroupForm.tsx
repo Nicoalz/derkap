@@ -43,7 +43,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
   };
 
   return (
-    <div className="p-6 flex flex-col items-center justify-center">
+    <div className="p-6 flex flex-col items-center justify-cente h-fit">
       <Input
         type="text"
         placeholder="Nom du groupe"
@@ -52,7 +52,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
         className="w-full p-2 mb-4 border rounded text-center"
       />
 
-      <div className="w-full p-6 bg-gray-100 rounded-lg flex flex-col items-center justify-center mb-4">
+      <div className="w-full h-fit p-6 bg-gray-100 rounded-lg flex flex-col items-center justify-center mb-4">
         {preview ? (
           <img
             src={preview}

@@ -58,7 +58,7 @@ const HomeScreen = () => {
 
   return (
     <div className="w-full flex flex-col items-center relative flex-1 no-scrollbar">
-      <div className="w-full flex justify-end p-8 h-[10vh]">
+      <div className="w-full flex justify-end p-4 h-[10vh]">
         <Link href={'/profile'} className="flex items-center gap-x-2">
           <User size={24} />
         </Link>
@@ -72,7 +72,7 @@ const HomeScreen = () => {
         <>
           <div className="before:absolute before:left-0 before:top-14 before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-b before:from-[#f2daf0] before:to-[#f2daf0]/0 before:content-['']"></div>
           <div className="flex flex-col w-full gap-4 h-[90vh]">
-            <div className="flex justify-center w-full gap-2 pt-2 px-4">
+            <div className="flex justify-center w-full gap-2 pt-0 p-4">
               <Button
                 text="Créer un groupe"
                 className="focus:outline-none focus:ring focus:ring-violet-300 w-full"

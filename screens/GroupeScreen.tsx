@@ -109,29 +109,31 @@ const GroupScreen = ({ id }: { id: string }) => {
         )}
       </GroupeHeader>
 
-      <div className="w-full flex items-start justify-center px-6 py-3">
+      <ul className="list-none w-full flex items-start justify-center px-6 py-3">
         {membresGroup?.slice(0, limitElements).map((member, index) =>
           member.profile?.avatar_url ? (
-            <div
+            <Link
+              href={`/profile/${member.profile?.username}`}
               className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
-              style={{ zIndex: groupeData?.members.length ? -index : 0 }}
+              style={{ zIndex: membresGroup.length - index }}
               key={index}
             >
               <img
                 src={member.profile.avatar_url || undefined}
                 className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full`}
               />
-            </div>
+            </Link>
           ) : (
-            <div
-              className={`${index !== 0 && '-ml-2'}`}
-              style={{ zIndex: groupeData?.members.length ? -index : 0 }}
+            <Link
+              href={`/profile/${member.profile?.username}`}
+              className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
+              style={{ zIndex: membresGroup.length - index }}
               key={index}
             >
               <p className="flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white">
                 {member.profile?.username?.charAt(0)}
               </p>
-            </div>
+            </Link>
           ),
         )}
 
@@ -144,7 +146,7 @@ const GroupScreen = ({ id }: { id: string }) => {
             </div>
           </div>
         )}
-      </div>
+      </ul>
 
       {!isChallenge && !isVoting && !isEnded && (
         <div className="w-full h-[80%] flex flex-col items-center justify-around">

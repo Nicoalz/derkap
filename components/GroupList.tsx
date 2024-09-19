@@ -40,7 +40,7 @@ const GroupList = ({
         .share({
           title: 'Rejoignez mon Groupe sur Derkap !',
           text: `Rejoignez notre groupe "${title}" sur Derkap ! Le code d'accès est ${invite_code}`,
-          url: `https://www.derkap.vercel.app/groupe/${id}`,
+          url: `https://derkap.vercel.app/groupe/${id}`,
         })
         .catch(error => console.log('Erreur lors du partage', error));
     } else {
@@ -50,7 +50,7 @@ const GroupList = ({
 
   if (isLoadding) {
     return (
-      <div className="w-full pt-8 p-4 flex flex-col gap-4">
+      <div className="w-full pt-8 p-4 flex flex-col gap-4 mb-16">
         {Array.from({ length: 5 }).map((_, index) => (
           <div
             key={index}
@@ -83,7 +83,7 @@ const GroupList = ({
   }
 
   return (
-    <div className="w-full p-4 pt-8 flex flex-col gap-4">
+    <div className="w-full p-4 pt-8 flex flex-col gap-4 mb-16">
       {myGroup.length === 0 ? (
         <p className="text-center">No groups at the moment</p>
       ) : (
@@ -140,7 +140,8 @@ const GroupList = ({
                   .slice(0, limitElements)
                   .map((member, index) =>
                     member.profile?.avatar_url ? (
-                      <div
+                      <Link
+                      href={`/profile/${member.profile?.username}`}
                         className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
                         style={{ zIndex: group.members.length - index }}
                         key={index}
@@ -149,9 +150,10 @@ const GroupList = ({
                           src={member.profile.avatar_url}
                           className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full"
                         />
-                      </div>
+                      </Link>
                     ) : (
-                      <div
+                      <Link
+                        href={`/profile/${member.profile?.username}`}
                         className={`${index !== 0 && '-ml-2'}`}
                         style={{ zIndex: group.members.length - index }}
                         key={index}
@@ -159,7 +161,7 @@ const GroupList = ({
                         <p className="flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white">
                           {member.profile?.username?.charAt(0)}
                         </p>
-                      </div>
+                      </Link>
                     ),
                   )}
 

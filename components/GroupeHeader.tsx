@@ -36,7 +36,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
         .share({
           title: 'Rejoignez notre Groupe',
           text: `Rejoignez notre groupe "${groupeData?.name}" sur Derkap ! Le code d'accès est ${groupeData?.invite_code}`,
-          url: window.location.href,
+          url: `https://derkap.vercel.app/groupe/${groupeData?.id}`,
         })
         .then(() => console.log('Partage réussi'))
         .catch(error => console.log('Erreur lors du partage', error));

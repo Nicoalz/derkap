@@ -27,3 +27,29 @@ export const getProfile = async ({ user_id }: { user_id?: string }) => {
     error: null,
   };
 };
+
+export const getProfileName = async ({ user_name }: { user_name?: string }) => {
+  const supabase = createSupabaseAppServerClient();
+  const { user } = (await supabase.auth.getUser()).data;
+  if (!user) {
+    return {
+      data: null,
+      error: 'User not found',
+    };
+  }
+  const { data, error } = await supabase
+    .from('profile')
+    .select('*')
+    .eq('username', user_name ?? user)
+    .single();
+  if (error) {
+    return {
+      data: null,
+      error: error.message,
+    };
+  }
+  return {
+    data,
+    error: null,
+  };
+};

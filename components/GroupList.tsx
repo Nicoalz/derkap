@@ -50,11 +50,11 @@ const GroupList = ({
 
   if (isLoadding) {
     return (
-      <div className="w-full pt-8 p-4 flex flex-col gap-4 mb-16">
+      <div className="w-full h-full overflow-scroll no-scrollbar flex flex-col gap-4 p-4">
         {Array.from({ length: 5 }).map((_, index) => (
           <div
             key={index}
-            className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element"
+            className={`flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element ${index === membresGroup.length - 1 && 'mb-16'}`}
           >
             <div className="flex gap-4 items-center justify-start relative w-full">
               <Skeleton className="w-16 h-16 rounded" />
@@ -83,16 +83,16 @@ const GroupList = ({
   }
 
   return (
-    <div className="w-full p-4 pt-8 flex flex-col gap-4 mb-16">
+    <div className="w-full h-full overflow-scroll no-scrollbar flex flex-col gap-4 p-4">
       {myGroup.length === 0 ? (
         <p className="text-center">No groups at the moment</p>
       ) : (
         <>
-          {membresGroup.map(group => (
+          {membresGroup.map((group, index) => (
             <Link
               href={`/groupe/${group.id}`}
               key={group.id}
-              className="flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element"
+              className={`flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element ${index === membresGroup.length - 1 && 'mb-16'}`}
             >
               <div className="flex gap-4 items-center justify-start relative w-full">
                 {group.img_url ? (

@@ -65,57 +65,57 @@ const HomeScreen = () => {
       </div>
 
       <PullToRefresh
-        className="no-scollbar w-full h-[90vh]"
+        className="no-scollbar w-full h-[90vh] relative"
         pullingContent={''}
         onRefresh={handleRefresh}
       >
-        <div className="flex flex-col w-full gap-4 h-[90vh] relative">
-          <div className="flex justify-center w-full gap-4 pt-2">
-            <Button
-              text="Créer un groupe"
-              className="focus:outline-none focus:ring focus:ring-violet-300"
-              onClick={() => setIsCreateGroupDrawerOpen(true)}
-            />
-            <Button
-              text="Rejoindre un groupe"
-              className="focus:outline-none focus:ring focus:ring-violet-300"
-              onClick={() => setIsJoinGroupDrawerOpen(true)}
-            />
-
-            <DrawerComponent
-              trigger={null}
-              title="Créer un groupe"
-              isOpen={isCreateGroupDrawerOpen}
-              onClose={() => setIsCreateGroupDrawerOpen(false)}
-            >
-              <GroupForm
-                onCloseDrawer={() => setIsCreateGroupDrawerOpen(false)}
-                groups={groups}
-                setGroups={setGroups}
+        <>
+          <div className="before:absolute before:left-0 before:top-14 before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-b before:from-[#f2daf0] before:to-[#f2daf0]/0 before:content-['']"></div>
+          <div className="flex flex-col w-full gap-4 h-[90vh]">
+            <div className="flex justify-center w-full gap-2 pt-2 px-4">
+              <Button
+                text="Créer un groupe"
+                className="focus:outline-none focus:ring focus:ring-violet-300 w-full"
+                onClick={() => setIsCreateGroupDrawerOpen(true)}
               />
-            </DrawerComponent>
+              <Button
+                text="Rejoindre un groupe"
+                className="focus:outline-none focus:ring focus:ring-violet-300 w-full"
+                onClick={() => setIsJoinGroupDrawerOpen(true)}
+              />
 
-            <DrawerComponent
-              trigger={null}
-              title="Rejoindre un groupe"
-              isOpen={isJoinGroupDrawerOpen}
-              onClose={() => setIsJoinGroupDrawerOpen(false)}
-            >
-              <div className="w-full flex flex-col p-6 gap-12 mb-12">
-                <Input
-                  placeholder="Code d'invitation"
-                  value={inviteCodeJoin}
-                  onChange={e => setInviteCodeJoin(e.target.value)}
+              <DrawerComponent
+                trigger={null}
+                title="Créer un groupe"
+                isOpen={isCreateGroupDrawerOpen}
+                onClose={() => setIsCreateGroupDrawerOpen(false)}
+              >
+                <GroupForm
+                  onCloseDrawer={() => setIsCreateGroupDrawerOpen(false)}
+                  groups={groups}
+                  setGroups={setGroups}
                 />
-                <Button text="Rejoindre" onClick={handleJoinGroup} />
-              </div>
-            </DrawerComponent>
-          </div>
-          <div className="before:absolute before:left-0 before:top-16 before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-b before:from-[#f2daf0] before:to-[#f2daf0]/0 before:content-['']"></div>
-          <div className="w-full h-full overflow-scroll no-scrollbar">
+              </DrawerComponent>
+
+              <DrawerComponent
+                trigger={null}
+                title="Rejoindre un groupe"
+                isOpen={isJoinGroupDrawerOpen}
+                onClose={() => setIsJoinGroupDrawerOpen(false)}
+              >
+                <div className="w-full flex flex-col p-6 gap-12 mb-12">
+                  <Input
+                    placeholder="Code d'invitation"
+                    value={inviteCodeJoin}
+                    onChange={e => setInviteCodeJoin(e.target.value)}
+                  />
+                  <Button text="Rejoindre" onClick={handleJoinGroup} />
+                </div>
+              </DrawerComponent>
+            </div>
             <GroupList groups={groups} isLoadding={isLoadingGettingGroup} />
           </div>
-        </div>
+        </>
       </PullToRefresh>
     </div>
   );

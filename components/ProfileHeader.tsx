@@ -17,7 +17,11 @@ interface GroupeHeaderProps {
   link?: string;
 }
 
-const ProfileHeader: React.FC<GroupeHeaderProps> = ({ isUserProfil, userData, children }) => {
+const ProfileHeader: React.FC<GroupeHeaderProps> = ({
+  isUserProfil,
+  userData,
+  children,
+}) => {
   const [isInfoChanged, setIsInfoChanged] = useState(false);
   const [userImage, setUserImage] = useState<File | string | null>(
     userData.avatar_url,
@@ -66,93 +70,92 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({ isUserProfil, userData, ch
         {userData.username}
       </h1>
 
-      {
-        isUserProfil && (
-          <SheetComponent trigger={<Ellipsis />} title="Mes infos">
-            <div className="flex flex-col justify-between h-full">
-              <div className="flex flex-col gap-4 items-start justify-center">
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <p>Mon avatar</p>
-                  <div className="relative w-full p-2 bg-white border rounded-lg flex flex-col gap-2 items-center justify-center">
-                    {preview ? (
-                      <img
-                        src={preview}
-                        alt="Preview"
-                        className="w-24 aspect-square object-cover rounded bg-white"
-                      />
-                    ) : (
-                      <ImageIcon size={24} className="text-gray-400" />
-                    )}
-                    <p className="text-gray-600 text-center text-sm">
-                      Changer de photo
-                    </p>
-                    <label
-                      htmlFor="image-upload"
-                      className="absolute h-full w-full"
-                    ></label>
-                    <Input
-                      type="file"
-                      id="image-upload"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="hidden"
+      {isUserProfil && (
+        <SheetComponent trigger={<Ellipsis />} title="Mes infos">
+          <div className="flex flex-col justify-between h-full">
+            <div className="flex flex-col gap-4 items-start justify-center">
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <p>Mon avatar</p>
+                <div className="relative w-full p-2 bg-white border rounded-lg flex flex-col gap-2 items-center justify-center">
+                  {preview ? (
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="w-24 aspect-square object-cover rounded bg-white"
                     />
-                  </div>
-                </div>
-
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <p>Surnom</p>
+                  ) : (
+                    <ImageIcon size={24} className="text-gray-400" />
+                  )}
+                  <p className="text-gray-600 text-center text-sm">
+                    Changer de photo
+                  </p>
+                  <label
+                    htmlFor="image-upload"
+                    className="absolute h-full w-full"
+                  ></label>
                   <Input
-                    type="name"
-                    id="name"
-                    placeholder="DerkapUser"
-                    value={userName}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setUserName(e.target.value);
-                      setIsInfoChanged(true);
-                    }}
-                  />
-                </div>
-
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <p>Email</p>
-                  <Input
-                    type="name"
-                    id="name"
-                    placeholder="thomas@derkap.com"
-                    value={userEmail}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setUserEmail(e.target.value);
-                      setIsInfoChanged(true);
-                    }}
+                    type="file"
+                    id="image-upload"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
                   />
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <p className="text-gray-600 text-center text-sm">
-                  Membre depuis le {membreSince()}
-                </p>
-                <Button
-                  text="Modifier"
-                  className={cn('w-full', !isInfoChanged && 'bg-gray-300')}
-                  disabled={!isInfoChanged}
-                  onClick={handleSubmit}
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <p>Surnom</p>
+                <Input
+                  type="name"
+                  id="name"
+                  placeholder="DerkapUser"
+                  value={userName}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setUserName(e.target.value);
+                    setIsInfoChanged(true);
+                  }}
                 />
-                <Button
-                  className="w-full bg-red-500 flex items-center justify-center gap-2"
-                  onClick={handleSignOut}
-                  text={
-                    <>
-                      Se déconnecter
-                      <LogOut size={16} />
-                    </>
-                  }
+              </div>
+
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <p>Email</p>
+                <Input
+                  type="name"
+                  id="name"
+                  placeholder="thomas@derkap.com"
+                  value={userEmail}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setUserEmail(e.target.value);
+                    setIsInfoChanged(true);
+                  }}
                 />
               </div>
             </div>
-          </SheetComponent>
-        )}
+
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-600 text-center text-sm">
+                Membre depuis le {membreSince()}
+              </p>
+              <Button
+                text="Modifier"
+                className={cn('w-full', !isInfoChanged && 'bg-gray-300')}
+                disabled={!isInfoChanged}
+                onClick={handleSubmit}
+              />
+              <Button
+                className="w-full bg-red-500 flex items-center justify-center gap-2"
+                onClick={handleSignOut}
+                text={
+                  <>
+                    Se déconnecter
+                    <LogOut size={16} />
+                  </>
+                }
+              />
+            </div>
+          </div>
+        </SheetComponent>
+      )}
       {children}
     </header>
   );

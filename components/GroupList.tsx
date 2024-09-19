@@ -141,7 +141,7 @@ const GroupList = ({
                   .map((member, index) =>
                     member.profile?.avatar_url ? (
                       <Link
-                      href={`/profile/${member.profile?.username}`}
+                        href={`/profile/${member.profile?.username}`}
                         className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
                         style={{ zIndex: group.members.length - index }}
                         key={index}

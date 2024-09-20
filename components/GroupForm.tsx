@@ -38,7 +38,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
       return setMissingName(true);
     }
     const { data, error } = await createGroup({ name: groupName });
-    if (error) return toast.error("Une erreurs s'est produite...")
+    if (error) return toast.error("Une erreurs s'est produite...");
     if (data) {
       setGroups([...groups, data]);
       onCloseDrawer();
@@ -70,6 +70,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
           <Image
             src={preview}
             alt="Preview"
+            width={24}
             className="w-24 h-24 object-cover rounded mb-2"
           />
         ) : (

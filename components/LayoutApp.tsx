@@ -1,6 +1,6 @@
 'use client';
 
-import { usePWA } from '@/contexts/pwa-context';
+// import { usePWA } from '@/contexts/pwa-context';
 import React from 'react';
 interface LayoutProps {
   children: React.ReactNode;

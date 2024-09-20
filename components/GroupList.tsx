@@ -124,6 +124,7 @@ const GroupList = ({
                   <Image
                     src={group.img_url}
                     alt={group.name}
+                    width={16}
                     className="w-16 h-16 rounded"
                   />
                 ) : (
@@ -172,7 +173,9 @@ const GroupList = ({
                       >
                         <Image
                           src={member.profile.avatar_url}
-                          alt={member.profile.username + "photo"}
+                          alt={member.profile.username + 'photo'}
+                          width={40}
+                          height={40}
                           className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full"
                         />
                       </div>

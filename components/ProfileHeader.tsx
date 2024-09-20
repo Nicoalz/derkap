@@ -78,6 +78,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
                     <Image
                       src={preview}
                       alt="Preview"
+                      width={24}
                       className="w-24 aspect-square object-cover rounded bg-white"
                     />
                   ) : (

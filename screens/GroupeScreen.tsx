@@ -13,6 +13,8 @@ import { TGroupDB } from '@/types/types';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
+import { toast } from 'sonner';
+import Image from 'next/image';
 
 const GroupScreen = ({ id }: { id: string }) => {
   const [isLoadding, setIsLoadding] = useState<boolean>(true);
@@ -44,7 +46,7 @@ const GroupScreen = ({ id }: { id: string }) => {
 
   const handleGetGroups = async () => {
     const { data, error } = await getGroups({});
-    if (error) return console.error(error);
+    if (error) return toast.error('Erreur dans la récupéaration des données');
     if (data) {
       const group = data.filter((group: TGroupDB) => group.id === Number(id));
       setGroupeData(group[0]);
@@ -59,7 +61,7 @@ const GroupScreen = ({ id }: { id: string }) => {
 
   useEffect(() => {
     handleGetGroups();
-  }, []);
+  }, [id]);
 
   if (isLoadding) {
     return (
@@ -118,8 +120,10 @@ const GroupScreen = ({ id }: { id: string }) => {
               style={{ zIndex: membresGroup.length - index }}
               key={index}
             >
-              <img
-                src={member.profile.avatar_url || undefined}
+              <Image
+                src={member.profile.avatar_url}
+                alt={member.profile.username + 'photo'}
+                width={10}
                 className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full`}
               />
             </Link>

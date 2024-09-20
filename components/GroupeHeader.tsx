@@ -8,6 +8,7 @@ import Button from './Button';
 import { TGroupDB } from '@/types/types';
 import { toast } from 'sonner';
 import { deleteGroup, leaveGroup } from '@/functions/group-action';
+import Image from 'next/image';
 
 interface GroupeHeaderProps {
   groupeData?: TGroupDB;
@@ -37,7 +38,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
           text: `Rejoignez notre groupe "${groupeData?.name}" sur Derkap ! Le code d'accès est ${groupeData?.invite_code}`,
           url: `https://derkap.vercel.app/groupe/${groupeData?.id}`,
         })
-        .catch(() => toast.error("Erreur lors du partage"));
+        .catch(() => toast.error('Erreur lors du partage'));
     } else {
       toast.error("L'API Web Share n'est pas supportée dans ce navigateur.");
     }
@@ -61,7 +62,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
       router.push('/');
       return toast.success('Groupe supprimé avec succès');
     }
-    if (error) return toast.error("Une erreur s'est produite...")
+    if (error) return toast.error("Une erreur s'est produite...");
   };
 
   const handleLeaveGroup = async () => {
@@ -73,7 +74,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
       router.push('/');
       return toast.success('Groupe quitté avec succès');
     }
-    if (error) return toast.error("Une erreur s'est produite...")
+    if (error) return toast.error("Une erreur s'est produite...");
   };
 
   const createAt = () => {
@@ -124,9 +125,10 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
           ) : (
             <div className="flex flex-col items-center">
               {groupeData?.img_url ? (
-                <img
+                <Image
                   src={groupeData?.img_url}
                   alt="Logo Groupe"
+                  width={24}
                   className="w-24 h-24 rounded-full border bg-custom-white"
                 />
               ) : (

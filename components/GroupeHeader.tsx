@@ -129,6 +129,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
                   src={groupeData?.img_url}
                   alt="Logo Groupe"
                   width={24}
+                  height={24}
                   className="w-24 h-24 rounded-full border bg-custom-white"
                 />
               ) : (

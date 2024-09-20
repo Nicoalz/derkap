@@ -125,6 +125,7 @@ const GroupList = ({
                     src={group.img_url}
                     alt={group.name}
                     width={16}
+                    height={16}
                     className="w-16 h-16 rounded"
                   />
                 ) : (

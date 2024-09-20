@@ -71,6 +71,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
             src={preview}
             alt="Preview"
             width={24}
+            height={24}
             className="w-24 h-24 object-cover rounded mb-2"
           />
         ) : (

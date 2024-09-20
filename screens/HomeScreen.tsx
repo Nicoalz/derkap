@@ -34,7 +34,7 @@ const HomeScreen = () => {
   const router = useRouter();
 
   const handleRefresh = async () => {
-    console.log('refreshing');
+    handleGetGroups()
   };
 
   const handleGetGroups = async () => {
@@ -79,7 +79,9 @@ const HomeScreen = () => {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => setIsCreateGroupDrawerOpen(true)}>
+              <DropdownMenuItem
+                onClick={() => setIsCreateGroupDrawerOpen(true)}
+              >
                 Créer un groupe
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setIsJoinGroupDrawerOpen(true)}>
@@ -121,7 +123,6 @@ const HomeScreen = () => {
             </div>
           </DrawerComponent>
         </header>
-
 
         <div className="before:absolute before:left-0 before:top-20 before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-b before:from-[#f1d8f2] before:to-[#f1d8f2]/0 before:content-['']"></div>
         <div className="flex flex-col w-full gap-4 h-[90vh]">

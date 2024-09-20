@@ -26,7 +26,7 @@ const ProfileScreen = ({ id }: { id?: string }) => {
         const { data } = await getProfileName({ user_name: id });
         if (data) {
           setUserData(data);
-          if(data.username === currentUserData.username) {
+          if (data.username === currentUserData.username) {
             setIsUserProfile(true);
           }
         }
@@ -48,7 +48,7 @@ const ProfileScreen = ({ id }: { id?: string }) => {
           </Link>
         </header>
         <div className="w-full flex flex-col items-center gap-4">
-          <div className='flex flex-col items-center justify-center gap-2'>
+          <div className="flex flex-col items-center justify-center gap-2">
             <Skeleton className="rounded-full border border-custom-black w-24 h-24" />
             <Skeleton className="w-24 h-[28px]" />
           </div>
@@ -87,7 +87,7 @@ const ProfileScreen = ({ id }: { id?: string }) => {
     <div className="w-full h-screen flex flex-col items-center justify-start">
       <ProfileHeader isUserProfil={isUserProfil} userData={userData} />
       <div className="w-full flex flex-col items-center gap-4">
-        <div className='flex flex-col items-center justify-center gap-2'>
+        <div className="flex flex-col items-center justify-center gap-2">
           {userData.avatar_url ? (
             <Image
               src={userData.avatar_url ?? ''}

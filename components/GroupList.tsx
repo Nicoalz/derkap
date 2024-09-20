@@ -89,13 +89,15 @@ const GroupList = ({
   return (
     <div className="w-full h-full overflow-scroll no-scrollbar flex flex-col gap-4 p-4">
       {myGroup.length === 0 ? (
-        <div className='h-full flex flex-col items-center justify-between'>
+        <div className="h-full flex flex-col items-center justify-between">
           <div></div>
-          <div className='flex flex-col gap-2 items-center justify-center'>
-            <p className='text-xs'>Pas de groupe pour le moment...</p>
-            <p className='font-champ text-4xl text-center'>Créez en un dès maintenant !</p>
+          <div className="flex flex-col gap-2 items-center justify-center">
+            <p className="text-xs">Pas de groupe pour le moment...</p>
+            <p className="font-champ text-4xl text-center">
+              Créez en un dès maintenant !
+            </p>
           </div>
-          <div className='w-full flex gap-2 items-center justify-center'>
+          <div className="w-full flex gap-2 items-center justify-center">
             <Button
               text="Créer un groupe"
               className="focus:outline-none focus:ring focus:ring-violet-300 w-full"

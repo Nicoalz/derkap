@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, Ellipsis, ImageIcon, LogOut } from 'lucide-react';
@@ -29,7 +29,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   const [preview, setPreview] = useState<string | null>(userData.avatar_url);
   const [userName, setUserName] = useState(userData.username);
   const [userEmail, setUserEmail] = useState(userData.email);
-  const router = useRouter()
+  const router = useRouter();
 
   const handleSignOut = async () => {
     await signoutSupabase();

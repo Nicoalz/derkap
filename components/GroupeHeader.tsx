@@ -90,7 +90,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
 
   return (
     <header className="w-full flex justify-between items-center p-4 h-fit relative">
-     <div className="flex items-center gap-x-2" onClick={() => router.back()}>
+      <div className="flex items-center gap-x-2" onClick={() => router.back()}>
         <ChevronLeft size={24} />
       </div>
 
@@ -126,21 +126,17 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              {
-                groupeData?.img_url ? (
-                  <img
-                    src={groupeData?.img_url}
-                    alt="Logo Groupe"
-                    className="w-24 h-24 rounded-full border bg-custom-white"
-                  />
-                ) : (
-                  <div className="flex items-center justify-center w-24 h-24 rounded-full border bg-custom-white">
-                    <p>
-                      {groupeData?.name.charAt(0)}
-                    </p>
-                  </div>
-                )
-              }
+              {groupeData?.img_url ? (
+                <img
+                  src={groupeData?.img_url}
+                  alt="Logo Groupe"
+                  className="w-24 h-24 rounded-full border bg-custom-white"
+                />
+              ) : (
+                <div className="flex items-center justify-center w-24 h-24 rounded-full border bg-custom-white">
+                  <p>{groupeData?.name.charAt(0)}</p>
+                </div>
+              )}
 
               <p className="text-center text-lg font-semibold">
                 {groupeData?.name}
@@ -189,8 +185,8 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
         </div>
       </SheetComponent>
 
-      { children }
-    </header >
+      {children}
+    </header>
   );
 };
 

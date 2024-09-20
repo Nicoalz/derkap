@@ -20,8 +20,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
+} from '@/components/ui/dropdown-menu';
 
 const HomeScreen = () => {
   const [isLoadingGettingGroup, setIsLoadingGettingGroup] = useState(true);
@@ -70,7 +69,7 @@ const HomeScreen = () => {
       <header className="w-full flex items-center justify-between p-4 gap-2 h-[10vh]">
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <div className='p-1 bg-custom-primary text-custom-white rounded-full'>
+            <div className="p-1 bg-custom-primary text-custom-white rounded-full">
               <Plus size="24" />
             </div>
           </DropdownMenuTrigger>

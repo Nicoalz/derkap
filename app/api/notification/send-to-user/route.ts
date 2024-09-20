@@ -20,12 +20,9 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     // Return a success response
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    console.error('Error:', error);
-
-    // Return an error response with the error message
+  } catch (error) {
     return NextResponse.json({
-      error: error.message || 'Unknown error',
+      error: (error instanceof Error) ? error.message : 'An unknown error occurred',
     });
   }
 }

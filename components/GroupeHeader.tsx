@@ -20,7 +20,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
   children,
 }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isInfoChanged, setIsInfoChanged] = useState<boolean>(false);
+  const [, setIsInfoChanged] = useState<boolean>(false);
   const [groupeName, setGroupeName] = useState(groupeData?.name || '');
   const router = useRouter();
 
@@ -37,10 +37,9 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
           text: `Rejoignez notre groupe "${groupeData?.name}" sur Derkap ! Le code d'accès est ${groupeData?.invite_code}`,
           url: `https://derkap.vercel.app/groupe/${groupeData?.id}`,
         })
-        .then(() => console.log('Partage réussi'))
-        .catch(error => console.log('Erreur lors du partage', error));
+        .catch(() => toast.error("Erreur lors du partage"));
     } else {
-      console.log("L'API Web Share n'est pas supportée dans ce navigateur.");
+      toast.error("L'API Web Share n'est pas supportée dans ce navigateur.");
     }
   };
 
@@ -55,7 +54,6 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
 
   const handleDeleteGroup = async () => {
     if (!groupeData?.id) {
-      console.error('Group ID is undefined');
       return;
     }
     const { error } = await deleteGroup({ group_id: groupeData.id });
@@ -63,12 +61,11 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
       router.push('/');
       return toast.success('Groupe supprimé avec succès');
     }
-    if (error) return console.error(error);
+    if (error) return toast.error("Une erreur s'est produite...")
   };
 
   const handleLeaveGroup = async () => {
     if (!groupeData?.id) {
-      console.error('Group invite_code is undefined');
       return;
     }
     const { error } = await leaveGroup({ group_id: groupeData.id?.toString() });
@@ -76,7 +73,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
       router.push('/');
       return toast.success('Groupe quitté avec succès');
     }
-    if (error) return console.error(error);
+    if (error) return toast.error("Une erreur s'est produite...")
   };
 
   const createAt = () => {

@@ -2,14 +2,13 @@
 
 import { usePWA } from '@/contexts/pwa-context';
 import React from 'react';
-import Header from './Header';
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE === 'true';
-  const { isPWA } = usePWA();
+  // const { isPWA } = usePWA();
   if (isMaintenance) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">

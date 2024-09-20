@@ -1,4 +1,4 @@
-const currentIndex = 0;
+// const currentIndex = 0;
 const audioFiles = [
   'audio/goofy.mp3',
   'audio/grenade.mp3',

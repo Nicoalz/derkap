@@ -33,7 +33,7 @@ export default function TestFunctionScreen() {
   const [inviteCodeJoin, setInviteCodeJoin] = useState('');
 
   const [isLoadingLeavingGroup, setIsLoadingLeavingGroup] = useState(false);
-  const [idGroupToLeave, setIdGroupToLeave] = useState(0);
+  // const [idGroupToLeave, setIdGroupToLeave] = useState(0);
 
   const handleGetProfile = async () => {
     setIsLoadingProfile(true);
@@ -44,7 +44,6 @@ export default function TestFunctionScreen() {
     setIsLoadingProfile(false);
     if (error) return console.error(error);
     if (data) setProfile(data);
-    console.log('GET PROFILE SUCCESS');
   };
 
   const handleGetGroups = async () => {
@@ -56,7 +55,6 @@ export default function TestFunctionScreen() {
     setIsLoadingGettingGroup(false);
     if (error) return console.error(error);
     if (data) setGroups(data);
-    console.log('GET GROUPS SUCCESS');
   };
 
   const handleCreateGroup = async () => {
@@ -65,7 +63,6 @@ export default function TestFunctionScreen() {
     setIsLoadingCreatingGroup(false);
     if (error) return console.error(error);
     if (data) setNewGroup(data);
-    console.log('CREATE GROUP SUCCESS');
   };
 
   const handleDeleteGroup = async () => {
@@ -73,7 +70,6 @@ export default function TestFunctionScreen() {
     const { error } = await deleteGroup({ group_id: idGroupToDelete });
     setIsLoadingDeletingGroup(false);
     if (error) return console.error(error);
-    console.log('DELETE GROUP SUCCESS');
   };
 
   const handleJoinGroup = async () => {
@@ -81,7 +77,6 @@ export default function TestFunctionScreen() {
     const { error } = await joinGroup({ invite_code: inviteCodeJoin });
     setIsLoadingJoiningGroup(false);
     if (error) return console.error(error);
-    console.log('JOIN GROUP SUCCESS');
   };
 
   const handleLeaveGroup = async () => {
@@ -89,7 +84,6 @@ export default function TestFunctionScreen() {
     const { error } = await leaveGroup({ group_id: inviteCodeJoin });
     setIsLoadingLeavingGroup(false);
     if (error) return console.error(error);
-    console.log('LEAVE GROUP SUCCESS');
   };
 
   return (

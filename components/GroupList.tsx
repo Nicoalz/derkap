@@ -6,6 +6,7 @@ import { SquareArrowOutUpRight } from 'lucide-react';
 import { Separator } from './ui/separator';
 import { Skeleton } from './ui/skeleton';
 import Button from './Button';
+import Image from 'next/image';
 
 const GroupList = ({
   groups,
@@ -46,7 +47,7 @@ const GroupList = ({
           text: `Rejoignez notre groupe "${title}" sur Derkap ! Le code d'accès est ${invite_code}`,
           url: `https://derkap.vercel.app/groupe/${id}`,
         })
-        .catch(error => console.log('Erreur lors du partage', error));
+        .catch(() => toast.info("Une erreur s'est produite"));
     } else {
       toast.info('Votre navigateur ne supporte pas le partage');
     }
@@ -120,7 +121,7 @@ const GroupList = ({
             >
               <div className="flex gap-4 items-center justify-start relative w-full">
                 {group.img_url ? (
-                  <img
+                  <Image
                     src={group.img_url}
                     alt={group.name}
                     className="w-16 h-16 rounded"
@@ -169,8 +170,9 @@ const GroupList = ({
                         style={{ zIndex: group.members.length - index }}
                         key={index}
                       >
-                        <img
+                        <Image
                           src={member.profile.avatar_url}
+                          alt={member.profile.username + "photo"}
                           className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full"
                         />
                       </div>

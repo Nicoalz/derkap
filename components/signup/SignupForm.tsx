@@ -93,7 +93,6 @@ export default function SignUpForm() {
         }
       } else {
         toast.error('Une erreur inattendue est survenue');
-        console.error(error);
       }
     } finally {
       setIsLoading(false);

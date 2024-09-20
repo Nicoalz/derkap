@@ -9,6 +9,7 @@ import SheetComponent from './SheetComponent';
 import { TProfileDB } from '@/types/types';
 import { signoutSupabase } from '@/functions/supabase/signout-supabase';
 import Button from './Button';
+import Image from 'next/image';
 
 interface GroupeHeaderProps {
   isUserProfil: boolean;
@@ -74,7 +75,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
                 <p>Mon avatar</p>
                 <div className="relative w-full p-2 bg-white border rounded-lg flex flex-col gap-2 items-center justify-center">
                   {preview ? (
-                    <img
+                    <Image
                       src={preview}
                       alt="Preview"
                       className="w-24 aspect-square object-cover rounded bg-white"

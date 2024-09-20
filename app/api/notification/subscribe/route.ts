@@ -12,11 +12,9 @@ export async function POST(req: Request): Promise<NextResponse> {
     await saveSubscription({ subscription });
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    console.error(error);
-
+  } catch (error) {
     return NextResponse.json({
-      error: error.message,
+      error: (error instanceof Error) ? error.message : 'An unknown error occurred',
     });
   }
 }

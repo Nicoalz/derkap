@@ -6,6 +6,7 @@ import { createGroup } from '@/functions/group-action';
 import { TGroupDB } from '@/types/types';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface GroupFormProps {
   onCloseDrawer: () => void;
@@ -20,7 +21,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
 }) => {
   const [groupName, setGroupName] = useState('');
   const [missingName, setMissingName] = useState(false);
-  const [groupImage, setGroupImage] = useState<File | null>(null);
+  const [, setGroupImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const router = useRouter();
 
@@ -37,7 +38,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
       return setMissingName(true);
     }
     const { data, error } = await createGroup({ name: groupName });
-    if (error) return console.error(error);
+    if (error) return toast.error("Une erreurs s'est produite...")
     if (data) {
       setGroups([...groups, data]);
       onCloseDrawer();
@@ -66,7 +67,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
 
       <div className="w-full h-fit p-6 bg-gray-100 rounded-lg flex flex-col items-center justify-center">
         {preview ? (
-          <img
+          <Image
             src={preview}
             alt="Preview"
             className="w-24 h-24 object-cover rounded mb-2"

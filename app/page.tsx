@@ -8,7 +8,7 @@ import { createSupabaseAppServerClient } from '../libs/supabase/server';
 const Home: NextPage = async () => {
   const supabase = createSupabaseAppServerClient();
 
-  const { user } = (await supabase.auth.getUser()).data;
+  // const { user } = (await supabase.auth.getUser()).data;
 
   return (
     <>

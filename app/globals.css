@@ -133,3 +133,7 @@ body {
   -webkit-box-shadow: 5px 5px 0px 1px theme('colors.custom-black');
   -moz-box-shadow: 5px 5px 0px 1px theme('colors.custom-black');
 }
+
+.ptr__children {
+  width: 100vw;
+}

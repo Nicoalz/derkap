@@ -34,7 +34,7 @@ const HomeScreen = () => {
   const router = useRouter();
 
   const handleRefresh = async () => {
-    handleGetGroups()
+    handleGetGroups();
   };
 
   const handleGetGroups = async () => {
@@ -73,7 +73,7 @@ const HomeScreen = () => {
       <>
         <header className="w-full flex items-center justify-between p-4 gap-2 h-[10vh]">
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger  asChild>
               <div className="p-1 bg-custom-primary text-custom-white rounded-full">
                 <Plus size="24" />
               </div>
@@ -124,8 +124,8 @@ const HomeScreen = () => {
           </DrawerComponent>
         </header>
 
-        <div className="before:absolute before:left-0 before:top-20 before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-b before:from-[#f1d8f2] before:to-[#f1d8f2]/0 before:content-['']"></div>
-        <div className="flex flex-col w-full gap-4 h-[90vh]">
+        <div className="before:absolute before:left-0 before:top-[4.5rem] before:z-[2] before:w-full before:h-[40px] before:bg-gradient-to-b before:from-[#f1d8f2] before:to-[#f1d8f2]/0 before:content-['']"></div>
+        <div className="flex flex-col w-full h-[90vh]">
           <GroupList
             groups={groups}
             isLoadding={isLoadingGettingGroup}

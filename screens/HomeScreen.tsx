@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { toast } from 'sonner';
+import { Plus, User } from 'lucide-react';
+
 import { getGroups, joinGroup } from '@/functions/group-action';
 import { TGroupDB } from '@/types/types';
 import GroupForm from '@/components/GroupForm';
@@ -12,18 +14,25 @@ import GroupList from '@/components/GroupList';
 import DrawerComponent from '@/components/DrawerComponent';
 import Button from '@/components/Button';
 import { Input } from '@/components/ui/input';
-import { useRouter } from 'next/navigation';
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 
 const HomeScreen = () => {
   const [isLoadingGettingGroup, setIsLoadingGettingGroup] = useState(true);
   const [inviteCodeJoin, setInviteCodeJoin] = useState<string>('');
-  const router = useRouter();
-
   const [groups, setGroups] = useState<TGroupDB[]>([]);
   const [isCreateGroupDrawerOpen, setIsCreateGroupDrawerOpen] =
     useState<boolean>(false);
   const [isJoinGroupDrawerOpen, setIsJoinGroupDrawerOpen] =
     useState<boolean>(false);
+
+  const router = useRouter();
 
   const handleRefresh = async () => {
     console.log('refreshing');
@@ -58,11 +67,56 @@ const HomeScreen = () => {
 
   return (
     <div className="w-full flex flex-col items-center relative flex-1 no-scrollbar">
-      <div className="w-full flex justify-end p-4 h-[10vh]">
+      <header className="w-full flex items-center justify-between p-4 gap-2 h-[10vh]">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <div className='p-1 bg-custom-primary text-custom-white rounded-full'>
+              <Plus size="24" />
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => setIsCreateGroupDrawerOpen(true)}>
+              Créer un groupe
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setIsJoinGroupDrawerOpen(true)}>
+              Rejoindre un groupe
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <Link href={'/profile'} className="flex items-center gap-x-2">
           <User size={24} />
         </Link>
-      </div>
+
+        <DrawerComponent
+          trigger={null}
+          title="Créer un groupe"
+          isOpen={isCreateGroupDrawerOpen}
+          onClose={() => setIsCreateGroupDrawerOpen(false)}
+        >
+          <GroupForm
+            onCloseDrawer={() => setIsCreateGroupDrawerOpen(false)}
+            groups={groups}
+            setGroups={setGroups}
+          />
+        </DrawerComponent>
+
+        <DrawerComponent
+          trigger={null}
+          title="Rejoindre un groupe"
+          isOpen={isJoinGroupDrawerOpen}
+          onClose={() => setIsJoinGroupDrawerOpen(false)}
+        >
+          <div className="w-full flex flex-col p-6 gap-12 mb-12">
+            <Input
+              placeholder="Code d'invitation"
+              value={inviteCodeJoin}
+              onChange={e => setInviteCodeJoin(e.target.value)}
+            />
+            <Button text="Rejoindre" onClick={handleJoinGroup} />
+          </div>
+        </DrawerComponent>
+      </header>
 
       <PullToRefresh
         className="no-scollbar w-full h-[90vh] relative"
@@ -70,50 +124,14 @@ const HomeScreen = () => {
         onRefresh={handleRefresh}
       >
         <>
-          <div className="before:absolute before:left-0 before:top-14 before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-b before:from-[#f2daf0] before:to-[#f2daf0]/0 before:content-['']"></div>
+          <div className="before:absolute before:left-0 before:top-0 before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-b before:from-[#f1d8f2] before:to-[#f1d8f2]/0 before:content-['']"></div>
           <div className="flex flex-col w-full gap-4 h-[90vh]">
-            <div className="flex justify-center w-full gap-2 pt-0 p-4">
-              <Button
-                text="Créer un groupe"
-                className="focus:outline-none focus:ring focus:ring-violet-300 w-full"
-                onClick={() => setIsCreateGroupDrawerOpen(true)}
-              />
-              <Button
-                text="Rejoindre un groupe"
-                className="focus:outline-none focus:ring focus:ring-violet-300 w-full"
-                onClick={() => setIsJoinGroupDrawerOpen(true)}
-              />
-
-              <DrawerComponent
-                trigger={null}
-                title="Créer un groupe"
-                isOpen={isCreateGroupDrawerOpen}
-                onClose={() => setIsCreateGroupDrawerOpen(false)}
-              >
-                <GroupForm
-                  onCloseDrawer={() => setIsCreateGroupDrawerOpen(false)}
-                  groups={groups}
-                  setGroups={setGroups}
-                />
-              </DrawerComponent>
-
-              <DrawerComponent
-                trigger={null}
-                title="Rejoindre un groupe"
-                isOpen={isJoinGroupDrawerOpen}
-                onClose={() => setIsJoinGroupDrawerOpen(false)}
-              >
-                <div className="w-full flex flex-col p-6 gap-12 mb-12">
-                  <Input
-                    placeholder="Code d'invitation"
-                    value={inviteCodeJoin}
-                    onChange={e => setInviteCodeJoin(e.target.value)}
-                  />
-                  <Button text="Rejoindre" onClick={handleJoinGroup} />
-                </div>
-              </DrawerComponent>
-            </div>
-            <GroupList groups={groups} isLoadding={isLoadingGettingGroup} />
+            <GroupList
+              groups={groups}
+              isLoadding={isLoadingGettingGroup}
+              setIsCreateGroupDrawerOpen={setIsCreateGroupDrawerOpen}
+              setIsJoinGroupDrawerOpen={setIsJoinGroupDrawerOpen}
+            />
           </div>
         </>
       </PullToRefresh>

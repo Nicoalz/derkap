@@ -23,10 +23,12 @@ const ProfileScreen = ({ id }: { id?: string }) => {
     const fetchData = async () => {
       setIsLoading(true);
       if (id) {
-        setIsUserProfile(false);
         const { data } = await getProfileName({ user_name: id });
         if (data) {
           setUserData(data);
+          if(data.username === currentUserData.username) {
+            setIsUserProfile(true);
+          }
         }
       } else {
         setUserData(currentUserData);
@@ -40,15 +42,16 @@ const ProfileScreen = ({ id }: { id?: string }) => {
   if (isLoading) {
     return (
       <div className="w-full h-screen flex flex-col items-center justify-start">
-        <header className="w-full flex justify-between items-center p-6 md:px-12 h-fit relative">
-          <Link href="/" className="flex items-center gap-x-2">
+        <header className="w-full flex justify-between items-center p-4 md:px-12 h-fit relative">
+          <Link href="/" className="flex items-center gap-2">
             <ChevronLeft size={24} />
           </Link>
-
-          <Skeleton className="abs-center w-52 h-8" />
         </header>
-        <div className="w-full flex flex-col items-center gap-2">
-          <Skeleton className="rounded-full border border-custom-black w-24 h-24" />
+        <div className="w-full flex flex-col items-center gap-4">
+          <div className='flex flex-col items-center justify-center gap-2'>
+            <Skeleton className="rounded-full border border-custom-black w-24 h-24" />
+            <Skeleton className="w-24 h-[28px]" />
+          </div>
           <div className="w-full flex justify-center items-center gap-12">
             <div className="flex flex-col items-center justify-center gap-1">
               <Skeleton className="w-6 h-6" />
@@ -83,25 +86,31 @@ const ProfileScreen = ({ id }: { id?: string }) => {
   return (
     <div className="w-full h-screen flex flex-col items-center justify-start">
       <ProfileHeader isUserProfil={isUserProfil} userData={userData} />
-      <div className="w-full flex flex-col items-center gap-2">
-        {userData.avatar_url ? (
-          <Image
-            src={userData.avatar_url ?? ''}
-            alt={userData.username ?? ''}
-            width={70}
-            height={70}
-            className="rounded-full my-2 w-24 h-24 object-cover border-2 border-custom-primary bg-custom-white"
-          />
-        ) : (
-          <div className="flex items-center justify-center bg-custom-white rounded-full border border-custom-black w-24 h-24">
-            <p className="uppercase">
-              {userData.username
-                .split(' ')
-                .map(word => word.charAt(0))
-                .join('')}
-            </p>
-          </div>
-        )}
+      <div className="w-full flex flex-col items-center gap-4">
+        <div className='flex flex-col items-center justify-center gap-2'>
+          {userData.avatar_url ? (
+            <Image
+              src={userData.avatar_url ?? ''}
+              alt={userData.username ?? ''}
+              width={70}
+              height={70}
+              className="rounded-full w-24 h-24 object-cover border-2 border-custom-primary bg-custom-white"
+            />
+          ) : (
+            <div className="flex items-center justify-center bg-custom-white rounded-full border border-custom-black w-24 h-24">
+              <p className="uppercase">
+                {userData.username
+                  .split(' ')
+                  .map(word => word.charAt(0))
+                  .join('')}
+              </p>
+            </div>
+          )}
+          <h1 className="font-champ text-xl tracking-wider capitalize max-w-52 text-wrap overflow-hidden text-ellipsis text-center">
+            {userData.username}
+          </h1>
+        </div>
+
         <div className="w-full flex justify-center items-center gap-12">
           <div className="flex flex-col items-center justify-center gap-1">
             <p className="text-md font-bold">14</p>

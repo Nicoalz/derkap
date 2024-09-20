@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
@@ -8,7 +8,6 @@ import Button from './Button';
 import { TGroupDB } from '@/types/types';
 import { toast } from 'sonner';
 import { deleteGroup, leaveGroup } from '@/functions/group-action';
-import { useRouter } from 'next/navigation';
 
 interface GroupeHeaderProps {
   groupeData?: TGroupDB;
@@ -89,13 +88,11 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
     });
   };
 
-  console.log(groupeData?.members);
-
   return (
     <header className="w-full flex justify-between items-center p-4 h-fit relative">
-      <Link href="/" className="flex items-center gap-x-2">
+     <div className="flex items-center gap-x-2" onClick={() => router.back()}>
         <ChevronLeft size={24} />
-      </Link>
+      </div>
 
       <SheetComponent
         trigger={
@@ -129,11 +126,22 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <img
-                src="https://picsum.photos/80"
-                alt="Logo Groupe"
-                className="w-32 rounded-full"
-              />
+              {
+                groupeData?.img_url ? (
+                  <img
+                    src={groupeData?.img_url}
+                    alt="Logo Groupe"
+                    className="w-24 h-24 rounded-full border bg-custom-white"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center w-24 h-24 rounded-full border bg-custom-white">
+                    <p>
+                      {groupeData?.name.charAt(0)}
+                    </p>
+                  </div>
+                )
+              }
+
               <p className="text-center text-lg font-semibold">
                 {groupeData?.name}
               </p>
@@ -181,8 +189,8 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
         </div>
       </SheetComponent>
 
-      {children}
-    </header>
+      { children }
+    </header >
   );
 };
 

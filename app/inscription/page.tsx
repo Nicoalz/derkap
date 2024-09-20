@@ -12,7 +12,7 @@ export default async function page() {
   }
   return (
     <div className="h-screen flex items-center justify-evenly pt-[5vh] flex-col p-5 gap-5">
-      <h2 className="text-center text-3xl w-full">Créer un compte</h2>
+      <h2 className="text-center text-3xl w-full font-champ">Créer un compte</h2>
       <SignUpForm />
     </div>
   );

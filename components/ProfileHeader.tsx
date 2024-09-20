@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 import { ChevronLeft, Ellipsis, ImageIcon, LogOut } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 import SheetComponent from './SheetComponent';
-import Button from './Button';
 import { TProfileDB } from '@/types/types';
 import { signoutSupabase } from '@/functions/supabase/signout-supabase';
-import { cn } from '@/lib/utils';
-import { toast } from 'sonner';
+import Button from './Button';
 
 interface GroupeHeaderProps {
   isUserProfil: boolean;
@@ -29,6 +29,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   const [preview, setPreview] = useState<string | null>(userData.avatar_url);
   const [userName, setUserName] = useState(userData.username);
   const [userEmail, setUserEmail] = useState(userData.email);
+  const router = useRouter()
 
   const handleSignOut = async () => {
     await signoutSupabase();
@@ -62,14 +63,9 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
 
   return (
     <header className="w-full flex justify-between items-center p-4 md:px-12 h-fit relative">
-      <Link href="/" className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-2" onClick={() => router.back()}>
         <ChevronLeft size={24} />
-      </Link>
-
-      <h1 className="abs-center font-champ text-xl tracking-wider capitalize max-w-52 text-wrap overflow-hidden text-ellipsis text-center">
-        {userData.username}
-      </h1>
-
+      </div>
       {isUserProfil && (
         <SheetComponent trigger={<Ellipsis />} title="Mes infos">
           <div className="flex flex-col justify-between h-full">

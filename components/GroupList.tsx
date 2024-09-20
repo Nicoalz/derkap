@@ -1,6 +1,8 @@
 import { TGroupDB } from '@/types/types';
 import Link from 'next/link';
+import { toast } from 'sonner';
 import { SquareArrowOutUpRight } from 'lucide-react';
+
 import { Separator } from './ui/separator';
 import { Skeleton } from './ui/skeleton';
 import Button from './Button';
@@ -8,14 +10,19 @@ import Button from './Button';
 const GroupList = ({
   groups,
   isLoadding,
+  setIsCreateGroupDrawerOpen,
+  setIsJoinGroupDrawerOpen,
 }: {
   groups: TGroupDB[];
   isLoadding: boolean;
+  setIsCreateGroupDrawerOpen: (value: boolean) => void;
+  setIsJoinGroupDrawerOpen: (value: boolean) => void;
 }) => {
+  const limitElements = 5;
+
   const myGroup = groups.filter(
     (group, index, self) => index === self.findIndex(t => t.id === group.id),
   );
-
   const membresGroup = myGroup.map(group => {
     const membres = group.members.filter(
       (member, index, self) =>
@@ -23,9 +30,6 @@ const GroupList = ({
     );
     return { ...group, members: membres };
   });
-
-  const limitElements = 5;
-
   const handleShare = ({
     title,
     id,
@@ -44,7 +48,7 @@ const GroupList = ({
         })
         .catch(error => console.log('Erreur lors du partage', error));
     } else {
-      console.log("L'API Web Share n'est pas supportée dans ce navigateur.");
+      toast.info('Votre navigateur ne supporte pas le partage');
     }
   };
 
@@ -85,7 +89,25 @@ const GroupList = ({
   return (
     <div className="w-full h-full overflow-scroll no-scrollbar flex flex-col gap-4 p-4">
       {myGroup.length === 0 ? (
-        <p className="text-center">No groups at the moment</p>
+        <div className='h-full flex flex-col items-center justify-between'>
+          <div></div>
+          <div className='flex flex-col gap-2 items-center justify-center'>
+            <p className='text-xs'>Pas de groupe pour le moment...</p>
+            <p className='font-champ text-4xl text-center'>Créez en un dès maintenant !</p>
+          </div>
+          <div className='w-full flex gap-2 items-center justify-center'>
+            <Button
+              text="Créer un groupe"
+              className="focus:outline-none focus:ring focus:ring-violet-300 w-full"
+              onClick={() => setIsCreateGroupDrawerOpen(true)}
+            />
+            <Button
+              text="Rejoindre un groupe"
+              className="focus:outline-none focus:ring focus:ring-violet-300 w-full"
+              onClick={() => setIsJoinGroupDrawerOpen(true)}
+            />
+          </div>
+        </div>
       ) : (
         <>
           {membresGroup.map((group, index) => (
@@ -140,8 +162,7 @@ const GroupList = ({
                   .slice(0, limitElements)
                   .map((member, index) =>
                     member.profile?.avatar_url ? (
-                      <Link
-                        href={`/profile/${member.profile?.username}`}
+                      <div
                         className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
                         style={{ zIndex: group.members.length - index }}
                         key={index}
@@ -150,10 +171,9 @@ const GroupList = ({
                           src={member.profile.avatar_url}
                           className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full"
                         />
-                      </Link>
+                      </div>
                     ) : (
-                      <Link
-                        href={`/profile/${member.profile?.username}`}
+                      <div
                         className={`${index !== 0 && '-ml-2'}`}
                         style={{ zIndex: group.members.length - index }}
                         key={index}
@@ -161,7 +181,7 @@ const GroupList = ({
                         <p className="flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white">
                           {member.profile?.username?.charAt(0)}
                         </p>
-                      </Link>
+                      </div>
                     ),
                   )}
 

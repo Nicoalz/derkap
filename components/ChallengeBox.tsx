@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchWithToken } from '../libs/fetch';
 import { cn } from '../libs/utils';
 
-const ChallengerBox = ({
+const ChallengeBox = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
@@ -84,7 +84,7 @@ const ChallengerBox = ({
     }
   };
 
-  const { description, emoji, title, category } = challenge ?? {};
+  const { description } = challenge ?? {};
 
   return (
     <div {...props} className={cn('w-full', className)}>
@@ -97,13 +97,13 @@ const ChallengerBox = ({
           }}
           className="h-24 flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-custom-black shadow-element gap-4 items-center"
         >
-          <p className="text-[3rem] ">{emoji ?? '📭'}</p>
+          <p className="text-[3rem] ">{description ? '😹' : '😢'}</p>
           <div className="text-left">
             <h1 className="font-bold uppercase text-lg font-champ">
-              {title ?? 'Derkap du jour'}
+              {'Derkap du jour'}
             </h1>
             <p className="text-sm font-champ text-custom-black">
-              {category ?? 'Pas de défis pour le moment'}
+              {'Pas de défis pour le moment'}
             </p>
             <p className="text-sm">{description ?? 'Reviens plus tard'}</p>
           </div>
@@ -113,4 +113,4 @@ const ChallengerBox = ({
   );
 };
 
-export default ChallengerBox;
+export default ChallengeBox;

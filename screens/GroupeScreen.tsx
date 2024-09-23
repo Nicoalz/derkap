@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
 
 import Button from '@/components/Button';
-import ChallengerBox from '@/components/ChallengeBox';
+import ChallengeBox from '@/components/ChallengeBox';
 import GroupeHeader from '@/components/GroupeHeader';
 import CarouselComponent from '@/components/CarousselComponent';
 import { CarouselItem } from '@/components/ui/carousel';
@@ -15,6 +15,10 @@ import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
 import Image from 'next/image';
+import CaptureScreen from './CaptureScreen';
+import DrawerComponent from '@/components/DrawerComponent';
+import { Input } from '@/components/ui/input';
+import { createChallenge } from '@/functions/challenge-action';
 
 const GroupScreen = ({ id }: { id: string }) => {
   const [isLoadding, setIsLoadding] = useState<boolean>(true);
@@ -22,6 +26,12 @@ const GroupScreen = ({ id }: { id: string }) => {
   const [isChallenge, setIsChallenge] = useState<boolean>(false);
   const [isVoting, setIsVoting] = useState<boolean>(false);
   const [isEnded, setIsEnded] = useState<boolean>(false);
+  const [isCapturing, setIsCapturing] = useState<boolean>(false);
+  const [isTaken, setIsTaken] = useState<boolean>(false);
+  const [isCreateChallengeOpen, setIsCreateChallengeOpen] =
+    useState<boolean>(false);
+  const [newChallengeDescription, setNewChallengeDescription] =
+    useState<string>('');
 
   const [challengeStatus, setChallengeStatus] = useState<
     'posting' | 'voting' | 'ended'
@@ -62,6 +72,37 @@ const GroupScreen = ({ id }: { id: string }) => {
   useEffect(() => {
     handleGetGroups();
   }, [id]);
+
+  const handleTakeDerkap = () => {
+    setIsCapturing(true);
+    // setIsVoting(true);
+    // setIsChallenge(false);
+    // setChallengeStatus('voting');
+  };
+
+  const createNewChallenge = async () => {
+    try {
+      if (!newChallengeDescription)
+        return toast.error('Chef, tu dois écrire un défi');
+
+      if (!groupeData?.id) return;
+
+      const { error } = await createChallenge({
+        challenge: {
+          description: newChallengeDescription,
+          group_id: groupeData.id,
+        },
+      });
+
+      if (error) {
+        throw new Error('');
+      }
+      setIsCreateChallengeOpen(false);
+      setIsChallenge(true);
+    } catch (error) {
+      toast.error('Erreur dans la création du défi');
+    }
+  };
 
   if (isLoadding) {
     return (
@@ -153,36 +194,70 @@ const GroupScreen = ({ id }: { id: string }) => {
         )}
       </ul>
 
+      <DrawerComponent
+        trigger={null}
+        title="Créer un défi"
+        isOpen={isCreateChallengeOpen}
+        onClose={() => setIsCreateChallengeOpen(false)}
+      >
+        <div className="w-full flex flex-col p-6 gap-12 mb-12">
+          <Input
+            placeholder="Description du défi"
+            value={newChallengeDescription}
+            onChange={e => setNewChallengeDescription(e.target.value)}
+          />
+          <Button text="Créer" onClick={createNewChallenge} />
+        </div>
+      </DrawerComponent>
+
       {!isChallenge && !isVoting && !isEnded && (
         <div className="w-full h-[80%] flex flex-col items-center justify-around">
           <p>
-            Pas de challenge pour le moment... <br /> Lancer le premier dès
+            Pas de défi pour le moment... <br /> Lancer le premier dès
             maintenant !
           </p>
-          <Button text="+" onClick={() => setIsChallenge(true)} />
+          <Button text="+" onClick={() => setIsCreateChallengeOpen(true)} />
         </div>
       )}
 
-      {isChallenge && (
+      {isChallenge && !isCapturing && !isTaken && (
         <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
-          <ChallengerBox />
+          <ChallengeBox />
           <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
             <p className="text-white">C’est le moment réaliser ton défi !</p>
           </div>
           <Button
             text="Prends ton Derkap"
             onClick={() => {
-              setIsVoting(true);
-              setIsChallenge(false);
-              setChallengeStatus('voting');
+              handleTakeDerkap();
             }}
           />
         </div>
       )}
 
+      {isChallenge && isCapturing && !isTaken && (
+        <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
+          <ChallengeBox />
+          <CaptureScreen
+            setIsCapturing={setIsCapturing}
+            setIsTaken={setIsTaken}
+            challenge_id={2}
+          />
+        </div>
+      )}
+
+      {isChallenge && !isCapturing && isTaken && (
+        <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
+          <ChallengeBox />
+          <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
+            <p className="text-white">En attente du Derkap de tes potes ! </p>
+          </div>
+        </div>
+      )}
+
       {isVoting && (
         <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
-          <ChallengerBox />
+          <ChallengeBox />
           <CarouselComponent>
             {Array.from({ length: 5 }).map((_, index) => (
               <CarouselItem key={index}>
@@ -205,7 +280,7 @@ const GroupScreen = ({ id }: { id: string }) => {
 
       {isEnded && (
         <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
-          <ChallengerBox />
+          <ChallengeBox />
           <div className="aspect-square w-full rounded-md bg-gray-400 flex items-center justify-center">
             <p className="text-white">Le défi est terminé !</p>
           </div>

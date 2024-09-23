@@ -1,10 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
-
 import Button from '@/components/Button';
-import ChallengerBox from '@/components/ChallengeBox';
-import { useUser } from '@/contexts/user-context';
-
-import { XIcon } from 'lucide-react';
+import { XIcon, ArrowLeftIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import Webcam from 'react-webcam';
@@ -12,13 +9,16 @@ import { toast } from 'sonner';
 import { getRandomAudio } from '../app/audio/audioManager';
 import { useSoundStore } from '../app/audio/useSoundStore';
 import Title from '../components/Title';
-
+import { pushPostToDb } from '@/functions/post-action';
 import Loader from '../components/Loader';
 
-const CaptureScreen: React.FC = () => {
+const CaptureScreen: React.FC<{
+  setIsCapturing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTaken: React.Dispatch<React.SetStateAction<boolean>>;
+  challenge_id: number;
+}> = ({ setIsCapturing, setIsTaken, challenge_id }) => {
   const router = useRouter();
   const { isSoundEnabled } = useSoundStore();
-  const [challenge, setChallenge] = useState<any | null>(null);
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
   const [imgTaken, setImgTaken] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
@@ -34,8 +34,6 @@ const CaptureScreen: React.FC = () => {
       validateRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [webcamRef]);
 
-  const [newDescription, setNewDescription] = useState<string>('');
-  const { userData } = useUser();
   const [isValidatingFile, setIsValidatingFile] = useState<boolean>(false);
 
   const resetPhoto = () => {
@@ -47,8 +45,6 @@ const CaptureScreen: React.FC = () => {
       const audioFile = getRandomAudio();
       const audio = new Audio(audioFile);
       audio.play();
-    } else {
-      console.log('Le son est désactivé.');
     }
   };
 
@@ -59,11 +55,22 @@ const CaptureScreen: React.FC = () => {
 
       playRandomSound();
 
+      const post = {
+        file_url: imgTaken,
+        challenge_id: challenge_id,
+      };
+
+      const { error } = await pushPostToDb({ post });
+
+      if (error) {
+        throw new Error(error);
+      }
+
       setIsRedirecting(true);
-      router.push('/');
+      setIsCapturing(false);
+      setIsTaken(true);
     } catch (error) {
-      console.error(error);
-      toast.error('Une erreur est survenue');
+      toast.error('Une erreur est survenue: ' + error);
     } finally {
       setIsValidatingFile(false);
     }
@@ -72,7 +79,6 @@ const CaptureScreen: React.FC = () => {
   return (
     <div className="flex flex-col w-full items-center">
       <Title text="Capture ton Derkap !" />
-      <div className="px-2">{challenge && !imgTaken && <ChallengerBox />}</div>
 
       <div className="w-full mt-4 relative h-0 pb-[125%]">
         {imgTaken ? (
@@ -104,6 +110,12 @@ const CaptureScreen: React.FC = () => {
               screenshotFormat="image/jpeg"
               screenshotQuality={1}
             />
+            <div
+              onClick={() => setIsCapturing(false)}
+              className="absolute top-2 left-2 p-2 bg-custom-black text-white rounded-xl"
+            >
+              <ArrowLeftIcon className="w-6 h-6" />
+            </div>
             <div className="flex justify-center items-center">
               <div
                 onClick={() => capture()}

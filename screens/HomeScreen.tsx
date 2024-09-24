@@ -21,6 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
 
 const HomeScreen = () => {
   const [isLoadingGettingGroup, setIsLoadingGettingGroup] = useState(true);
@@ -30,6 +31,7 @@ const HomeScreen = () => {
     useState<boolean>(false);
   const [isJoinGroupDrawerOpen, setIsJoinGroupDrawerOpen] =
     useState<boolean>(false);
+  const [isRequestInProgress, setIsRequestInProgress] = useState(false);
 
   const router = useRouter();
 
@@ -48,17 +50,20 @@ const HomeScreen = () => {
   };
 
   const handleJoinGroup = async () => {
+    if (isRequestInProgress) return;
+
+    setIsRequestInProgress(true);
     const { data, error } = await joinGroup({ invite_code: inviteCodeJoin });
-    if (!error) {
+
+    if (data) {
       toast.success('Vous avez rejoint le groupe avec succès');
       setInviteCodeJoin('');
       router.push(`/groupe/${data?.id}`);
+      setIsRequestInProgress(false);
     }
-    if (error) {
-      toast.error("Code d'invitation invalide");
-      return console.error(error);
-    }
+    if (error) return toast.error("Code d'invitation invalide");
   };
+
 
   useEffect(() => {
     handleGetGroups();
@@ -119,7 +124,7 @@ const HomeScreen = () => {
                 value={inviteCodeJoin}
                 onChange={e => setInviteCodeJoin(e.target.value)}
               />
-              <Button text="Rejoindre" onClick={handleJoinGroup} />
+              <Button text={isRequestInProgress ? "Chargement..." : "Rejoidnre"} onClick={handleJoinGroup} className={cn(isRequestInProgress && 'cursor-not-allowed bg-gray-400')} disabled={isRequestInProgress} />
             </div>
           </DrawerComponent>
         </header>

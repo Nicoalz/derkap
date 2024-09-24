@@ -137,3 +137,7 @@ body {
 .ptr__children {
   width: 100vw;
 }
+
+div[data-radix-popper-content-wrapper] {
+  left: 16px !important;
+}

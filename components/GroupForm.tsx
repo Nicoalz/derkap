@@ -7,6 +7,7 @@ import { TGroupDB } from '@/types/types';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 interface GroupFormProps {
   onCloseDrawer: () => void;
@@ -23,6 +24,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
   const [missingName, setMissingName] = useState(false);
   const [, setGroupImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [isRequestInProgress, setIsRequestInProgress] = useState(false);
   const router = useRouter();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,16 +36,21 @@ const GroupForm: React.FC<GroupFormProps> = ({
   };
 
   const handleCreateGroup = async () => {
+    if (isRequestInProgress) return;
+
     if (!groupName) {
       return setMissingName(true);
     }
+    
+    setIsRequestInProgress(true);
     const { data, error } = await createGroup({ name: groupName });
     if (error) return toast.error("Une erreurs s'est produite...");
     if (data) {
       setGroups([...groups, data]);
-      onCloseDrawer();
       toast.success('Groupe créé avec succès');
+      onCloseDrawer();
       router.push(`/groupe/${data.id}`);
+      setIsRequestInProgress(false);
     }
   };
 
@@ -95,7 +102,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
         />
       </div>
 
-      <Button text="Créer" onClick={handleCreateGroup} className="w-full" />
+      <Button text={isRequestInProgress ? "Chargement..." : "Créer"} onClick={handleCreateGroup} className={cn(isRequestInProgress && 'cursor-not-allowed bg-gray-400', "w-full")} disabled={isRequestInProgress} />
     </div>
   );
 };

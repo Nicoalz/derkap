@@ -64,7 +64,6 @@ const HomeScreen = () => {
     if (error) return toast.error("Code d'invitation invalide");
   };
 
-
   useEffect(() => {
     handleGetGroups();
   }, []);
@@ -124,7 +123,14 @@ const HomeScreen = () => {
                 value={inviteCodeJoin}
                 onChange={e => setInviteCodeJoin(e.target.value)}
               />
-              <Button text={isRequestInProgress ? "Chargement..." : "Rejoidnre"} onClick={handleJoinGroup} className={cn(isRequestInProgress && 'cursor-not-allowed bg-gray-400')} disabled={isRequestInProgress} />
+              <Button
+                text={isRequestInProgress ? 'Chargement...' : 'Rejoidnre'}
+                onClick={handleJoinGroup}
+                className={cn(
+                  isRequestInProgress && 'cursor-not-allowed bg-gray-400',
+                )}
+                disabled={isRequestInProgress}
+              />
             </div>
           </DrawerComponent>
         </header>

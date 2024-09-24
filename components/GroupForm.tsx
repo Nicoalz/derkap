@@ -41,7 +41,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
     if (!groupName) {
       return setMissingName(true);
     }
-    
+
     setIsRequestInProgress(true);
     const { data, error } = await createGroup({ name: groupName });
     if (error) return toast.error("Une erreurs s'est produite...");
@@ -102,7 +102,15 @@ const GroupForm: React.FC<GroupFormProps> = ({
         />
       </div>
 
-      <Button text={isRequestInProgress ? "Chargement..." : "Créer"} onClick={handleCreateGroup} className={cn(isRequestInProgress && 'cursor-not-allowed bg-gray-400', "w-full")} disabled={isRequestInProgress} />
+      <Button
+        text={isRequestInProgress ? 'Chargement...' : 'Créer'}
+        onClick={handleCreateGroup}
+        className={cn(
+          isRequestInProgress && 'cursor-not-allowed bg-gray-400',
+          'w-full',
+        )}
+        disabled={isRequestInProgress}
+      />
     </div>
   );
 };

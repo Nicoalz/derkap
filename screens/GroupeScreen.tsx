@@ -143,14 +143,17 @@ const GroupScreen = ({ id }: { id: string }) => {
           <ChallengeBox challenge={currentChallenge} />
           {currentChallenge?.status === 'posting' && (
             <ChallengeInProgress
-              challenge_id={currentChallenge.id}
+              challenge={currentChallenge}
               group={currentGroup}
               posts={currentPosts}
               fetchAllGroupData={fetchAllGroupData}
             />
           )}
           {currentChallenge?.status === 'voting' && (
-            <Voting posts={currentPosts} />
+            <Voting
+              fetchAllGroupData={fetchAllGroupData}
+              posts={currentPosts}
+            />
           )}
           {currentChallenge?.status === 'ended' && (
             <ChallengeEnded

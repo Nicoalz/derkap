@@ -25,4 +25,6 @@ export type TGroupDB = Database['public']['Tables']['group']['Row'] & {
 };
 
 // POSTS
-export type TPostDB = Database['public']['Tables']['post']['Row'];
+export type TPostDB = Database['public']['Tables']['post']['Row'] & {
+  creator: TProfileDB | null;
+};

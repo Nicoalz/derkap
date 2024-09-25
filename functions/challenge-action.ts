@@ -64,3 +64,26 @@ export const getCurrentChallenge = async ({
     error: null,
   };
 };
+
+export const setChallengeToVoting = async ({
+  challenge_id,
+}: {
+  challenge_id: number;
+}) => {
+  const supabase = createSupabaseAppServerClient();
+  const { error } = await supabase
+    .from('challenge')
+    .update({ status: 'voting' })
+    .eq('id', challenge_id);
+
+  if (error) {
+    return {
+      error: error.message,
+    };
+  }
+
+  return {
+    data: null,
+    error: null,
+  };
+};

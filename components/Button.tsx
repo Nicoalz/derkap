@@ -30,7 +30,7 @@ export default function Button({
         className={cn(
           ' bg-custom-primary text-white py-2 px-4 rounded  text-sm',
           className,
-          { 'bg-gray-200 text-custom-black': isCancel },
+          { 'bg-gray-300 text-gray-400': isCancel },
         )}
       >
         {' '}
@@ -44,7 +44,7 @@ export default function Button({
       className={cn(
         ' bg-custom-primary text-white py-2 px-4 rounded  text-sm',
         className,
-        { 'bg-gray-200 text-custom-black': isCancel },
+        { 'bg-gray-300 text-gray-400': isCancel },
       )}
     >
       {' '}

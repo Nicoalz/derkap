@@ -10,12 +10,13 @@ import { useSoundStore } from '../app/audio/useSoundStore';
 import Title from '../components/Title';
 import { pushPostToDb } from '@/functions/post-action';
 import Loader from '../components/Loader';
+import { TChallengeDB } from '@/types/types';
 
 const CaptureScreen: React.FC<{
   setIsCapturing: React.Dispatch<React.SetStateAction<boolean>>;
   fetchAllGroupData: () => Promise<void>;
-  challenge_id: number;
-}> = ({ setIsCapturing, fetchAllGroupData, challenge_id }) => {
+  challenge: TChallengeDB;
+}> = ({ setIsCapturing, fetchAllGroupData, challenge }) => {
   const { isSoundEnabled } = useSoundStore();
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
   const [imgTaken, setImgTaken] = useState<string | null>(null);
@@ -53,9 +54,13 @@ const CaptureScreen: React.FC<{
 
       playRandomSound();
 
+      if (!challenge) {
+        throw new Error('Challenge not found');
+      }
+
       const post = {
         file_url: imgTaken,
-        challenge_id: challenge_id,
+        challenge_id: challenge?.id,
       };
 
       const { error } = await pushPostToDb({ post });

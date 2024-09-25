@@ -3,14 +3,15 @@ import { cn } from '@/libs/utils';
 import { useState } from 'react';
 import CaptureScreen from '@/screens/CaptureScreen';
 import Button from '@/components/Button';
+import { TChallengeDB } from '@/types/types';
 interface PostNotTakenProps extends React.HTMLAttributes<HTMLDivElement> {
   fetchAllGroupData: () => Promise<void>;
-  challenge_id: number;
+  challenge: TChallengeDB;
 }
 
 const PostNotTaken = ({
   className,
-  challenge_id,
+  challenge,
   fetchAllGroupData,
   ...props
 }: PostNotTakenProps) => {
@@ -21,7 +22,7 @@ const PostNotTaken = ({
         <CaptureScreen
           setIsCapturing={setIsCapturing}
           fetchAllGroupData={fetchAllGroupData}
-          challenge_id={challenge_id}
+          challenge={challenge}
         />
       ) : (
         <div>

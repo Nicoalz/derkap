@@ -3,7 +3,7 @@ import { cn } from '@/libs/utils';
 import { useState, useEffect } from 'react';
 import PostTaken from './PostTaken';
 import PostNotTaken from './PostNotTaken';
-import { TGroupDB, TPostDB } from '@/types/types';
+import { TChallengeDB, TGroupDB, TPostDB } from '@/types/types';
 import { useUser } from '@/contexts/user-context';
 
 interface ChallengeInProgressProps
@@ -11,14 +11,14 @@ interface ChallengeInProgressProps
   group: TGroupDB | undefined;
   posts: TPostDB[] | undefined;
   fetchAllGroupData: () => Promise<void>;
-  challenge_id: number;
+  challenge: TChallengeDB;
 }
 
 const ChallengeInProgress = ({
   group,
   posts,
   fetchAllGroupData,
-  challenge_id,
+  challenge,
   className,
   ...props
 }: ChallengeInProgressProps) => {
@@ -28,7 +28,6 @@ const ChallengeInProgress = ({
 
   useEffect(() => {
     if (posts) {
-      console.log({ posts });
       const myPost = posts.find(post => post.profile_id === currentUserData.id);
       if (myPost) {
         setIsMyPostTaken(true);
@@ -39,10 +38,15 @@ const ChallengeInProgress = ({
   return (
     <div {...props} className={cn('w-full', className)}>
       {isMyPostTaken ? (
-        <PostTaken posts={posts} group={group} />
+        <PostTaken
+          fetchAllGroupData={fetchAllGroupData}
+          challenge={challenge}
+          posts={posts}
+          group={group}
+        />
       ) : (
         <PostNotTaken
-          challenge_id={challenge_id}
+          challenge={challenge}
           fetchAllGroupData={fetchAllGroupData}
         />
       )}

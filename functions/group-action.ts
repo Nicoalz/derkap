@@ -28,6 +28,33 @@ export const getGroups = async ({ user_id }: { user_id?: string }) => {
   };
 };
 
+export const getGroup = async ({ group_id }: { group_id: string }) => {
+  const supabase = createSupabaseAppServerClient();
+  const { user } = (await supabase.auth.getUser()).data;
+  if (!user) {
+    return {
+      data: null,
+      error: 'User not found',
+    };
+  }
+  //select the single group and its members
+  const { data, error } = await supabase
+    .from('group')
+    .select('*, members:group_profile(profile(*))')
+    .eq('id', group_id)
+    .single();
+  if (error) {
+    return {
+      data: null,
+      error: error.message,
+    };
+  }
+  return {
+    data,
+    error: null,
+  };
+};
+
 export const createGroup = async ({ name }: { name: string }) => {
   const supabase = createSupabaseAppServerClient();
   const { user } = (await supabase.auth.getUser()).data;

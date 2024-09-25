@@ -2,35 +2,22 @@
 import { useEffect, useState } from 'react';
 import { fetchWithToken } from '../libs/fetch';
 import { cn } from '../libs/utils';
+import { TChallengeDB } from '@/types/types';
+
+interface ChallengeBoxProps extends React.HTMLAttributes<HTMLDivElement> {
+  challenge: TChallengeDB;
+}
 
 const ChallengeBox = ({
+  challenge,
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => {
-  const [challenge] = useState<any>(null);
+}: ChallengeBoxProps) => {
   const [isLoading] = useState(false);
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
 
-  const fetchActiveChallenge = async () => {
-    // try {
-    //   setIsLoading(true);
-    //   const { data, error } = await getActiveChallenge();
-    //   if (error) {
-    //     console.error('Error fetching challenge:', error);
-    //     return;
-    //   }
-    //   console.log('Active challenge:', data);
-    //   setChallenge(data);
-    // } catch (err) {
-    //   console.error('Error fetching challenge:', err);
-    // } finally {
-    //   setIsLoading(false);
-    // }
-  };
-
   useEffect(() => {
     setIsNotificationSupported('Notification' in window);
-    fetchActiveChallenge();
   }, []);
 
   const requestPermission = async () => {
@@ -84,8 +71,6 @@ const ChallengeBox = ({
     }
   };
 
-  const { description } = challenge ?? {};
-
   return (
     <div {...props} className={cn('w-full', className)}>
       {isLoading ? (
@@ -97,15 +82,19 @@ const ChallengeBox = ({
           }}
           className="h-24 flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-custom-black shadow-element gap-4 items-center"
         >
-          <p className="text-[3rem] ">{description ? '😹' : '😢'}</p>
+          <p className="text-[3rem] ">{challenge ? '😹' : '😢'}</p>
           <div className="text-left">
-            <h1 className="font-bold uppercase text-lg font-champ">
+            {/* <h1 className="font-bold uppercase text-lg font-champ">
               {'Derkap du jour'}
-            </h1>
+            </h1> */}
             <p className="text-sm font-champ text-custom-black">
-              {'Pas de défis pour le moment'}
+              {challenge ? challenge.description : 'Reviens plus tard'}
             </p>
-            <p className="text-sm">{description ?? 'Reviens plus tard'}</p>
+            <p className="text-sm">
+              {challenge
+                ? 'Créé par ' + challenge.creator?.username
+                : 'Reviens plus tard'}
+            </p>
           </div>
         </div>
       )}

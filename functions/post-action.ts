@@ -69,13 +69,23 @@ export const pushPostToDb = async ({
     };
   }
 
+  //await verifyChallengeCompletion({ challenge_id });
+
   return {
     error: null,
     data: null,
   };
 };
 
-export const getPosts = async ({ challenge_id }: { challenge_id: string }) => {
+// const verifyChallengeCompletion = async ({
+//   challenge_id,
+// }: {
+//   challenge_id: number;
+// }) => {
+//   // get the number of posts for this challenge and the numbers of members in the group, if they are equal, then the challenge is completed
+// }
+
+export const getPosts = async ({ challenge_id }: { challenge_id: number }) => {
   const supabase = createSupabaseAppServerClient();
   const { user } = (await supabase.auth.getUser()).data;
   if (!user) {

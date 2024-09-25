@@ -37,28 +37,30 @@ export const createChallenge = async ({
   };
 };
 
-// export const getChallenge = async ({ challenge_id }: { challenge_id: string }) => {
-//   const supabase = createSupabaseAppServerClient();
-//   const { user } = (await supabase.auth.getUser()).data;
-//   if (!user) {
-//     return {
-//       data: null,
-//       error: 'User not found',
-//     };
-//   }
-//   const { data, error } = await supabase
-//     .from('post')
-//     .select('*')
-//     .eq('challenge_id', challenge_id);
-//   if (error) {
-//     return {
-//       data: null,
-//       error: error.message,
-//     };
-//   }
+export const getCurrentChallenge = async ({
+  group_id,
+}: {
+  group_id: string;
+}) => {
+  const supabase = createSupabaseAppServerClient();
+  // get the latest created challenge, and the profile of the creator
+  const { data, error } = await supabase
+    .from('challenge')
+    .select(`*, creator:profile(*)`)
+    .eq('group_id', group_id)
+    .order('created_at', { ascending: false })
+    .limit(1);
+  // .single(); // => if single set and no row is found, it will return an error, but no challenge can be possible so no error
 
-//   return {
-//     data,
-//     error: null,
-//   };
-// };
+  if (error) {
+    return {
+      data: null,
+      error: error.message,
+    };
+  }
+
+  return {
+    data,
+    error: null,
+  };
+};

@@ -11,7 +11,11 @@ export interface TVapidDetails {
 }
 
 // CHALLENGES
-export type TChallengeDB = Database['public']['Tables']['challenge']['Row'];
+export type TChallengeDB =
+  | (Database['public']['Tables']['challenge']['Row'] & {
+      creator: TProfileDB | null;
+    })
+  | null;
 
 // GROUPS
 export type TGroupDB = Database['public']['Tables']['group']['Row'] & {

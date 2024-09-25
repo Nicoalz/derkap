@@ -5,25 +5,45 @@ import { ChevronLeft } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import SheetComponent from './SheetComponent';
 import Button from './Button';
-import { TGroupDB } from '@/types/types';
+import { TGroupDB, TChallengeDB } from '@/types/types';
 import { toast } from 'sonner';
 import { deleteGroup, leaveGroup } from '@/functions/group-action';
 import Image from 'next/image';
+import { Database } from '@/types/supabase';
+import { cn } from '@/lib/utils';
 
 interface GroupeHeaderProps {
   groupeData?: TGroupDB;
   children?: React.ReactNode;
   link?: string;
+  currentChallenge?: TChallengeDB;
 }
 
 const GroupeHeader: React.FC<GroupeHeaderProps> = ({
   groupeData,
+  currentChallenge,
   children,
 }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [, setIsInfoChanged] = useState<boolean>(false);
   const [groupeName, setGroupeName] = useState(groupeData?.name || '');
   const router = useRouter();
+
+  const statusColorMap: {
+    [key in Database['public']['Tables']['challenge']['Row']['status']]: string;
+  } = {
+    posting: 'bg-orange-400',
+    voting: 'bg-yellow-400',
+    ended: 'bg-gray-400',
+  };
+
+  const status = () => {
+    if (!currentChallenge) return 'Pas de défi';
+    else if (currentChallenge.status === 'posting') return 'En cours';
+    else if (currentChallenge.status === 'voting') return 'À voter';
+    else if (currentChallenge.status === 'ended') return 'Terminé';
+    return 'Pas de défi';
+  };
 
   const membresGroup = groupeData?.members.filter(
     (member, index, self) =>
@@ -185,7 +205,18 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
         </div>
       </SheetComponent>
 
-      {children}
+      {currentChallenge && (
+        <div
+          className={cn(
+            'rounded-md px-2.5 py-0.5 text-xs font-semibold text-white',
+            currentChallenge?.status
+              ? statusColorMap[currentChallenge.status]
+              : '',
+          )}
+        >
+          <p className="text-center">{status()}</p>
+        </div>
+      )}
     </header>
   );
 };

@@ -2,7 +2,6 @@
 'use client';
 import Button from '@/components/Button';
 import { XIcon, ArrowLeftIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import Webcam from 'react-webcam';
 import { toast } from 'sonner';
@@ -14,10 +13,9 @@ import Loader from '../components/Loader';
 
 const CaptureScreen: React.FC<{
   setIsCapturing: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsTaken: React.Dispatch<React.SetStateAction<boolean>>;
+  fetchAllGroupData: () => Promise<void>;
   challenge_id: number;
-}> = ({ setIsCapturing, setIsTaken, challenge_id }) => {
-  const router = useRouter();
+}> = ({ setIsCapturing, fetchAllGroupData, challenge_id }) => {
   const { isSoundEnabled } = useSoundStore();
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
   const [imgTaken, setImgTaken] = useState<string | null>(null);
@@ -68,11 +66,11 @@ const CaptureScreen: React.FC<{
 
       setIsRedirecting(true);
       setIsCapturing(false);
-      setIsTaken(true);
     } catch (error) {
       toast.error('Une erreur est survenue: ' + error);
     } finally {
       setIsValidatingFile(false);
+      fetchAllGroupData();
     }
   };
 

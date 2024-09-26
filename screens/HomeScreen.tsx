@@ -35,18 +35,34 @@ const HomeScreen = () => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    const localGroups = localStorage.getItem('groups');
+    if (localGroups) {
+      setGroups(JSON.parse(localGroups));
+      setIsLoadingGettingGroup(false);
+    }
+  }, []);
+
   const handleRefresh = async () => {
     handleGetGroups();
   };
 
   const handleGetGroups = async () => {
-    const { data, error } = await getGroups({});
-    setIsLoadingGettingGroup(false);
-    if (error) {
-      console.error(error);
+    try {
+      const { data, error } = await getGroups({});
+
+      if (error) {
+        toast.error('Erreur lors de la récupération des groupes');
+      }
+      if (data) {
+        setGroups(data);
+        localStorage.setItem('groups', JSON.stringify(data));
+      }
+    } catch (error) {
       toast.error('Erreur lors de la récupération des groupes');
+    } finally {
+      setIsLoadingGettingGroup(false);
     }
-    if (data) setGroups(data);
   };
 
   const handleJoinGroup = async () => {

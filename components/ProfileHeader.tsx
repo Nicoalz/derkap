@@ -33,6 +33,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   const router = useRouter();
 
   const handleSignOut = async () => {
+    localStorage.removeItem('groups');
     await signoutSupabase();
   };
 

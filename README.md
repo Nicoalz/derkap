@@ -14,6 +14,8 @@ Everyone takes a photo challenge, and everyone votes for the best one!
 - TailwindCSS - Shadcn - Lucid-React
 - Supabase
 - Husky
+- EsLint
+- Prettier
 
 # Installation
 

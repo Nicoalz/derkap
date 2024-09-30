@@ -87,3 +87,26 @@ export const setChallengeToVoting = async ({
     error: null,
   };
 };
+
+export const setChallengeToEnd = async ({
+  challenge_id,
+}: {
+  challenge_id: number;
+}) => {
+  const supabase = createSupabaseAppServerClient();
+  const { error } = await supabase
+    .from('challenge')
+    .update({ status: 'ended' })
+    .eq('id', challenge_id);
+
+  if (error) {
+    return {
+      error: error.message,
+    };
+  }
+
+  return {
+    data: null,
+    error: null,
+  };
+};

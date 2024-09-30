@@ -40,6 +40,7 @@ export default function Button({
   }
   return (
     <button
+      disabled={isCancel}
       {...props}
       className={cn(
         ' bg-custom-primary text-white py-2 px-4 rounded  text-sm',

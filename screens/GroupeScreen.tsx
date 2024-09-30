@@ -19,8 +19,7 @@ import {
 import { TChallengeDB, TPostDB } from '@/types/types';
 import { getPosts } from '@/functions/post-action';
 import NoChallenge from '@/components/group/NoChallenge';
-import Voting from '@/components/group/Voting';
-import ChallengeEnded from '@/components/group/ChallengeEnded';
+import ChallengeFinalization from '@/components/group/ChallengeFinalization';
 import GroupLoading from '@/components/group/GroupLoading';
 import GroupMembersList from '@/components/group/GroupMembersList';
 import ChallengeInProgress from '@/components/group/ChallengeInProgress';
@@ -149,14 +148,12 @@ const GroupScreen = ({ id }: { id: string }) => {
               fetchAllGroupData={fetchAllGroupData}
             />
           )}
-          {currentChallenge?.status === 'voting' && (
-            <Voting
+          {(currentChallenge?.status === 'voting' ||
+            currentChallenge?.status === 'ended') && (
+            <ChallengeFinalization
               fetchAllGroupData={fetchAllGroupData}
               posts={currentPosts}
-            />
-          )}
-          {currentChallenge?.status === 'ended' && (
-            <ChallengeEnded
+              challenge={currentChallenge}
               setIsCreateChallengeOpen={setIsCreateChallengeOpen}
             />
           )}

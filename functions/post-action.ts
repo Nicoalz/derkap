@@ -110,9 +110,3 @@ export const getPosts = async ({ challenge_id }: { challenge_id: number }) => {
     error: null,
   };
 };
-
-export const voteForPost = async ({ post_id }: { post_id: number }) => {
-  //todo: implement the vote for a post
-  //If I vote again, it should remove the previous vote
-  throw new Error('Not implemented');
-};

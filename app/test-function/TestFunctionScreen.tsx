@@ -126,9 +126,9 @@ export default function TestFunctionScreen() {
     // ADD VOTE FOR A SPECIFIC POST
     // EACH USER CAN VOTE FOR ONE POST BY CHALLENGE
     // IF USER VOTE FOR ANOTHER POST, THE PREVIOUS VOTE IS DELETED
-    const { error } = await addVote({ post_id: idPostToAddVote });
-    setIsLoadingAddingVote(false);
-    if (error) return console.error(error);
+    // const { error } = await addVote({ post_id: idPostToAddVote });
+    // setIsLoadingAddingVote(false);
+    // if (error) return console.error(error);
   };
 
   return (

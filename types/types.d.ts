@@ -30,6 +30,4 @@ export type TPostDB = Database['public']['Tables']['post']['Row'] & {
 };
 
 // VOTES
-export type TVoteDB = Database['public']['Tables']['vote']['Row'] & {
-  challenge: Database['public']['Tables']['challenge']['Row'] | null;
-};
+export type TVoteDB = Database['public']['Tables']['vote']['Row'];

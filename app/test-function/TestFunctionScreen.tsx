@@ -9,8 +9,10 @@ import {
   joinGroup,
   leaveGroup,
 } from '@/functions/group-action';
+import { getPosts } from '@/functions/post-action';
 import { getProfile } from '@/functions/profile-actions';
-import { TGroupDB, TProfileDB } from '@/types/types';
+import { addVote, getVotes } from '@/functions/vote-action';
+import { TGroupDB, TPostDB, TProfileDB, TVoteDB } from '@/types/types';
 import { useState } from 'react';
 
 export default function TestFunctionScreen() {
@@ -33,7 +35,17 @@ export default function TestFunctionScreen() {
   const [inviteCodeJoin, setInviteCodeJoin] = useState('');
 
   const [isLoadingLeavingGroup, setIsLoadingLeavingGroup] = useState(false);
-  // const [idGroupToLeave, setIdGroupToLeave] = useState(0);
+
+  const [postsByChallenge, setPostsByChallenge] = useState<TPostDB[]>();
+  const [isLoadingGettingPosts, setIsLoadingGettingPosts] = useState(false);
+  const [idChallengeToGetPosts, setIdChallengeToGetPosts] = useState(0);
+
+  const [isLoadingGettingVotes, setIsLoadingGettingVotes] = useState(false);
+  const [idChallengeToGetVotes, setIdChallengeToGetVotes] = useState(0);
+
+  const [isLoadingAddingVote, setIsLoadingAddingVote] = useState(false);
+  const [idPostToAddVote, setIdPostToAddVote] = useState(0);
+  const [vote, setVote] = useState<TVoteDB[]>();
 
   const handleGetProfile = async () => {
     setIsLoadingProfile(true);
@@ -83,6 +95,39 @@ export default function TestFunctionScreen() {
     setIsLoadingLeavingGroup(true);
     const { error } = await leaveGroup({ group_id: inviteCodeJoin });
     setIsLoadingLeavingGroup(false);
+    if (error) return console.error(error);
+  };
+
+  const handleGetVotes = async () => {
+    setIsLoadingGettingVotes(true);
+
+    // GET ALL VOTES OF A SPECIFIC CHALLENGE
+    const { data, error } = await getVotes({
+      challenge_id: idChallengeToGetVotes,
+    });
+    setIsLoadingGettingVotes(false);
+    if (error) return console.error(error);
+    if (data) setVote(data);
+  };
+
+  const handleGetPosts = async () => {
+    setIsLoadingGettingPosts(true);
+    // GET ALL POSTS OF A SPECIFIC CHALLENGE
+    const { data, error } = await getPosts({
+      challenge_id: idChallengeToGetPosts,
+    });
+    setIsLoadingGettingPosts(false);
+    if (error) return console.error(error);
+    if (data) setPostsByChallenge(data);
+  };
+
+  const handleAddVote = async () => {
+    setIsLoadingAddingVote(true);
+    // ADD VOTE FOR A SPECIFIC POST
+    // EACH USER CAN VOTE FOR ONE POST BY CHALLENGE
+    // IF USER VOTE FOR ANOTHER POST, THE PREVIOUS VOTE IS DELETED
+    const { error } = await addVote({ post_id: idPostToAddVote });
+    setIsLoadingAddingVote(false);
     if (error) return console.error(error);
   };
 
@@ -172,6 +217,59 @@ export default function TestFunctionScreen() {
             className="w-fit disabled:bg-gray-400"
             text={isLoadingDeletingGroup ? loadingText : 'Delete Goup'}
             onClick={handleDeleteGroup}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-y-2 mt-8">
+        <h3 className="font-champ">Posts</h3>
+        <div className="flex gap-x-4">
+          <Input
+            className="w-fit max-w-[120px]"
+            placeholder="Challenge ID"
+            onChange={e => setIdChallengeToGetPosts(Number(e.target.value))}
+          />
+          <Button
+            disabled={isLoadingGettingPosts}
+            className="w-fit disabled:bg-gray-400"
+            text={isLoadingGettingPosts ? loadingText : 'Get Challenge Posts'}
+            onClick={handleGetPosts}
+          />
+        </div>
+        <pre className="bg-white max-h-[700px] overflow-auto">
+          {JSON.stringify(postsByChallenge, null, 2)}
+        </pre>
+      </div>
+
+      <div className="flex flex-col gap-y-2 mt-8">
+        <h3 className="font-champ">Votes</h3>
+        <div className="flex gap-x-4">
+          <Input
+            className="w-fit max-w-[120px]"
+            placeholder="Challenge ID"
+            onChange={e => setIdChallengeToGetVotes(Number(e.target.value))}
+          />
+          <Button
+            disabled={isLoadingGettingVotes}
+            className="w-fit disabled:bg-gray-400"
+            text={isLoadingGettingVotes ? loadingText : 'Get Challenge Votes'}
+            onClick={handleGetVotes}
+          />
+        </div>
+        <pre className="bg-white max-h-[700px] overflow-auto">
+          {JSON.stringify(vote, null, 2)}
+        </pre>
+        <div className="flex gap-x-4">
+          <Input
+            className="w-fit max-w-[100px]"
+            placeholder="Post ID"
+            onChange={e => setIdPostToAddVote(Number(e.target.value))}
+          />
+          <Button
+            disabled={isLoadingAddingVote}
+            className="w-fit disabled:bg-gray-400"
+            text={isLoadingAddingVote ? loadingText : 'Add Vote for Post'}
+            onClick={handleAddVote}
           />
         </div>
       </div>

@@ -28,3 +28,8 @@ export type TGroupDB = Database['public']['Tables']['group']['Row'] & {
 export type TPostDB = Database['public']['Tables']['post']['Row'] & {
   creator: TProfileDB | null;
 };
+
+// VOTES
+export type TVoteDB = Database['public']['Tables']['vote']['Row'] & {
+  challenge: Database['public']['Tables']['challenge']['Row'] | null;
+};

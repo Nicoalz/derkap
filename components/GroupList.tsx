@@ -33,7 +33,6 @@ const GroupList = ({
   });
 
   console.log(membresGroup);
-  
 
   const handleShare = ({
     title,

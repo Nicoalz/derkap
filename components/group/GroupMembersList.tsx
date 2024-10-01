@@ -35,7 +35,7 @@ const GroupMembersList = ({
               alt={member?.profile?.username + 'photo'}
               width={10}
               height={10}
-              className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full`}
+              className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full object-cover`}
             />
           </Link>
         ) : (

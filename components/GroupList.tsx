@@ -31,6 +31,10 @@ const GroupList = ({
     );
     return { ...group, members: membres };
   });
+
+  console.log(membresGroup);
+  
+
   const handleShare = ({
     title,
     id,
@@ -177,7 +181,7 @@ const GroupList = ({
                           alt={member.profile.username + 'photo'}
                           width={40}
                           height={40}
-                          className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full"
+                          className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full object-cover"
                         />
                       </div>
                     ) : (

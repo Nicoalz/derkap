@@ -189,23 +189,24 @@ const ChallengeFinalization = ({
           </CarouselItem>
         ))}
       </CarouselComponent>
-      {challenge?.status === 'voting' && (
-        <>
-          <Button
-            text={userVote?.voted ? 'Changer mon vote' : 'Voter'}
-            isCancel={!selectedPost}
-            onClick={() => {
-              handleVote();
-            }}
-          />
-          <Button
-            text="Fermer les votes"
-            onClick={() => {
-              setIsEndVoteOpen(true);
-            }}
-          />
-        </>
-      )}
+      {challenge?.creator_id === userData.id &&
+        challenge?.status === 'voting' && (
+          <>
+            <Button
+              text={userVote?.voted ? 'Changer mon vote' : 'Voter'}
+              isCancel={!selectedPost}
+              onClick={() => {
+                handleVote();
+              }}
+            />
+            <Button
+              text="Fermer les votes"
+              onClick={() => {
+                setIsEndVoteOpen(true);
+              }}
+            />
+          </>
+        )}
       {challenge?.status === 'ended' && (
         <Button
           text="Relancer dès mainteant un défi !"

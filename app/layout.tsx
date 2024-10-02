@@ -9,7 +9,7 @@ import { createSupabaseAppServerClient } from '../libs/supabase/server';
 import './globals.css';
 const title = 'Derkap';
 const description = 'Derkap';
-const domain = 'wwww.example.com/';
+const domain = 'app.derkap.fr/';
 const url = `https://${domain}`;
 const socialBannerUrl = '/social_banner.png';
 

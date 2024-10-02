@@ -14,8 +14,7 @@ export const getVotes = async ({ challenge_id }: { challenge_id: number }) => {
   const { data, error } = await supabase
     .from('vote')
     .select('*')
-    .eq('challenge_id', challenge_id)
-    .limit(1);
+    .eq('challenge_id', challenge_id);
 
   if (error) {
     return {

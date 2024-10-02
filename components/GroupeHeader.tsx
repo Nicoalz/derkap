@@ -40,7 +40,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
   const status = () => {
     if (!currentChallenge) return 'Pas de défi';
     else if (currentChallenge.status === 'posting') return 'En cours';
-    else if (currentChallenge.status === 'voting') return 'À voter';
+    else if (currentChallenge.status === 'voting') return 'En votes';
     else if (currentChallenge.status === 'ended') return 'Terminé';
     return 'Pas de défi';
   };

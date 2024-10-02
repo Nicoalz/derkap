@@ -39,12 +39,12 @@ const generateSubscription = async () => {
 const subscribeUser = async () => {
   const subscription = await generateSubscription();
   if (!subscription) return;
-  await postSubscription({ subscription });
+  return await postSubscription({ subscription });
 };
 
 export const handleAskNotification = async () => {
   const permission = await askPermission();
   if (permission === 'granted') {
-    await subscribeUser();
+    return await subscribeUser();
   }
 };

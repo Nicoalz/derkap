@@ -68,9 +68,9 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
       const data = await handleAskNotification();
       console.log(data);
       toast.success('Notifications réinitialisées');
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast.error('Erreur lors de la réinitialisation des notifications');
+      toast.error(error?.message);
     }
   };
 

@@ -9,7 +9,8 @@
     "lint": "next lint",
     "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx . --fix",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "gen:supabase-types": "supabase gen types typescript --project-id hrktxqpsqbjnockggnic --schema public > types/supabase.ts"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

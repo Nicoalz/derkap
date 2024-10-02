@@ -32,8 +32,6 @@ const GroupList = ({
     return { ...group, members: membres };
   });
 
-  console.log(membresGroup);
-
   const handleShare = ({
     title,
     id,

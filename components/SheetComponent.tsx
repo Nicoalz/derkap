@@ -5,7 +5,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { useEffect } from 'react';
 
 interface SheetProps {
   trigger: React.ReactNode;

@@ -10,7 +10,7 @@ import { TProfileDB } from '@/types/types';
 import { signoutSupabase } from '@/functions/supabase/signout-supabase';
 import Button from './Button';
 import Image from 'next/image';
-
+import { handleAskNotification } from '@/libs/notificationHelper';
 interface GroupeHeaderProps {
   isUserProfil: boolean;
   userData: TProfileDB;
@@ -136,6 +136,11 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
               <p className="text-gray-600 text-center text-sm">
                 Membre depuis le {membreSince()}
               </p>
+              <Button
+                text="Réinitialiser les notifications"
+                className={cn('w-full')}
+                onClick={handleAskNotification}
+              />
               <Button
                 text="Modifier"
                 className={cn('w-full', !isInfoChanged && 'bg-gray-300')}

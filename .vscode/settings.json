@@ -11,5 +11,7 @@
     "source.fixAll.eslint": "always"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "deno.enablePaths": ["supabase/functions"],
+  "deno.lint": true,
 }

@@ -111,6 +111,38 @@ export type Database = {
           },
         ];
       };
+      notification_subscription: {
+        Row: {
+          created_at: string;
+          id: number;
+          subscription: Json | null;
+          url: string | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          subscription?: Json | null;
+          url?: string | null;
+          user_id?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          subscription?: Json | null;
+          url?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'notification_subscription_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'profile';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       NotificationSubscription: {
         Row: {
           created_at: string;
@@ -216,24 +248,34 @@ export type Database = {
       };
       vote: {
         Row: {
+          challenge_id: number;
           created_at: string;
           id: number;
           post_id: number;
           user_id: string;
         };
         Insert: {
+          challenge_id: number;
           created_at?: string;
           id?: number;
           post_id: number;
           user_id?: string;
         };
         Update: {
+          challenge_id?: number;
           created_at?: string;
           id?: number;
           post_id?: number;
           user_id?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: 'vote_challenge_id_fkey';
+            columns: ['challenge_id'];
+            isOneToOne: false;
+            referencedRelation: 'challenge';
+            referencedColumns: ['id'];
+          },
           {
             foreignKeyName: 'vote_post_id_fkey';
             columns: ['post_id'];

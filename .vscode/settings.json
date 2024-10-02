@@ -13,5 +13,5 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "deno.enablePaths": ["supabase/functions"],
-  "deno.lint": true,
+  "deno.lint": true
 }

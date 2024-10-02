@@ -63,6 +63,17 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
     });
   };
 
+  const handleResetNotification = async () => {
+    try {
+      const data = await handleAskNotification();
+      console.log(data);
+      toast.success('Notifications réinitialisées');
+    } catch (error) {
+      console.error(error);
+      toast.error('Erreur lors de la réinitialisation des notifications');
+    }
+  };
+
   return (
     <header className="w-full flex justify-between items-center p-4 md:px-12 h-fit relative">
       <div className="flex items-center gap-x-2" onClick={() => router.back()}>
@@ -139,7 +150,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
               <Button
                 text="Réinitialiser les notifications"
                 className={cn('w-full')}
-                onClick={handleAskNotification}
+                onClick={handleResetNotification}
               />
               <Button
                 text="Modifier"

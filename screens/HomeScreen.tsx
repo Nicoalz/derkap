@@ -40,20 +40,25 @@ const HomeScreen = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const notificationFirstTimeSeenStored = localStorage.getItem(
-      'NotificationFirstTimeSeen',
-    );
-    if (notificationFirstTimeSeenStored) {
-      setNotificationFirstTimeSeen(notificationFirstTimeSeenStored as any);
-    } else {
-      setNotificationFirstTimeSeen('false');
-    }
-
     const localGroups = localStorage.getItem('groups');
     if (localGroups) {
       setGroups(JSON.parse(localGroups));
       setIsLoadingGettingGroup(false);
     }
+  }, []);
+
+  useEffect(() => {
+    const notifSeenExpireStored = localStorage.getItem('notifSeenExpire');
+    if (notifSeenExpireStored) {
+      const expiry = parseInt(notifSeenExpireStored);
+      // it has not expired
+      if (expiry > new Date().getTime()) {
+        setNotificationFirstTimeSeen('true');
+        return;
+      }
+    }
+    // if it has expired or not set
+    setNotificationFirstTimeSeen('false');
   }, []);
 
   useEffect(() => {
@@ -67,7 +72,10 @@ const HomeScreen = () => {
   };
 
   const updateNotifFirstTimeSeen = () => {
-    localStorage.setItem('NotificationFirstTimeSeen', 'true');
+    const now = new Date();
+    const expiresIn = 7 * 24 * 60 * 60 * 1000; // 7 days
+    const expiry = now.getTime() + expiresIn;
+    localStorage.setItem('notifSeenExpire', expiry.toString());
     setNotificationFirstTimeSeen('true');
   };
 

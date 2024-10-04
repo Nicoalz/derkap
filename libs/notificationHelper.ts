@@ -11,33 +11,15 @@ const askPermission = async () => {
   return permission;
 };
 
-const unsubscribeUser = async () => {
-  const registration = await navigator.serviceWorker.ready;
-  if (!registration) {
-    console.error('Service worker registration failed or is not ready.');
-    return;
-  }
-
-  const subscription = await registration.pushManager.getSubscription();
-  if (!subscription) {
-    console.error('No subscription found.');
-    return;
-  }
-
-  return await subscription.unsubscribe();
-};
-
 const generateSubscription = async () => {
   if (!('serviceWorker' in navigator)) {
-    console.error('Service workers are not supported by this browser.');
-    return;
+    throw new Error('Service workers are not supported by this browser.');
   }
 
   const registration = await navigator.serviceWorker.ready;
 
   if (!registration) {
-    console.error('Service worker registration failed or is not ready.');
-    return;
+    throw new Error('Service worker registration failed or is not ready.');
   }
 
   const subscription = await registration.pushManager.subscribe({
@@ -56,7 +38,7 @@ const subscribeUser = async () => {
 const getCurrentSubscription = async () => {
   const registration = await navigator.serviceWorker.ready;
   if (!registration) {
-    console.error('Service worker registration failed or is not ready.');
+    throw new Error('Service worker registration failed or is not ready.');
     return;
   }
 
@@ -65,13 +47,13 @@ const getCurrentSubscription = async () => {
 
 export const handleAskNotification = async () => {
   if (!isNotificationSupported()) {
-    console.error('Notifications are not supported by this browser.');
+    throw new Error('Notifications are not supported by this browser.');
     return;
   }
   const permission = await askPermission();
   const currentSubscription = await getCurrentSubscription();
   if (currentSubscription) {
-    await unsubscribeUser();
+    await currentSubscription.unsubscribe();
   }
   if (permission === 'granted') {
     return await subscribeUser();

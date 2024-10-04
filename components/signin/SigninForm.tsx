@@ -37,7 +37,6 @@ export default function SignInForm() {
 
   return (
     <form
-      action={handleSignUp}
       onSubmit={e => {
         e.preventDefault();
         handleSignUp(new FormData(e.target as HTMLFormElement));

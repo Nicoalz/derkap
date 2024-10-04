@@ -5,15 +5,26 @@ const isNotificationSupported = (): boolean => {
 };
 
 const askPermission = async () => {
-  if (!isNotificationSupported()) {
-    console.error('Notifications are not supported by this browser.');
-    return;
-  }
-
   //   Notification?.permission === 'granted';
 
   const permission = await Notification.requestPermission();
   return permission;
+};
+
+const unsubscribeUser = async () => {
+  const registration = await navigator.serviceWorker.ready;
+  if (!registration) {
+    console.error('Service worker registration failed or is not ready.');
+    return;
+  }
+
+  const subscription = await registration.pushManager.getSubscription();
+  if (!subscription) {
+    console.error('No subscription found.');
+    return;
+  }
+
+  return await subscription.unsubscribe();
 };
 
 const generateSubscription = async () => {
@@ -42,8 +53,26 @@ const subscribeUser = async () => {
   return await postSubscription({ subscription });
 };
 
+const getCurrentSubscription = async () => {
+  const registration = await navigator.serviceWorker.ready;
+  if (!registration) {
+    console.error('Service worker registration failed or is not ready.');
+    return;
+  }
+
+  return await registration.pushManager.getSubscription();
+};
+
 export const handleAskNotification = async () => {
+  if (!isNotificationSupported()) {
+    console.error('Notifications are not supported by this browser.');
+    return;
+  }
   const permission = await askPermission();
+  const currentSubscription = await getCurrentSubscription();
+  if (currentSubscription) {
+    await unsubscribeUser();
+  }
   if (permission === 'granted') {
     return await subscribeUser();
   }

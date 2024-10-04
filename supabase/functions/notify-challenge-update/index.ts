@@ -9,31 +9,24 @@ Deno.serve(async req => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
     );
 
-    const { post_id, challenge_id, sender_id } = await req.json();
-    console.log(post_id, challenge_id, sender_id);
+    const { challenge_id, group_id, event_type, old_status, new_status } =
+      await req.json();
+    console.log('Received data:', {
+      challenge_id,
+      group_id,
+      event_type,
+      old_status,
+      new_status,
+    });
 
-    // First, fetch the group_id associated with the challenge
-    const { data: challenge, error: challengeError } = await supabase
-      .from('challenge')
-      .select('group_id')
-      .eq('id', challenge_id)
-      .single();
-
-    if (challengeError) {
-      console.error('Error fetching challenge', challengeError);
-      throw challengeError;
-    }
-
-    // Now fetch group participants excluding the sender
+    // Fetch group participants
     const { data: groupParticipants, error: participantsError } = await supabase
       .from('group_profile')
       .select('profile_id')
-      .eq('group_id', challenge.group_id);
-    //.neq('profile_id', sender_id);
+      .eq('group_id', group_id);
 
-    console.log('Group participants', groupParticipants);
     if (participantsError) {
-      console.error('Error participants', participantsError);
+      console.error('Error fetching participants:', participantsError);
       throw participantsError;
     }
 
@@ -46,9 +39,8 @@ Deno.serve(async req => {
         groupParticipants.map(participant => participant.profile_id),
       );
 
-    console.log('Subscriptions', subscriptions);
     if (subscriptionsError) {
-      console.error('Error subscriptions', subscriptionsError);
+      console.error('Error fetching subscriptions:', subscriptionsError);
       throw subscriptionsError;
     }
 
@@ -64,6 +56,17 @@ Deno.serve(async req => {
       vapidKeys,
     });
 
+    // Prepare notification message
+    let title = '';
+    let message = '';
+    if (event_type === 'new_challenge') {
+      title = 'Nouveau challenge dans votre groupe';
+      message = 'Un nouveau challenge a été créé. Venez le découvrir !';
+    } else if (event_type === 'status_change') {
+      title = 'Mise à jour du statut du challenge';
+      message = `Le statut du challenge est passé de "${old_status}" à "${new_status}".`;
+    }
+
     // Send push notifications
     const notifications = subscriptions.map(async sub => {
       const pushSubscription = sub.subscription;
@@ -73,16 +76,9 @@ Deno.serve(async req => {
         pushSubscription,
       );
 
-      await subscriber.pushTextMessage(
-        JSON.stringify({
-          title: 'Nouveau post dans votre groupe',
-          message: 'Viens vite le voir !',
-        }),
-        {},
-      );
+      await subscriber.pushTextMessage(JSON.stringify({ title, message }), {});
     });
 
-    console.log('Notifications', notifications);
     await Promise.all(notifications);
     return new Response(JSON.stringify({ success: true }), {
       headers: { 'Content-Type': 'application/json' },

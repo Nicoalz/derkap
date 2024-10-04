@@ -6,7 +6,7 @@ import Link from 'next/link';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { toast } from 'sonner';
 import { Plus, User } from 'lucide-react';
-
+import NotificationFirstTime from '@/components/NotificationFirstTime';
 import { getGroups, joinGroup } from '@/functions/group-action';
 import { TGroupDB } from '@/types/types';
 import GroupForm from '@/components/GroupForm';
@@ -24,6 +24,9 @@ import {
 import { cn } from '@/lib/utils';
 
 const HomeScreen = () => {
+  const [NotificationFirstTimeSeen, setNotificationFirstTimeSeen] = useState<
+    'loading' | 'true' | 'false'
+  >('loading');
   const [isLoadingGettingGroup, setIsLoadingGettingGroup] = useState(true);
   const [inviteCodeJoin, setInviteCodeJoin] = useState<string>('');
   const [groups, setGroups] = useState<TGroupDB[]>([]);
@@ -32,6 +35,7 @@ const HomeScreen = () => {
   const [isJoinGroupDrawerOpen, setIsJoinGroupDrawerOpen] =
     useState<boolean>(false);
   const [isRequestInProgress, setIsRequestInProgress] = useState(false);
+  const [isNotificationSupported, setIsNotificationSupported] = useState(false);
 
   const router = useRouter();
 
@@ -43,8 +47,36 @@ const HomeScreen = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const notifSeenExpireStored = localStorage.getItem('notifSeenExpire');
+    if (notifSeenExpireStored) {
+      const expiry = parseInt(notifSeenExpireStored);
+      // it has not expired
+      if (expiry > new Date().getTime()) {
+        setNotificationFirstTimeSeen('true');
+        return;
+      }
+    }
+    // if it has expired or not set
+    setNotificationFirstTimeSeen('false');
+  }, []);
+
+  useEffect(() => {
+    if (typeof Notification !== 'undefined') {
+      setIsNotificationSupported(true);
+    }
+  }, []);
+
   const handleRefresh = async () => {
     handleGetGroups();
+  };
+
+  const updateNotifFirstTimeSeen = () => {
+    const now = new Date();
+    const expiresIn = 7 * 24 * 60 * 60 * 1000; // 7 days
+    const expiry = now.getTime() + expiresIn;
+    localStorage.setItem('notifSeenExpire', expiry.toString());
+    setNotificationFirstTimeSeen('true');
   };
 
   const handleGetGroups = async () => {
@@ -91,6 +123,14 @@ const HomeScreen = () => {
       onRefresh={handleRefresh}
     >
       <>
+        {isNotificationSupported &&
+          Notification?.permission !== 'granted' &&
+          NotificationFirstTimeSeen === 'false' && (
+            <NotificationFirstTime
+              updateNotifFirstTimeSeen={updateNotifFirstTimeSeen}
+              permission={Notification.permission}
+            />
+          )}
         <header className="w-full flex items-center justify-between p-4 gap-2 h-[10vh]">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

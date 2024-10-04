@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -30,12 +30,19 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   const [preview, setPreview] = useState<string | null>(userData.avatar_url);
   const [userName, setUserName] = useState(userData.username);
   const [userEmail, setUserEmail] = useState(userData.email);
+  const [isNotificationSupported, setIsNotificationSupported] = useState(false);
   const router = useRouter();
 
   const handleSignOut = async () => {
     localStorage.removeItem('groups');
     await signoutSupabase();
   };
+
+  useEffect(() => {
+    if (typeof Notification !== 'undefined') {
+      setIsNotificationSupported(true);
+    }
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -145,9 +152,20 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
               <p className="text-gray-600 text-center text-sm">
                 Membre depuis le {membreSince()}
               </p>
+              {isNotificationSupported &&
+                Notification.permission === 'denied' && (
+                  <p className="text-xs text-red-500 text-justify">
+                    Avant de les réinitialiser, autorise les notifications de
+                    Derkap dans les réglages de ton smartphone !
+                  </p>
+                )}
               <Button
                 text="Réinitialiser les notifications"
                 className={cn('w-full')}
+                isCancel={
+                  isNotificationSupported &&
+                  Notification.permission === 'denied'
+                }
                 onClick={handleResetNotification}
               />
               <Button

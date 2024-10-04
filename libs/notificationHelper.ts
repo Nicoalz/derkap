@@ -3,10 +3,7 @@ import { postSubscription } from '@/functions/notification-actions';
 const isNotificationSupported = (): boolean => {
   return 'Notification' in window;
 };
-
 const askPermission = async () => {
-  //   Notification?.permission === 'granted';
-
   const permission = await Notification.requestPermission();
   return permission;
 };
@@ -39,10 +36,14 @@ const getCurrentSubscription = async () => {
   const registration = await navigator.serviceWorker.ready;
   if (!registration) {
     throw new Error('Service worker registration failed or is not ready.');
-    return;
   }
 
   return await registration.pushManager.getSubscription();
+};
+
+export const getPermission = () => {
+  if (!isNotificationSupported()) return;
+  return Notification.permission;
 };
 
 export const handleAskNotification = async () => {

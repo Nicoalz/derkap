@@ -70,6 +70,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
       console.log('reseted');
       toast.success('Notifications réinitialisées');
     } catch (error: any) {
+      console.error('error', error);
       toast.error(error?.message);
     }
   };

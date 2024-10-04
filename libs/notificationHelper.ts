@@ -46,20 +46,15 @@ const getCurrentSubscription = async () => {
 };
 
 export const handleAskNotification = async () => {
-  console.log('handleAskNotification');
   if (!isNotificationSupported()) {
     throw new Error('Notifications are not supported by this browser.');
   }
-  console.log('isNotificationSupported');
   const permission = await askPermission();
-  console.log('permission', permission);
-  // const currentSubscription = await getCurrentSubscription();
-  // if (currentSubscription) {
-  //   await currentSubscription.unsubscribe();
-  // }
+  const currentSubscription = await getCurrentSubscription();
+  if (currentSubscription) {
+    await currentSubscription.unsubscribe();
+  }
   if (permission === 'granted') {
-    console.log('permission granted');
     return await subscribeUser();
   }
-  console.log('permission not granted');
 };

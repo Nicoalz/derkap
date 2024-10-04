@@ -5,11 +5,6 @@ const isNotificationSupported = (): boolean => {
 };
 
 const askPermission = async () => {
-  if (!isNotificationSupported()) {
-    console.error('Notifications are not supported by this browser.');
-    return;
-  }
-
   //   Notification?.permission === 'granted';
 
   const permission = await Notification.requestPermission();
@@ -18,15 +13,13 @@ const askPermission = async () => {
 
 const generateSubscription = async () => {
   if (!('serviceWorker' in navigator)) {
-    console.error('Service workers are not supported by this browser.');
-    return;
+    throw new Error('Service workers are not supported by this browser.');
   }
 
   const registration = await navigator.serviceWorker.ready;
 
   if (!registration) {
-    console.error('Service worker registration failed or is not ready.');
-    return;
+    throw new Error('Service worker registration failed or is not ready.');
   }
 
   const subscription = await registration.pushManager.subscribe({
@@ -42,9 +35,31 @@ const subscribeUser = async () => {
   return await postSubscription({ subscription });
 };
 
+const getCurrentSubscription = async () => {
+  const registration = await navigator.serviceWorker.ready;
+  if (!registration) {
+    throw new Error('Service worker registration failed or is not ready.');
+    return;
+  }
+
+  return await registration.pushManager.getSubscription();
+};
+
 export const handleAskNotification = async () => {
+  console.log('handleAskNotification');
+  if (!isNotificationSupported()) {
+    throw new Error('Notifications are not supported by this browser.');
+  }
+  console.log('isNotificationSupported');
   const permission = await askPermission();
+  console.log('permission', permission);
+  // const currentSubscription = await getCurrentSubscription();
+  // if (currentSubscription) {
+  //   await currentSubscription.unsubscribe();
+  // }
   if (permission === 'granted') {
+    console.log('permission granted');
     return await subscribeUser();
   }
+  console.log('permission not granted');
 };

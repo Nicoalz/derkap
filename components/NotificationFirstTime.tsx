@@ -2,6 +2,9 @@
 import { cn } from '@/libs/utils';
 import Button from './Button';
 import { handleAskNotification } from '@/libs/notificationHelper';
+import { toast } from 'sonner';
+import { useState } from 'react';
+import Loader from '@/components/Loader';
 interface NotificationFirstTimePermission
   extends React.HTMLAttributes<HTMLDivElement> {
   permission: 'default' | 'denied';
@@ -13,9 +16,17 @@ const NotificationFirstTime = ({
   className,
   ...props
 }: NotificationFirstTimePermission) => {
+  const [isLoading, setIsLoading] = useState(false);
   const handleOk = async () => {
-    await handleAskNotification();
-    updateNotifFirstTimeSeen();
+    try {
+      setIsLoading(true);
+      await handleAskNotification();
+    } catch (e) {
+      toast.error('Erreur lors de la demande de notification');
+    } finally {
+      updateNotifFirstTimeSeen();
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -40,7 +51,11 @@ const NotificationFirstTime = ({
           </p>
         )}
 
-        <Button text="Ok" onClick={handleOk} />
+        {isLoading ? (
+          <Loader className="" />
+        ) : (
+          <Button text="Ok" onClick={handleOk} />
+        )}
       </div>
     </div>
   );

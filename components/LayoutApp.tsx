@@ -1,20 +1,23 @@
 'use client';
 
-// import { usePWA } from '@/contexts/pwa-context';
+import { usePWA } from '@/contexts/pwa-context';
 import React from 'react';
+import NoPwaScreen from '@/screens/NoPwaScreen';
+import Footer from './Footer';
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE === 'true';
-  // const { isPWA } = usePWA();
+  const isProduction = process.env.NODE_ENV === 'production';
+  const { isPWA } = usePWA();
   if (isMaintenance) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-3xl font-bold">Derkap is under maintenance</h1>
+        <h1 className="text-3xl font-bold">Derkap est en maintenance</h1>
         <p className="text-lg mt-4 text-gray-400">
-          We just need some time to make it better !
+          Encore un peu de patience !
         </p>
       </div>
     );
@@ -22,29 +25,20 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="flex flex-col min-h-screen dark">
-      <>
-        <main className="h-full container mx-auto flex-1 flex flex-col">
-          {children}
-        </main>
-      </>
-
-      {/* {isPWA ? (
+      {!isPWA && isProduction ? (
         <>
-          <main className="container mx-auto flex-1 flex flex-col">
+          <div className="h-full container mx-auto flex-1 flex flex-col justify-center">
+            <NoPwaScreen />
+          </div>
+          <Footer />
+        </>
+      ) : (
+        <>
+          <main className="h-full container mx-auto flex-1 flex flex-col">
             {children}
           </main>
-          <BottomNavbar />
         </>
-      ) :
-        (
-          <>
-            <div className='container mx-auto flex-1 flex flex-col justify-center'>
-              <NoPwaScreen />
-            </div>
-            <Footer />
-          </>
-        )
-      } */}
+      )}
     </div>
   );
 };

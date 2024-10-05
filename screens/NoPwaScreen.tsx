@@ -1,6 +1,7 @@
 const NoPwaScreen: React.FC = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center text-center px-4">
+      <p>Bienvenue sur Derkap!</p>
       <p>
         Pour utiliser cette application, veuillez l&apos;installer sur votre
         appareil.

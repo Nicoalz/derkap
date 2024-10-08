@@ -1,7 +1,23 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.4';
 import * as webpush from 'https://jsr.io/@negrel/webpush/0.3.0/mod.ts';
 
-Deno.serve(async req => {
+// Define types for our data structure
+type Challenge = {
+  group_id: number;
+  group: {
+    name: string;
+  };
+};
+
+type Sender = {
+  username: string;
+};
+
+type Subscription = {
+  subscription: webpush.PushSubscription;
+};
+
+Deno.serve(async (req: Request) => {
   try {
     console.log('Request received');
     const supabase = createClient(
@@ -12,10 +28,17 @@ Deno.serve(async req => {
     const { post_id, challenge_id, sender_id } = await req.json();
     console.log(post_id, challenge_id, sender_id);
 
-    // First, fetch the group_id associated with the challenge
-    const { data: challenge, error: challengeError } = await supabase
+    // Fetch challenge details including group_id and group name
+    const { data: challengeData, error: challengeError } = await supabase
       .from('challenge')
-      .select('group_id')
+      .select(
+        `
+        group_id,
+        group:group_id (
+          name
+        )
+      `,
+      )
       .eq('id', challenge_id)
       .single();
 
@@ -24,12 +47,31 @@ Deno.serve(async req => {
       throw challengeError;
     }
 
-    // Now fetch group participants excluding the sender
+    const challenge = challengeData as unknown as Challenge;
+    console.log('Challenge', challenge);
+
+    // Fetch sender's username
+    const { data: senderData, error: senderError } = await supabase
+      .from('profile')
+      .select('username')
+      .eq('id', sender_id)
+      .single();
+
+    if (senderError) {
+      console.error('Error fetching sender', senderError);
+      throw senderError;
+    }
+
+    const sender = senderData as Sender;
+
+    console.log('Sender', sender);
+
+    // Fetch group participants excluding the sender
     const { data: groupParticipants, error: participantsError } = await supabase
       .from('group_profile')
       .select('profile_id')
-      .eq('group_id', challenge.group_id);
-    //.neq('profile_id', sender_id);
+      .eq('group_id', challenge.group_id)
+      .neq('profile_id', sender_id);
 
     console.log('Group participants', groupParticipants);
     if (participantsError) {
@@ -38,22 +80,29 @@ Deno.serve(async req => {
     }
 
     // Fetch notification subscriptions for group members
-    const { data: subscriptions, error: subscriptionsError } = await supabase
-      .from('notification_subscription')
-      .select('subscription')
-      .in(
-        'user_id',
-        groupParticipants.map(participant => participant.profile_id),
-      );
+    const { data: subscriptionsData, error: subscriptionsError } =
+      await supabase
+        .from('notification_subscription')
+        .select('subscription')
+        .in(
+          'user_id',
+          groupParticipants.map(participant => participant.profile_id),
+        );
 
-    console.log('Subscriptions', subscriptions);
     if (subscriptionsError) {
       console.error('Error subscriptions', subscriptionsError);
       throw subscriptionsError;
     }
 
+    const subscriptions = subscriptionsData as Subscription[];
+
+    console.log('Subscriptions', subscriptions);
+
     const vapidKeysString = Deno.env.get('VAPID_KEYS');
-    const exportedVapidKeys = JSON.parse(vapidKeysString ?? '');
+    if (!vapidKeysString) {
+      throw new Error('VAPID_KEYS not found in environment variables');
+    }
+    const exportedVapidKeys = JSON.parse(vapidKeysString);
 
     const vapidKeys = await webpush.importVapidKeys(exportedVapidKeys, {
       extractable: false,
@@ -64,6 +113,10 @@ Deno.serve(async req => {
       vapidKeys,
     });
 
+    // Prepare notification message
+    const title = `${challenge.group.name}: Nouveau post !`;
+    const message = `${sender.username} a pris son Derkap ! 🤪`;
+
     // Send push notifications
     const notifications = subscriptions.map(async sub => {
       const pushSubscription = sub.subscription;
@@ -73,13 +126,7 @@ Deno.serve(async req => {
         pushSubscription,
       );
 
-      await subscriber.pushTextMessage(
-        JSON.stringify({
-          title: 'Nouveau post dans votre groupe',
-          message: 'Viens vite le voir !',
-        }),
-        {},
-      );
+      await subscriber.pushTextMessage(JSON.stringify({ title, message }), {});
     });
 
     console.log('Notifications', notifications);

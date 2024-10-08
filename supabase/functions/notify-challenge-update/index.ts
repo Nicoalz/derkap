@@ -77,7 +77,7 @@ Deno.serve(async req => {
     } else if (event_type === 'status_change') {
       if (new_status === 'voting') {
         title = `${groupName}: Challenge ✅`;
-        message = `Tout le monde a posté ! Maintenant, faut voter ! 🤪 `;
+        message = `Tout le monde a posté ! Maintenant, faut voter ! 🤔`;
       } else if (new_status === 'ended') {
         title = `${groupName}: Stooooop !`;
         message = `Les votes sont clos ! Qui a gagné ? 🧐 `;

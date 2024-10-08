@@ -19,30 +19,42 @@ Deno.serve(async req => {
       new_status,
     });
 
-    // Fetch group participants
-    const { data: groupParticipants, error: participantsError } = await supabase
-      .from('group_profile')
-      .select('profile_id')
-      .eq('group_id', group_id);
+    // Fetch group details, participants, and their notification subscriptions in one query
+    const { data: groupData, error: groupError } = await supabase
+      .from('group')
+      .select(
+        `
+        name,
+        group_profile:group_profile!inner(
+          profile:profile!inner(
+            notification_subscription(subscription)
+          )
+        )
+      `,
+      )
+      .eq('id', group_id)
+      .single();
 
-    if (participantsError) {
-      console.error('Error fetching participants:', participantsError);
-      throw participantsError;
+    if (groupError) {
+      console.error('Error fetching group data:', groupError);
+      throw groupError;
     }
 
-    // Fetch notification subscriptions for group members
-    const { data: subscriptions, error: subscriptionsError } = await supabase
-      .from('notification_subscription')
-      .select('subscription')
-      .in(
-        'user_id',
-        groupParticipants.map(participant => participant.profile_id),
+    const groupName = groupData.name;
+    const subscriptions = (groupData.group_profile as any)
+      .flatMap(
+        (gp: { profile: { notification_subscription: any } }) =>
+          gp.profile.notification_subscription,
+      )
+      .filter(
+        (sub: { subscription: null } | null) =>
+          sub !== null && sub.subscription !== null,
       );
 
-    if (subscriptionsError) {
-      console.error('Error fetching subscriptions:', subscriptionsError);
-      throw subscriptionsError;
-    }
+    console.log('Old status :', old_status);
+    console.log('New status :', new_status);
+    console.log('Group name:', groupName);
+    console.log('Subscriptions:', subscriptions);
 
     const vapidKeysString = Deno.env.get('VAPID_KEYS');
     const exportedVapidKeys = JSON.parse(vapidKeysString ?? '');
@@ -60,26 +72,38 @@ Deno.serve(async req => {
     let title = '';
     let message = '';
     if (event_type === 'new_challenge') {
-      title = 'Nouveau challenge dans votre groupe';
-      message = 'Un nouveau challenge a été créé. Venez le découvrir !';
+      title = `${groupName}: Nouveau challenge !`;
+      message = `Un nouveau challenge a été créé dans ton groupe ${groupName}. Viens le découvrir ! 🤯`;
     } else if (event_type === 'status_change') {
-      title = 'Mise à jour du statut du challenge';
-      message = `Le statut du challenge est passé de "${old_status}" à "${new_status}".`;
+      if (new_status === 'voting') {
+        title = `${groupName}: Challenge ✅`;
+        message = `Tout le monde a posté ! Maintenant, faut voter ! 🤪 `;
+      } else if (new_status === 'ended') {
+        title = `${groupName}: Stooooop !`;
+        message = `Les votes sont clos ! Qui a gagné ? 🧐 `;
+      } else {
+        message = `Le challenge est passé de "${old_status}" à "${new_status}".`;
+      }
     }
 
     // Send push notifications
-    const notifications = subscriptions.map(async sub => {
-      const pushSubscription = sub.subscription;
+    const notifications = subscriptions.map(
+      async (sub: { subscription: any }) => {
+        const pushSubscription = sub.subscription;
 
-      const subscriber = new webpush.PushSubscriber(
-        webPushApp,
-        pushSubscription,
-      );
+        const subscriber = new webpush.PushSubscriber(
+          webPushApp,
+          pushSubscription,
+        );
 
-      await subscriber.pushTextMessage(JSON.stringify({ title, message }), {});
-    });
+        await subscriber.pushTextMessage(
+          JSON.stringify({ title, message }),
+          {},
+        );
+      },
+    );
 
-    await Promise.all(notifications);
+    await Promise.allSettled(notifications);
     return new Response(JSON.stringify({ success: true }), {
       headers: { 'Content-Type': 'application/json' },
       status: 200,

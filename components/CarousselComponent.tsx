@@ -9,10 +9,10 @@ import {
 
 interface CarouselComponentProps {
   children: React.ReactNode;
-  setApi?:(api: CarouselApi) => void;
+  setApi?: (api: CarouselApi) => void;
 }
 
-const CarouselComponent = ({ children , setApi}: CarouselComponentProps) => {
+const CarouselComponent = ({ children, setApi }: CarouselComponentProps) => {
   return (
     <Carousel className="w-full" setApi={setApi}>
       <CarouselContent>{children}</CarouselContent>

@@ -47,12 +47,13 @@ const PostTaken = ({
     if (!group || !posts) return [];
     const groupMembers = group.members;
     const postsProfiles = posts.map(post => post.profile_id);
-    return groupMembers.filter(member => !postsProfiles.includes(member.profile?.id ?? ''));
-  }
+    return groupMembers.filter(
+      member => !postsProfiles.includes(member.profile?.id ?? ''),
+    );
+  };
 
   return (
-    <div className='w-full flex flex-col gap-4'>
-
+    <div className="w-full flex flex-col gap-4">
       <div
         {...props}
         className={cn(
@@ -67,24 +68,25 @@ const PostTaken = ({
           onClose={() => setIsGoVoteOpen(false)}
         >
           <div className="w-full flex flex-col p-6 gap-12 mb-12">
-            <div className='flex flex-col gap-4'>
+            <div className="flex flex-col gap-4">
               <p className="text-xs">
-                En tant que créateur du défi, tu peux décider de passer aux votes,
-                sans attendre que tous les participants aient posté leur Derkap.
+                En tant que créateur du défi, tu peux décider de passer aux
+                votes, sans attendre que tous les participants aient posté leur
+                Derkap.
               </p>
               <p className="text-xs font-bold">
-                Attention, une fois les votes lancés, les participants ne pourront
-                plus poster leur Derkap.
+                Attention, une fois les votes lancés, les participants ne
+                pourront plus poster leur Derkap.
               </p>
             </div>
             <Button text="Confirmer" onClick={handleGoVote} />
           </div>
         </DrawerComponent>
 
-        <div className='h-full w-full overflow-hidden rounded-md relative'>
+        <div className="h-full w-full overflow-hidden rounded-md relative">
           <CarouselComponent>
             {posts?.map((post, index) => (
-              <CarouselItem key={index} >
+              <CarouselItem key={index}>
                 <Image
                   src={post.img_url}
                   alt="post"
@@ -96,34 +98,38 @@ const PostTaken = ({
             ))}
           </CarouselComponent>
           <div className="abs-center flex flex-col items-center text-center gap-4 font-champ">
-            <p className='text-xl w-fit'>
+            <p className="text-xl w-fit">
               En attente de tous les participants !
             </p>
-            <p className='text-4xl w-fit'>
+            <p className="text-4xl w-fit">
               {posts?.length} / {group?.members?.length}
             </p>
           </div>
         </div>
       </div>
 
-
-
-      <div className='w-full flex flex-col gap-4'>
-        <p className='text-xl font-champ'>Toujours en retard...</p>
-        <div className='w-full flex flex-col gap-2'>
+      <div className="w-full flex flex-col gap-4">
+        <p className="text-xl font-champ">Toujours en retard...</p>
+        <div className="w-full flex flex-col gap-2">
           {getWhoDontPost().map((member, index) => (
-            <Link key={index} className='text-s' href={`/profile/${member?.profile?.username}`}>@{member.profile?.username}</Link>
+            <Link
+              key={index}
+              className="text-s"
+              href={`/profile/${member?.profile?.username}`}
+            >
+              @{member.profile?.username}
+            </Link>
           ))}
         </div>
       </div>
 
       {challenge?.creator_id === currentUserData.id && (
-        <div className='fixed w-full bg-[#f8e9db] bottom-0 right-0'>
+        <div className="fixed w-full bg-[#f8e9db] bottom-0 right-0">
           <div className="relative px-4 pb-8 pt-4">
             <div className="before:absolute before:left-0 before:-top-[1.6rem] before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-t before:from-[#f8e9db] before:to-[#f8e9db]/0 before:content-['']"></div>
             <Button
               text="Passer aux votes"
-              className='w-full'
+              className="w-full"
               onClick={() => {
                 setIsGoVoteOpen(true);
               }}
@@ -131,7 +137,6 @@ const PostTaken = ({
           </div>
         </div>
       )}
-
     </div>
   );
 };

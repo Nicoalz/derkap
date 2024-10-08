@@ -110,7 +110,6 @@ const GroupScreen = ({ id }: { id: string }) => {
     return <GroupLoading />;
   }
 
-
   return (
     <div className="h-screen relative">
       <GroupeHeader
@@ -151,13 +150,13 @@ const GroupScreen = ({ id }: { id: string }) => {
           )}
           {(currentChallenge?.status === 'voting' ||
             currentChallenge?.status === 'ended') && (
-              <ChallengeFinalization
-                posts={currentPosts}
-                fetchAllGroupData={fetchAllGroupData}
-                challenge={currentChallenge}
-                setIsCreateChallengeOpen={setIsCreateChallengeOpen}
-              />
-            )}
+            <ChallengeFinalization
+              posts={currentPosts}
+              fetchAllGroupData={fetchAllGroupData}
+              challenge={currentChallenge}
+              setIsCreateChallengeOpen={setIsCreateChallengeOpen}
+            />
+          )}
         </div>
       )}
     </div>

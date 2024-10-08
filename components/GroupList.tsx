@@ -22,7 +22,6 @@ const GroupList = ({
   const limitElements = 5;
 
   console.log(groups);
-  
 
   const membresGroup = groups.map(group => {
     const membres = group.members.filter(

@@ -19,9 +19,7 @@ const GroupList = ({
   setIsCreateGroupDrawerOpen: (value: boolean) => void;
   setIsJoinGroupDrawerOpen: (value: boolean) => void;
 }) => {
-  const limitElements = 5;
-
-  console.log(groups);
+  const limitElements = 2;
 
   const membresGroup = groups.map(group => {
     const membres = group.members.filter(
@@ -56,14 +54,17 @@ const GroupList = ({
   if (isLoadding) {
     return (
       <div className="w-full h-full overflow-scroll no-scrollbar flex flex-col gap-4 p-4">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: limitElements }).map((_, index) => (
           <div
             key={index}
-            className={`flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element ${index === membresGroup.length - 1 && 'mb-12'}`}
+            className={`flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element ${index === limitElements - 1 && 'mb-12'}`}
           >
             <div className="flex gap-4 items-center justify-start relative w-full">
               <Skeleton className="w-16 h-16 rounded" />
-              <Skeleton className="w-48 h-8" />
+              <div className='flex flex-col gap-2'>
+                <Skeleton className="w-48 h-7" />
+                <Skeleton className="w-20 h-5" />
+              </div>
               <Button
                 text={<SquareArrowOutUpRight size={14} />}
                 className="absolute right-0 rounded-full aspect-square px-2 py-2"
@@ -139,12 +140,12 @@ const GroupList = ({
                   </div>
                 )}
 
-                <span className="text-xl font-semibold max-w-48 overflow-hidden truncate">
-                  {group.name}
-                </span>
-                {group?.challengeStatus && (
+                <div className='flex flex-col gap-2'>
+                  <span className="text-xl font-semibold max-w-48 overflow-hidden truncate">
+                    {group.name}
+                  </span>
                   <StatusLabel challengeStatus={group.challengeStatus} />
-                )}
+                </div>
                 <Button
                   text={<SquareArrowOutUpRight size={14} />}
                   className="absolute right-0 rounded-full aspect-square px-2 py-2 focus:outline-none focus:ring focus:ring-violet-300"

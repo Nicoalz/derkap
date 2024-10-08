@@ -2,7 +2,7 @@ import { TGroupDB } from '@/types/types';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { SquareArrowOutUpRight } from 'lucide-react';
-
+import StatusLabel from './StatusLabel';
 import { Separator } from './ui/separator';
 import { Skeleton } from './ui/skeleton';
 import Button from './Button';
@@ -143,6 +143,9 @@ const GroupList = ({
                 <span className="text-xl font-semibold max-w-48 overflow-hidden truncate">
                   {group.name}
                 </span>
+                {group?.challengeStatus && (
+                  <StatusLabel challengeStatus={group.challengeStatus} />
+                )}
                 <Button
                   text={<SquareArrowOutUpRight size={14} />}
                   className="absolute right-0 rounded-full aspect-square px-2 py-2 focus:outline-none focus:ring focus:ring-violet-300"

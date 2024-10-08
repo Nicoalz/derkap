@@ -14,6 +14,7 @@ import GroupList from '@/components/GroupList';
 import DrawerComponent from '@/components/DrawerComponent';
 import Button from '@/components/Button';
 import { Input } from '@/components/ui/input';
+import { getCurrentChallengesStatus } from '@/functions/challenge-action';
 
 import {
   DropdownMenu,
@@ -46,6 +47,31 @@ const HomeScreen = () => {
       setIsLoadingGettingGroup(false);
     }
   }, []);
+
+  const fetchStatus = async ({ groups }: { groups: TGroupDB[] }) => {
+    try {
+      const { data, error } = await getCurrentChallengesStatus({
+        group_ids: groups.map(group => group.id),
+      });
+      if (error) {
+        toast.error('Erreur lors de la récupération des status');
+      }
+      if (data) {
+        const currentGroups = groups.map(group => {
+          const status = data.find(
+            challengeStatus => challengeStatus.group_id === group.id,
+          );
+          return {
+            ...group,
+            challengeStatus: status && status.status,
+          };
+        });
+        setGroups(currentGroups);
+      }
+    } catch (error) {
+      toast.error('Erreur lors de la récupération des status');
+    }
+  };
 
   useEffect(() => {
     const notifSeenExpireStored = localStorage.getItem('notifSeenExpire');
@@ -89,6 +115,7 @@ const HomeScreen = () => {
       if (data) {
         setGroups(data);
         localStorage.setItem('groups', JSON.stringify(data));
+        fetchStatus({ groups: data });
       }
     } catch (error) {
       toast.error('Erreur lors de la récupération des groupes');

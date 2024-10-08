@@ -110,8 +110,9 @@ const GroupScreen = ({ id }: { id: string }) => {
     return <GroupLoading />;
   }
 
+
   return (
-    <div className="h-screen">
+    <div className="h-screen relative">
       <GroupeHeader
         currentChallenge={currentChallenge}
         groupeData={currentGroup}
@@ -138,7 +139,7 @@ const GroupScreen = ({ id }: { id: string }) => {
       {!currentChallenge ? (
         <NoChallenge setIsCreateChallengeOpen={setIsCreateChallengeOpen} />
       ) : (
-        <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
+        <div className="w-full  flex flex-col items-center justify-start gap-8 px-6 py-3">
           <ChallengeBox challenge={currentChallenge} />
           {currentChallenge?.status === 'posting' && (
             <ChallengeInProgress
@@ -150,13 +151,13 @@ const GroupScreen = ({ id }: { id: string }) => {
           )}
           {(currentChallenge?.status === 'voting' ||
             currentChallenge?.status === 'ended') && (
-            <ChallengeFinalization
-              fetchAllGroupData={fetchAllGroupData}
-              posts={currentPosts}
-              challenge={currentChallenge}
-              setIsCreateChallengeOpen={setIsCreateChallengeOpen}
-            />
-          )}
+              <ChallengeFinalization
+                posts={currentPosts}
+                fetchAllGroupData={fetchAllGroupData}
+                challenge={currentChallenge}
+                setIsCreateChallengeOpen={setIsCreateChallengeOpen}
+              />
+            )}
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
@@ -8,14 +9,15 @@ import {
 
 interface CarouselComponentProps {
   children: React.ReactNode;
+  setApi?:(api: CarouselApi) => void;
 }
 
-const CarouselComponent = ({ children }: CarouselComponentProps) => {
+const CarouselComponent = ({ children , setApi}: CarouselComponentProps) => {
   return (
-    <Carousel className="w-[75%] max-w-xs">
+    <Carousel className="w-full" setApi={setApi}>
       <CarouselContent>{children}</CarouselContent>
-      <CarouselPrevious className="text-white" />
-      <CarouselNext className="text-white" />
+      {/* <CarouselPrevious className="text-white" />
+      <CarouselNext className="text-white" /> */}
     </Carousel>
   );
 };

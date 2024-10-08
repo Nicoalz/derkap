@@ -21,10 +21,10 @@ const GroupList = ({
 }) => {
   const limitElements = 5;
 
-  const myGroup = groups.filter(
-    (group, index, self) => index === self.findIndex(t => t.id === group.id),
-  );
-  const membresGroup = myGroup.map(group => {
+  console.log(groups);
+  
+
+  const membresGroup = groups.map(group => {
     const membres = group.members.filter(
       (member, index, self) =>
         index === self.findIndex(t => t.profile?.id === member.profile?.id),
@@ -90,7 +90,7 @@ const GroupList = ({
 
   return (
     <div className="w-full h-full overflow-scroll no-scrollbar flex flex-col gap-4 p-4">
-      {myGroup.length === 0 ? (
+      {groups.length === 0 ? (
         <div className="h-full flex flex-col items-center justify-between mb-12">
           <div></div>
           <div className="flex flex-col gap-2 items-center justify-center">
@@ -114,7 +114,7 @@ const GroupList = ({
         </div>
       ) : (
         <>
-          {membresGroup.map((group, index) => (
+          {groups.map((group, index) => (
             <Link
               href={`/groupe/${group.id}`}
               key={group.id}

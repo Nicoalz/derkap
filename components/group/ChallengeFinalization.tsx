@@ -2,7 +2,7 @@
 import { cn } from '@/libs/utils';
 import Button from '@/components/Button';
 import CarouselComponent from '@/components/CarousselComponent';
-import { CarouselItem } from '@/components/ui/carousel';
+import { CarouselApi, CarouselItem } from '@/components/ui/carousel';
 import { TPostDB, TVoteDB, TChallengeDB } from '@/types/types';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -37,9 +37,16 @@ const ChallengeFinalization = ({
   } | null>(null);
   const [isEndVoteOpen, setIsEndVoteOpen] = useState<boolean>(false);
 
+  const [api, setApi] = useState<CarouselApi>()
+  const [currentPost, setCurrentPost] = useState(0)
+
   const handleVote = async () => {
     try {
       if (!selectedPost) return toast.error('Aucun post sélectionné');
+      // await addVote({
+      //   post_id: selectedPost.id,
+      //   challenge_id: selectedPost.challenge_id,
+      // });
       await addVote({
         post_id: selectedPost.id,
         challenge_id: selectedPost.challenge_id,
@@ -116,9 +123,23 @@ const ChallengeFinalization = ({
     }
   }, []);
 
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+    setCurrentPost(api.selectedScrollSnap() + 1)
+    api.on("select", () => {
+      setCurrentPost(api.selectedScrollSnap() + 1)
+    })
+  }, [api])
+
+  useEffect(() => {
+    setSelectedPost(posts[currentPost - 1])
+  }, [currentPost]);
+
   if (isLoading)
     return (
-      <div className="w-full h-[80%] flex flex-col items-center justify-start gap-8 px-6 py-3">
+      <div className="w-full flex flex-col items-center justify-start gap-4 px-6 py-3">
         <Skeleton className="w-full h-24" />
         <Skeleton className="w-full aspect-square" />
         <Skeleton className="py-2 px-4 text-sm text-transparent">
@@ -130,7 +151,7 @@ const ChallengeFinalization = ({
   return (
     <div
       {...props}
-      className={cn('w-full flex flex-col items-center gap-y-2', className)}
+      className={cn('w-full flex flex-col items-center gap-2', className)}
     >
       <DrawerComponent
         trigger={null}
@@ -151,31 +172,27 @@ const ChallengeFinalization = ({
           <Button text="Confirmer" onClick={handleEndVote} />
         </div>
       </DrawerComponent>
+
       {challenge?.status === 'ended' && (
-        <p>Défi terminé ! Check les résultats:</p>
+        <p className='font-champ text-xl'>Défi terminé ! Check les résultats:</p>
       )}
 
-      {userVote?.voted ? (
-        <p>T&apos;as voté pour {getPostCreatorName(userVote?.postId)} </p>
-      ) : (
-        <p>Oublie pas de voter !</p>
+      {!userVote?.voted && (
+        <p className='text-2xl font-champ'>Oublie pas de voter !</p>
       )}
 
-      <CarouselComponent>
+      <CarouselComponent setApi={setApi}>
         {posts.map((post, index) => (
           <CarouselItem onClick={() => setSelectedPost(post)} key={index}>
             <Image
               className={cn(
-                'rounded-md',
+                'rounded-md w-full object-cover aspect-square',
                 challenge?.status === 'voting' &&
-                  post.id === userVote?.postId &&
-                  'border-4 border-green-500',
-                challenge?.status === 'voting' &&
-                  selectedPost === post &&
-                  'border-4 border-custom-primary',
+                post.id === userVote?.postId &&
+                'border-4 border-green-500',
                 challenge?.status === 'ended' &&
-                  isPostHasMoreVotes(post.id) &&
-                  'border-4 border-yellow-500',
+                isPostHasMoreVotes(post.id) &&
+                'border-4 border-yellow-500',
               )}
               src={post.img_url}
               alt="post"
@@ -183,30 +200,39 @@ const ChallengeFinalization = ({
               height={300}
             />
             <div className="flex w-full justify-between">
-              <p>@{post.creator?.username}</p>
-              <p>{getVoteCount(post.id)} vote(s)</p>
+              <p className='font-champ'>@{post.creator?.username}</p>
+              <p className='font-champ'>{getVoteCount(post.id)} vote(s)</p>
             </div>
           </CarouselItem>
         ))}
       </CarouselComponent>
+
+      <div className="text-center">
+        {currentPost} of {posts.length}
+      </div>
+
       {challenge?.status === 'voting' && (
-        <>
-          <Button
-            text={userVote?.voted ? 'Changer mon vote' : 'Voter'}
-            isCancel={!selectedPost}
-            onClick={() => {
-              handleVote();
-            }}
-          />
-          {challenge?.creator_id === userData.id && (
+        <div className='fixed w-full bg-[#f8e9db] bottom-0 right-0'>
+          <div className="relative px-4 pb-8 pt-4 flex flex-col w-full gap-4">
+            <div className="before:absolute before:left-0 before:-top-[1.6rem] before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-t before:from-[#f8e9db] before:to-[#f8e9db]/0 before:content-['']"></div>
+            {challenge?.creator_id === userData.id && (
+              <Button
+                className='bg-gray-300'
+                text="Fermer les votes"
+                onClick={() => {
+                  setIsEndVoteOpen(true);
+                }}
+              />
+            )}
             <Button
-              text="Fermer les votes"
+              text={userVote?.voted ? 'Changer mon vote' : 'Voter'}
+              isCancel={!selectedPost}
               onClick={() => {
-                setIsEndVoteOpen(true);
+                handleVote();
               }}
             />
-          )}
-        </>
+          </div>
+        </div>
       )}
       {challenge?.status === 'ended' && (
         <Button

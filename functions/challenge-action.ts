@@ -65,6 +65,30 @@ export const getCurrentChallenge = async ({
   };
 };
 
+export const getCurrentChallengesStatus = async ({
+  group_ids,
+}: {
+  group_ids: number[];
+}) => {
+  const supabase = createSupabaseAppServerClient();
+
+  // Constructing the raw SQL query
+  const { data, error } = await supabase.rpc('get_latest_challenge_status', {
+    group_ids: group_ids,
+  });
+
+  if (error) {
+    return {
+      error: error.message,
+    };
+  }
+
+  return {
+    data,
+    error: null,
+  };
+};
+
 export const setChallengeToVoting = async ({
   challenge_id,
 }: {

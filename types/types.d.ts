@@ -22,6 +22,12 @@ export type TGroupDB = Database['public']['Tables']['group']['Row'] & {
   members: {
     profile: TProfileDB | null;
   }[];
+  challengeStatus?: 'posting' | 'voting' | 'ended';
+};
+
+export type TGroupsStatus = {
+  group_id: number;
+  status: 'posting' | 'voting' | 'ended';
 };
 
 // POSTS

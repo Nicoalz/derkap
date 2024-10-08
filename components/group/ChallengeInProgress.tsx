@@ -46,6 +46,7 @@ const ChallengeInProgress = ({
         />
       ) : (
         <PostNotTaken
+          posts={posts}
           challenge={challenge}
           fetchAllGroupData={fetchAllGroupData}
         />

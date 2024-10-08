@@ -210,7 +210,7 @@ const ChallengeFinalization = ({
       </CarouselComponent>
 
       <div className="text-center">
-        {currentPost} sur  {posts.length}
+        {currentPost} sur {posts.length}
       </div>
 
       {challenge?.status === 'voting' && (

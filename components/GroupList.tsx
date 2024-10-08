@@ -61,7 +61,7 @@ const GroupList = ({
           >
             <div className="flex gap-4 items-center justify-start relative w-full">
               <Skeleton className="w-16 h-16 rounded" />
-              <div className='flex flex-col gap-2'>
+              <div className="flex flex-col gap-2">
                 <Skeleton className="w-48 h-7" />
                 <Skeleton className="w-20 h-5" />
               </div>
@@ -140,7 +140,7 @@ const GroupList = ({
                   </div>
                 )}
 
-                <div className='flex flex-col gap-2'>
+                <div className="flex flex-col gap-2">
                   <span className="text-xl font-semibold max-w-48 overflow-hidden truncate">
                     {group.name}
                   </span>

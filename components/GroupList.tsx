@@ -21,8 +21,6 @@ const GroupList = ({
 }) => {
   const limitElements = 5;
 
-  console.log(groups);
-
   const membresGroup = groups.map(group => {
     const membres = group.members.filter(
       (member, index, self) =>
@@ -117,8 +115,14 @@ const GroupList = ({
             <Link
               href={`/groupe/${group.id}`}
               key={group.id}
-              className={`flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element ${index === membresGroup.length - 1 && 'mb-12'}`}
+              className={`relative flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element ${index === membresGroup.length - 1 && 'mb-12'}`}
             >
+              {group.hasNewStatus === true && (
+                <span className="absolute bottom-4 right-4 rounded-full bg-red-500 text-white w-6 h-6 flex justify-center items-center">
+                  1
+                </span>
+              )}
+
               <div className="flex gap-4 items-center justify-start relative w-full">
                 {group.img_url ? (
                   <Image

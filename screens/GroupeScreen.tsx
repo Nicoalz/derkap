@@ -23,6 +23,7 @@ import ChallengeFinalization from '@/components/group/ChallengeFinalization';
 import GroupLoading from '@/components/group/GroupLoading';
 import GroupMembersList from '@/components/group/GroupMembersList';
 import ChallengeInProgress from '@/components/group/ChallengeInProgress';
+import { updateLastStatusSeen } from '@/libs/lastStatusSeen';
 
 const GroupScreen = ({ id }: { id: string }) => {
   const [isLoadding, setIsLoadding] = useState<boolean>(true);
@@ -80,6 +81,15 @@ const GroupScreen = ({ id }: { id: string }) => {
   useEffect(() => {
     fetchAllGroupData();
   }, [id]);
+
+  useEffect(() => {
+    if (currentGroup?.id && currentChallenge?.status) {
+      updateLastStatusSeen({
+        groupId: currentGroup.id,
+        newStatus: currentChallenge.status,
+      });
+    }
+  }, [currentGroup, currentChallenge]);
 
   const createNewChallenge = async () => {
     try {

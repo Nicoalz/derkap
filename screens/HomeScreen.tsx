@@ -15,6 +15,7 @@ import DrawerComponent from '@/components/DrawerComponent';
 import Button from '@/components/Button';
 import { Input } from '@/components/ui/input';
 import { getCurrentChallengesStatus } from '@/functions/challenge-action';
+import { addLastStatusSeenToGroups } from '@/libs/lastStatusSeen';
 
 import {
   DropdownMenu,
@@ -57,7 +58,7 @@ const HomeScreen = () => {
         toast.error('Erreur lors de la récupération des status');
       }
       if (data) {
-        const currentGroups = groups.map(group => {
+        const groupsWStatus = groups.map(group => {
           const status = data.find(
             challengeStatus => challengeStatus.group_id === group.id,
           );
@@ -66,7 +67,10 @@ const HomeScreen = () => {
             challengeStatus: status && status.status,
           };
         });
-        setGroups(currentGroups);
+        const groupsWLastSeenStatus = addLastStatusSeenToGroups({
+          groups: groupsWStatus,
+        });
+        setGroups(groupsWLastSeenStatus);
       }
     } catch (error) {
       toast.error('Erreur lors de la récupération des status');

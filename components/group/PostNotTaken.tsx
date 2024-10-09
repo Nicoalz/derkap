@@ -32,7 +32,7 @@ const PostNotTaken = ({
           challenge={challenge}
         />
       ) : (
-        <div className="w-full flex flex-col items-center gap-2 relative">
+        <div className="w-full flex flex-col items-center gap-2 relative rounded-md">
           {posts && posts.length > 0 ? (
             <CarouselComponent>
               {posts.map((post, index) => (
@@ -42,18 +42,19 @@ const PostNotTaken = ({
                     alt="post"
                     width={300}
                     height={300}
-                    className="blur-2xl"
+                    className="blur-2xl aspect-image"
                   />
                 </CarouselItem>
               ))}
             </CarouselComponent>
           ) : (
-            <div className="aspect-square w-full rounded-md bg-gray-400"></div>
+            <div className="aspect-image w-full rounded-md bg-gray-400"></div>
           )}
           <div className="abs-center flex flex-col gap-4">
             <p className="text-xl font-champ text-center">À vous de jouer !</p>
             <Button
               text="Poster votre Derkap"
+              className='font-champ'
               onClick={() => setIsCapturing(true)}
             />
           </div>

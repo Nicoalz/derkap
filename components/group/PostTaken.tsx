@@ -53,7 +53,7 @@ const PostTaken = ({
   };
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4 mb-28 overflow-x-scroll">
       <div
         {...props}
         className={cn(
@@ -83,7 +83,7 @@ const PostTaken = ({
           </div>
         </DrawerComponent>
 
-        <div className="h-full w-full overflow-hidden rounded-md relative">
+        <div className="h-full aspect-image w-full overflow-hidden relative">
           <CarouselComponent>
             {posts?.map((post, index) => (
               <CarouselItem key={index}>
@@ -92,7 +92,7 @@ const PostTaken = ({
                   alt="post"
                   width={300}
                   height={300}
-                  className="blur-2xl"
+                  className="blur-2xl w-full object-cover aspect-image rounded-md"
                 />
               </CarouselItem>
             ))}
@@ -126,10 +126,10 @@ const PostTaken = ({
       {challenge?.creator_id === currentUserData.id && (
         <div className="fixed w-full bg-[#f8e9db] bottom-0 right-0">
           <div className="relative px-4 pb-8 pt-4">
-            <div className="before:absolute before:left-0 before:-top-[1.6rem] before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-t before:from-[#f8e9db] before:to-[#f8e9db]/0 before:content-['']"></div>
+            <div className="absolute left-0 -top-[1.6rem] z-[2] w-full h-[30px] bg-gradient-to-t from-[#f8e9db] to-[#f8e9db]/0 content-['']"></div>
             <Button
               text="Passer aux votes"
-              className="w-full"
+              className="w-full font-champ"
               onClick={() => {
                 setIsGoVoteOpen(true);
               }}

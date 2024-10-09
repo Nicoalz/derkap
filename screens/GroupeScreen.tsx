@@ -21,12 +21,12 @@ import { getPosts } from '@/functions/post-action';
 import NoChallenge from '@/components/group/NoChallenge';
 import ChallengeFinalization from '@/components/group/ChallengeFinalization';
 import GroupLoading from '@/components/group/GroupLoading';
-import GroupMembersList from '@/components/group/GroupMembersList';
 import ChallengeInProgress from '@/components/group/ChallengeInProgress';
 import { updateLastStatusSeen } from '@/libs/lastStatusSeen';
+import PullToRefresh from 'react-simple-pull-to-refresh';
 
 const GroupScreen = ({ id }: { id: string }) => {
-  const [isLoadding, setIsLoadding] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentGroup, setCurrentGroup] = useState<TGroupDB>();
   const [currentChallenge, setCurrentChallenge] = useState<TChallengeDB>(null);
   const [currentPosts, setCurrentPosts] = useState<TPostDB[]>([]);
@@ -66,7 +66,7 @@ const GroupScreen = ({ id }: { id: string }) => {
   };
 
   const fetchAllGroupData = async () => {
-    setIsLoadding(true);
+    setIsLoading(true);
     try {
       await fetchCurrentGroup();
       const challenge = await fetchCurrentChallenge();
@@ -74,7 +74,7 @@ const GroupScreen = ({ id }: { id: string }) => {
       await fetchCurrentPosts({ challengeId: challenge.id });
     } catch (error) {
     } finally {
-      setIsLoadding(false);
+      setIsLoading(false);
     }
   };
 
@@ -116,60 +116,69 @@ const GroupScreen = ({ id }: { id: string }) => {
     }
   };
 
-  if (isLoadding) {
+
+  if (isLoading) {
     return <GroupLoading />;
   }
 
   return (
-    <div className="h-screen relative overflow-x-scroll">
+
+    <div className="min-h-screen relative overflow-x-scroll">
       <GroupeHeader
         currentChallenge={currentChallenge}
         groupeData={currentGroup}
       />
 
-      <GroupMembersList group={currentGroup} />
-
-      <DrawerComponent
-        trigger={null}
-        title="Créer un défi"
-        isOpen={isCreateChallengeOpen}
-        onClose={() => setIsCreateChallengeOpen(false)}
+      <PullToRefresh
+        className="h-full relative overflow-x-scroll"
+        pullingContent={''}
+        onRefresh={fetchAllGroupData}
       >
-        <div className="w-full flex flex-col p-6 gap-12 mb-12">
-          <Input
-            placeholder="Description du défi"
-            value={newChallengeDescription}
-            onChange={e => setNewChallengeDescription(e.target.value)}
-          />
-          <Button text="Créer" onClick={createNewChallenge} />
-        </div>
-      </DrawerComponent>
+        <>
 
-      {!currentChallenge ? (
-        <NoChallenge setIsCreateChallengeOpen={setIsCreateChallengeOpen} />
-      ) : (
-        <div className="w-full  flex flex-col items-center justify-start gap-4 px-6 py-3">
-          <ChallengeBox challenge={currentChallenge} />
-          {currentChallenge?.status === 'posting' && (
-            <ChallengeInProgress
-              challenge={currentChallenge}
-              group={currentGroup}
-              posts={currentPosts}
-              fetchAllGroupData={fetchAllGroupData}
-            />
+          <DrawerComponent
+            trigger={null}
+            title="Créer un défi"
+            isOpen={isCreateChallengeOpen}
+            onClose={() => setIsCreateChallengeOpen(false)}
+          >
+            <div className="w-full flex flex-col p-6 gap-12 mb-12">
+              <Input
+                placeholder="Description du défi"
+                value={newChallengeDescription}
+                onChange={e => setNewChallengeDescription(e.target.value)}
+              />
+              <Button text="Créer" onClick={createNewChallenge} />
+            </div>
+          </DrawerComponent>
+
+          {!currentChallenge ? (
+            <NoChallenge setIsCreateChallengeOpen={setIsCreateChallengeOpen} />
+          ) : (
+            <div className="w-full flex flex-col items-center justify-start gap-4 px-2 py-3 mt-14">
+              <ChallengeBox challenge={currentChallenge} />
+              {currentChallenge?.status === 'posting' && (
+                <ChallengeInProgress
+                  challenge={currentChallenge}
+                  group={currentGroup}
+                  posts={currentPosts}
+                  fetchAllGroupData={fetchAllGroupData}
+                />
+              )}
+              {(currentChallenge?.status === 'voting' ||
+                currentChallenge?.status === 'ended') && (
+                  <ChallengeFinalization
+                    posts={currentPosts}
+                    fetchAllGroupData={fetchAllGroupData}
+                    challenge={currentChallenge}
+                    setIsCreateChallengeOpen={setIsCreateChallengeOpen}
+                  />
+                )}
+            </div>
           )}
-          {(currentChallenge?.status === 'voting' ||
-            currentChallenge?.status === 'ended') && (
-            <ChallengeFinalization
-              posts={currentPosts}
-              fetchAllGroupData={fetchAllGroupData}
-              challenge={currentChallenge}
-              setIsCreateChallengeOpen={setIsCreateChallengeOpen}
-            />
-          )}
-        </div>
-      )}
-    </div>
+        </>
+      </PullToRefresh>
+    </div >
   );
 };
 

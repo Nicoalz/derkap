@@ -97,10 +97,6 @@ const HomeScreen = () => {
     }
   }, []);
 
-  const handleRefresh = async () => {
-    handleGetGroups();
-  };
-
   const updateNotifFirstTimeSeen = () => {
     const now = new Date();
     const expiresIn = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -151,7 +147,7 @@ const HomeScreen = () => {
     <PullToRefresh
       className="w-full flex flex-col items-center flex-1 no-scrollbar relative"
       pullingContent={''}
-      onRefresh={handleRefresh}
+      onRefresh={handleGetGroups}
     >
       <>
         {isNotificationSupported &&
@@ -222,7 +218,7 @@ const HomeScreen = () => {
           </DrawerComponent>
         </header>
 
-        <div className="before:absolute before:left-0 before:top-[4.5rem] before:z-[2] before:w-full before:h-[40px] before:bg-gradient-to-b before:from-[#f1d8f2] before:to-[#f1d8f2]/0 before:content-['']"></div>
+        <div className="absolute left-0 top-[4rem] z-[2] w-full h-4 bg-gradient-to-b from-[#f1d8f2] to-[#f1d8f2]/0 content-['']"></div>
         <div className="flex flex-col w-full h-[90vh]">
           <GroupList
             groups={groups}

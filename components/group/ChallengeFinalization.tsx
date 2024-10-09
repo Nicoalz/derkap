@@ -11,7 +11,6 @@ import { addVote, getVotes } from '@/functions/vote-action';
 import { useUser } from '@/contexts/user-context';
 import DrawerComponent from '@/components/DrawerComponent';
 import { setChallengeToEnd } from '@/functions/challenge-action';
-import { Skeleton } from '@/components/ui/skeleton';
 interface VotingProps extends React.HTMLAttributes<HTMLDivElement> {
   posts: TPostDB[];
   fetchAllGroupData: () => Promise<void>;
@@ -27,7 +26,6 @@ const ChallengeFinalization = ({
   className,
   ...props
 }: VotingProps) => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { userData } = useUser();
   const [selectedPost, setSelectedPost] = useState<TPostDB | null>(null);
   const [votes, setVotes] = useState<TVoteDB[]>([]);
@@ -96,7 +94,6 @@ const ChallengeFinalization = ({
     try {
       const fetchVotes = async () => {
         try {
-          setIsLoading(true);
           if (!challenge) return;
           const { data, error } = await getVotes({
             challenge_id: challenge.id,
@@ -113,9 +110,7 @@ const ChallengeFinalization = ({
           }
         } catch (error) {
           toast.error('Erreur lors de la récupération des votes');
-        } finally {
-          setIsLoading(false);
-        }
+        } 
       };
       fetchVotes();
     } catch (error) {
@@ -137,21 +132,10 @@ const ChallengeFinalization = ({
     setSelectedPost(posts[currentPost - 1]);
   }, [currentPost]);
 
-  if (isLoading)
-    return (
-      <div className="w-full flex flex-col items-center justify-start gap-4 px-6 py-3">
-        <Skeleton className="w-full h-24" />
-        <Skeleton className="w-full aspect-square" />
-        <Skeleton className="py-2 px-4 text-sm text-transparent">
-          Prends ton Derkap
-        </Skeleton>
-      </div>
-    );
-
   return (
     <div
       {...props}
-      className={cn('w-full flex flex-col items-center gap-2', className)}
+      className={cn('w-full flex flex-col items-center gap-2 mb-28', className)}
     >
       <DrawerComponent
         trigger={null}
@@ -179,22 +163,18 @@ const ChallengeFinalization = ({
         </p>
       )}
 
-      {!userVote?.voted && (
-        <p className="text-2xl font-champ">Oublie pas de voter !</p>
-      )}
-
       <CarouselComponent setApi={setApi}>
         {posts.map((post, index) => (
           <CarouselItem onClick={() => setSelectedPost(post)} key={index}>
             <Image
               className={cn(
-                'rounded-md w-full object-contain max-h-[510px]',
+                'rounded-md w-full object-cover max-h-[510px] aspect-image',
                 challenge?.status === 'voting' &&
-                  post.id === userVote?.postId &&
-                  'border-4 border-green-500',
+                post.id === userVote?.postId &&
+                'border-4 border-green-500',
                 challenge?.status === 'ended' &&
-                  isPostHasMoreVotes(post.id) &&
-                  'border-4 border-yellow-500',
+                isPostHasMoreVotes(post.id) &&
+                'border-4 border-yellow-500',
               )}
               src={post.img_url}
               alt="post"
@@ -209,17 +189,33 @@ const ChallengeFinalization = ({
         ))}
       </CarouselComponent>
 
-      <div className="text-center">
+      {/* <div className="text-center">
         {currentPost} sur {posts.length}
+      </div> */}
+
+      <div className='flex items-center gap-1'>
+        {posts.map((post, index) => (
+          <div
+            key={index}
+            className={cn(
+              'rounded-full cursor-pointer transition-all duration-300',
+              post.id === selectedPost?.id ? 'bg-gray-800 w-2 h-2' : 'bg-gray-400 w-1 h-1',
+            )}
+            onClick={() => {
+              setCurrentPost(index + 1);
+              api?.scrollTo(index);
+            }}
+          ></div>
+        ))}
       </div>
 
       {challenge?.status === 'voting' && (
         <div className="fixed w-full bg-[#f8e9db] bottom-0 right-0">
-          <div className="relative px-4 pb-8 pt-4 flex flex-col w-full gap-4">
-            <div className="before:absolute before:left-0 before:-top-[1.6rem] before:z-[2] before:w-full before:h-[30px] before:bg-gradient-to-t before:from-[#f8e9db] before:to-[#f8e9db]/0 before:content-['']"></div>
+          <div className="w-full relative pb-8 pt-2 flex justify-between items-center gap-2 px-2">
+            <div className="absolute left-0 -top-2 z-[2] w-full h-2 bg-gradient-to-t from-[#f8e9db] to-[#f8e9db]/0 content-['']"></div>
             {challenge?.creator_id === userData.id && (
               <Button
-                className="bg-gray-300"
+                className="bg-purple-300 w-full"
                 text="Fermer les votes"
                 onClick={() => {
                   setIsEndVoteOpen(true);
@@ -227,6 +223,7 @@ const ChallengeFinalization = ({
               />
             )}
             <Button
+              className='w-full'
               text={userVote?.voted ? 'Changer mon vote' : 'Voter'}
               isCancel={!selectedPost}
               onClick={() => {

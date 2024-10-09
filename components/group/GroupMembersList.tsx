@@ -18,7 +18,7 @@ const GroupMembersList = ({
     <ul
       {...props}
       className={cn(
-        'list-none w-full flex items-start justify-center px-6 py-3',
+        'list-none w-full flex items-start justify-center px-2 py-3',
         className,
       )}
     >

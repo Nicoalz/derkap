@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { deleteGroup, leaveGroup } from '@/functions/group-action';
 import Image from 'next/image';
 import StatusLabel from './StatusLabel';
+import GroupMembersList from './group/GroupMembersList';
 
 interface GroupeHeaderProps {
   groupeData?: TGroupDB;
@@ -89,7 +90,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
   };
 
   return (
-    <header className="w-full flex justify-between items-center p-4 h-fit relative">
+    <header className="w-full flex justify-between items-center p-4 h-fit fixed top-0 bg-[#f1d7f3] z-10">
       <div className="flex items-center gap-x-2" onClick={() => router.back()}>
         <ChevronLeft size={24} />
       </div>
@@ -147,6 +148,9 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
                 {membresGroup?.length}
                 /10 memebres
               </span>
+
+              <GroupMembersList group={groupeData} />
+
               <div className="flex flex-col items-center mt-32 gap-4">
                 <h2 className="text-3xl">Code d&apos;accès</h2>
                 <h3 className="text-xl font-bold font-champ">

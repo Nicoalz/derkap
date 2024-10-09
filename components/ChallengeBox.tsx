@@ -19,18 +19,15 @@ const ChallengeBox = ({
       {isLoading ? (
         <p>Loading ...</p>
       ) : (
-        <div className="h-24 flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-custom-black shadow-element gap-4 items-center">
-          <p className="text-[3rem] ">{challenge ? '😹' : '😢'}</p>
+        <div className="min-h-16 max-h-fit flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-custom-black shadow-element gap-4 items-center">
+          <p className="text-3xl text-center">{challenge ? '😹' : '😢'}</p>
           <div className="text-left">
-            {/* <h1 className="font-bold uppercase text-lg font-champ">
-              {'Derkap du jour'}
-            </h1> */}
-            <p className="text-sm font-champ text-custom-black">
+            <p className="text-sm font-champ text-custom-black line-clamp-2 ">
               {challenge ? challenge.description : 'Reviens plus tard'}
             </p>
-            <p className="text-sm">
+            <p className="text-sm line-clamp-1">
               {challenge
-                ? 'Créé par ' + challenge.creator?.username
+                ? 'Par ' + challenge.creator?.username
                 : 'Reviens plus tard'}
             </p>
           </div>

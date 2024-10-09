@@ -22,9 +22,8 @@ const ChallengeInProgress = ({
   className,
   ...props
 }: ChallengeInProgressProps) => {
-  // todo : recup si j'ai un post dans le challenge
   const { userData: currentUserData } = useUser();
-  const [isMyPostTaken, setIsMyPostTaken] = useState<boolean>(false); // if the user has already filled the challenge
+  const [isMyPostTaken, setIsMyPostTaken] = useState<boolean>(false);
 
   useEffect(() => {
     if (posts) {

@@ -69,7 +69,7 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       aspectRatio: {
-        image: '9/16',
+        image: '4/5',
       },
       borderRadius: {
         lg: 'var(--radius)',

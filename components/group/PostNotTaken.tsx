@@ -54,7 +54,7 @@ const PostNotTaken = ({
             <p className="text-xl font-champ text-center">À vous de jouer !</p>
             <Button
               text="Poster votre Derkap"
-              className='font-champ'
+              className="font-champ"
               onClick={() => setIsCapturing(true)}
             />
           </div>

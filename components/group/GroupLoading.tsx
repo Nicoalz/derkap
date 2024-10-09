@@ -30,28 +30,27 @@ const NoChallenge = ({
       </div> */}
 
       <div className="w-full h-screen flex flex-col items-center justify-start gap-4 px-2 py-3">
-
         <div className="min-h-16 max-h-fit flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-custom-black shadow-element gap-4 items-center">
           <Skeleton className="w-10 h-10 aspect-square" />
           <div className="w-full flex flex-col gap-2">
             <Skeleton className="w-3/4 h-4" />
-            <div className='flex items-center gap-1'>
-              <p className='text-sm'>Par</p>
+            <div className="flex items-center gap-1">
+              <p className="text-sm">Par</p>
               <Skeleton className="w-16 h-4" />
             </div>
           </div>
         </div>
 
-        <div className='flex flex-col mb-1 w-full '>
+        <div className="flex flex-col mb-1 w-full ">
           <Skeleton className="w-full h-[504px]" />
-          <div className='flex justify-between items-center'>
-            <div className='flex items-center'>
-              <p className='font-champ'>@</p>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <p className="font-champ">@</p>
               <Skeleton className="w-16 h-4" />
             </div>
-            <div className='flex gap-2 justify-center items-center'>
+            <div className="flex gap-2 justify-center items-center">
               <Skeleton className="w-4 h-4" />
-              <p className='font-champ'>vote(s)</p>
+              <p className="font-champ">vote(s)</p>
             </div>
           </div>
         </div>
@@ -63,7 +62,6 @@ const NoChallenge = ({
           <Skeleton className="w-full h-9" />
         </div>
       </div>
-
     </div>
   );
 };

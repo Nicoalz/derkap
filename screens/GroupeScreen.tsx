@@ -116,13 +116,11 @@ const GroupScreen = ({ id }: { id: string }) => {
     }
   };
 
-
   if (isLoading) {
     return <GroupLoading />;
   }
 
   return (
-
     <div className="min-h-screen relative overflow-x-scroll">
       <GroupeHeader
         currentChallenge={currentChallenge}
@@ -135,7 +133,6 @@ const GroupScreen = ({ id }: { id: string }) => {
         onRefresh={fetchAllGroupData}
       >
         <>
-
           <DrawerComponent
             trigger={null}
             title="Créer un défi"
@@ -167,18 +164,18 @@ const GroupScreen = ({ id }: { id: string }) => {
               )}
               {(currentChallenge?.status === 'voting' ||
                 currentChallenge?.status === 'ended') && (
-                  <ChallengeFinalization
-                    posts={currentPosts}
-                    fetchAllGroupData={fetchAllGroupData}
-                    challenge={currentChallenge}
-                    setIsCreateChallengeOpen={setIsCreateChallengeOpen}
-                  />
-                )}
+                <ChallengeFinalization
+                  posts={currentPosts}
+                  fetchAllGroupData={fetchAllGroupData}
+                  challenge={currentChallenge}
+                  setIsCreateChallengeOpen={setIsCreateChallengeOpen}
+                />
+              )}
             </div>
           )}
         </>
       </PullToRefresh>
-    </div >
+    </div>
   );
 };
 

@@ -110,7 +110,7 @@ const ChallengeFinalization = ({
           }
         } catch (error) {
           toast.error('Erreur lors de la récupération des votes');
-        } 
+        }
       };
       fetchVotes();
     } catch (error) {
@@ -170,11 +170,11 @@ const ChallengeFinalization = ({
               className={cn(
                 'rounded-md w-full object-cover max-h-[510px] aspect-image',
                 challenge?.status === 'voting' &&
-                post.id === userVote?.postId &&
-                'border-4 border-green-500',
+                  post.id === userVote?.postId &&
+                  'border-4 border-green-500',
                 challenge?.status === 'ended' &&
-                isPostHasMoreVotes(post.id) &&
-                'border-4 border-yellow-500',
+                  isPostHasMoreVotes(post.id) &&
+                  'border-4 border-yellow-500',
               )}
               src={post.img_url}
               alt="post"
@@ -193,13 +193,15 @@ const ChallengeFinalization = ({
         {currentPost} sur {posts.length}
       </div> */}
 
-      <div className='flex items-center gap-1'>
+      <div className="flex items-center gap-1">
         {posts.map((post, index) => (
           <div
             key={index}
             className={cn(
               'rounded-full cursor-pointer transition-all duration-300',
-              post.id === selectedPost?.id ? 'bg-gray-800 w-2 h-2' : 'bg-gray-400 w-1 h-1',
+              post.id === selectedPost?.id
+                ? 'bg-gray-800 w-2 h-2'
+                : 'bg-gray-400 w-1 h-1',
             )}
             onClick={() => {
               setCurrentPost(index + 1);
@@ -223,7 +225,7 @@ const ChallengeFinalization = ({
               />
             )}
             <Button
-              className='w-full'
+              className="w-full"
               text={userVote?.voted ? 'Changer mon vote' : 'Voter'}
               isCancel={!selectedPost}
               onClick={() => {

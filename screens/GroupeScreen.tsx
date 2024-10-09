@@ -127,12 +127,12 @@ const GroupScreen = ({ id }: { id: string }) => {
         groupeData={currentGroup}
       />
 
-      <PullToRefresh
+      {/* <PullToRefresh
         className="h-full relative overflow-x-scroll"
         pullingContent={''}
         onRefresh={fetchAllGroupData}
       >
-        <>
+        <> */}
           <DrawerComponent
             trigger={null}
             title="Créer un défi"
@@ -173,8 +173,8 @@ const GroupScreen = ({ id }: { id: string }) => {
               )}
             </div>
           )}
-        </>
-      </PullToRefresh>
+        {/* </>
+      </PullToRefresh> */}
     </div>
   );
 };

@@ -57,7 +57,7 @@ const PostTaken = ({
       <div
         {...props}
         className={cn(
-          'aspect-square w-full rounded-md bg-gray-300 flex items-center justify-center flex-col text-white gap-y-4',
+          'aspect-square w-full rounded-xl bg-gray-300 flex items-center justify-center flex-col text-white gap-y-4',
           className,
         )}
       >
@@ -92,7 +92,7 @@ const PostTaken = ({
                   alt="post"
                   width={300}
                   height={300}
-                  className="blur-2xl w-full object-cover aspect-image rounded-md"
+                  className="blur-2xl w-full object-cover aspect-image rounded-xl"
                 />
               </CarouselItem>
             ))}

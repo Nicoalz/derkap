@@ -32,7 +32,7 @@ const PostNotTaken = ({
           challenge={challenge}
         />
       ) : (
-        <div className="w-full flex flex-col items-center gap-2 relative rounded-md">
+        <div className="w-full flex flex-col items-center gap-2 relative rounded-xl">
           {posts && posts.length > 0 ? (
             <CarouselComponent>
               {posts.map((post, index) => (
@@ -48,7 +48,7 @@ const PostNotTaken = ({
               ))}
             </CarouselComponent>
           ) : (
-            <div className="aspect-image w-full rounded-md bg-gray-400"></div>
+            <div className="aspect-image w-full rounded-xl bg-gray-400"></div>
           )}
           <div className="abs-center flex flex-col gap-4">
             <p className="text-xl font-champ text-center">À vous de jouer !</p>

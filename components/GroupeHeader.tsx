@@ -187,9 +187,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
         </div>
       </SheetComponent>
 
-      {currentChallenge && (
-        <StatusLabel challengeStatus={currentChallenge.status} />
-      )}
+      <StatusLabel challengeStatus={currentChallenge?.status} />
     </header>
   );
 };

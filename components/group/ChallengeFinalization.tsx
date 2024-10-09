@@ -188,7 +188,7 @@ const ChallengeFinalization = ({
           <CarouselItem onClick={() => setSelectedPost(post)} key={index}>
             <Image
               className={cn(
-                'rounded-md w-full object-cover aspect-square',
+                'rounded-md w-full object-contain max-h-[510px]',
                 challenge?.status === 'voting' &&
                   post.id === userVote?.postId &&
                   'border-4 border-green-500',
@@ -210,7 +210,7 @@ const ChallengeFinalization = ({
       </CarouselComponent>
 
       <div className="text-center">
-        {currentPost} of {posts.length}
+        {currentPost} sur {posts.length}
       </div>
 
       {challenge?.status === 'voting' && (

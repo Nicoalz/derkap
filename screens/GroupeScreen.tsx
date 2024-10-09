@@ -121,7 +121,7 @@ const GroupScreen = ({ id }: { id: string }) => {
   }
 
   return (
-    <div className="h-screen relative">
+    <div className="h-screen relative overflow-x-scroll">
       <GroupeHeader
         currentChallenge={currentChallenge}
         groupeData={currentGroup}
@@ -148,7 +148,7 @@ const GroupScreen = ({ id }: { id: string }) => {
       {!currentChallenge ? (
         <NoChallenge setIsCreateChallengeOpen={setIsCreateChallengeOpen} />
       ) : (
-        <div className="w-full  flex flex-col items-center justify-start gap-8 px-6 py-3">
+        <div className="w-full  flex flex-col items-center justify-start gap-4 px-6 py-3">
           <ChallengeBox challenge={currentChallenge} />
           {currentChallenge?.status === 'posting' && (
             <ChallengeInProgress

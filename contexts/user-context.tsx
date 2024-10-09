@@ -1,10 +1,11 @@
 'use client';
 import { User } from '@supabase/supabase-js';
-import { ReactNode, createContext, useContext } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 import { TProfileDB } from '../types/types';
 
 interface UserContextType {
-  userData: TProfileDB;
+  userData: TProfileDB & { avatarTimestamp: number };
+  updateUserData: (newData: Partial<TProfileDB>) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -20,16 +21,31 @@ export const UserProvider: React.FC<UserProviderProps> = ({
   user,
   profile,
 }) => {
-  const userData: TProfileDB = {
+  const [userData, setUserData] = useState<
+    TProfileDB & { avatarTimestamp: number }
+  >({
     id: user?.id ?? '',
     username: profile?.username ?? '',
     avatar_url: profile?.avatar_url || '/mrderka.png',
     created_at: user?.created_at ?? '',
     email: profile?.email ?? '',
+    avatarTimestamp: Date.now(),
+  });
+
+  const updateUserData = (newData: Partial<TProfileDB>) => {
+    setUserData(prevData => ({
+      ...prevData,
+      ...newData,
+      avatarTimestamp: newData.avatar_url
+        ? Date.now()
+        : prevData.avatarTimestamp,
+    }));
   };
 
   return (
-    <UserContext.Provider value={{ userData }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ userData, updateUserData }}>
+      {children}
+    </UserContext.Provider>
   );
 };
 

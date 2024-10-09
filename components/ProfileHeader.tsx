@@ -11,25 +11,27 @@ import { signoutSupabase } from '@/functions/supabase/signout-supabase';
 import Button from './Button';
 import Image from 'next/image';
 import { handleAskNotification } from '@/libs/notificationHelper';
+import { createSupabaseFrontendClient } from '@/libs/supabase/client';
+import { useUser } from '@/contexts/user-context';
 interface GroupeHeaderProps {
   isUserProfil: boolean;
-  userData: TProfileDB;
   children?: React.ReactNode;
   link?: string;
 }
 
 const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   isUserProfil,
-  userData,
   children,
 }) => {
   const [isInfoChanged, setIsInfoChanged] = useState(false);
+  const { updateUserData, userData: currentUserData } = useUser();
+
   const [userImage, setUserImage] = useState<File | string | null>(
-    userData.avatar_url,
+    `${currentUserData.avatar_url}?${currentUserData.avatarTimestamp}`,
   );
-  const [preview, setPreview] = useState<string | null>(userData.avatar_url);
-  const [userName, setUserName] = useState(userData.username);
-  const [userEmail, setUserEmail] = useState(userData.email);
+  const [preview, setPreview] = useState<string | null>(
+    `${currentUserData.avatar_url}?${currentUserData.avatarTimestamp}`,
+  );
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
   const router = useRouter();
 
@@ -53,8 +55,18 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
     }
   };
 
-  const handleSubmit = () => {
-    if (userName && userEmail && userImage) {
+  const handleSubmit = async () => {
+    if (userImage !== currentUserData.avatar_url && userImage) {
+      const { data, error } = await updateAvatarProfile({
+        avatar: userImage as File,
+      });
+      if (error) {
+        console.error(error);
+        toast.error("Impossible de modifier l'image");
+        return;
+      }
+      updateUserData({ avatar_url: data?.publicUrl });
+
       toast.success('Informations mises à jour');
     } else {
       toast.error('Veuillez remplir tous les champs');
@@ -62,7 +74,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   };
 
   const membreSince = () => {
-    const date = new Date(userData.created_at);
+    const date = new Date(currentUserData.created_at);
     return date.toLocaleDateString('fr-FR', {
       year: 'numeric',
       month: 'long',
@@ -77,6 +89,56 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
     } catch (error: any) {
       toast.error(error?.message);
     }
+  };
+
+  const updateAvatarProfile = async ({ avatar }: { avatar: File }) => {
+    const supabase = createSupabaseFrontendClient();
+    const { user } = (await supabase.auth.getUser()).data;
+    if (!user) {
+      return {
+        data: null,
+        error: 'User not found',
+      };
+    }
+
+    // UPLOAD NEW AVATAR
+
+    const { data, error } = await supabase.storage
+      .from('avatars')
+      .upload(`${user.id}/avatar`, avatar, { upsert: true });
+    if (error) {
+      return {
+        data: null,
+        error: error.message,
+      };
+    }
+    if (!data) {
+      return {
+        data: null,
+        error: 'No data',
+      };
+    }
+
+    // GET NEW AVATAR URL
+    const { data: avatar_url } = await supabase.storage
+      .from('avatars')
+      .getPublicUrl(`${user.id}/avatar`);
+
+    const { error: updateError } = await supabase
+      .from('profile')
+      .update({
+        avatar_url: avatar_url.publicUrl,
+      })
+      .eq('id', user.id);
+
+    if (updateError) {
+      return {
+        data: null,
+        error: updateError.message,
+      };
+    }
+
+    return { data: avatar_url, error: null };
   };
 
   return (
@@ -95,8 +157,8 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
                     <Image
                       src={preview}
                       alt="Preview"
-                      width={24}
-                      height={24}
+                      width={150}
+                      height={150}
                       className="w-24 aspect-square object-cover rounded bg-white"
                     />
                   ) : (
@@ -121,30 +183,12 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
 
               <div className="grid w-full max-w-sm items-center gap-1.5">
                 <p>Surnom</p>
-                <Input
-                  type="name"
-                  id="name"
-                  placeholder="DerkapUser"
-                  value={userName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setUserName(e.target.value);
-                    setIsInfoChanged(true);
-                  }}
-                />
+                <p className="text-sm">{currentUserData.username}</p>
               </div>
 
               <div className="grid w-full max-w-sm items-center gap-1.5">
                 <p>Email</p>
-                <Input
-                  type="name"
-                  id="name"
-                  placeholder="thomas@derkap.com"
-                  value={userEmail}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setUserEmail(e.target.value);
-                    setIsInfoChanged(true);
-                  }}
-                />
+                <p className="text-sm">{currentUserData.email}</p>
               </div>
             </div>
 

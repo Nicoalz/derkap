@@ -130,9 +130,9 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
         >
           <div className="flex flex-col justify-between h-full">
             <div className="flex flex-col gap-4 items-start justify-center">
-              <div className="grid w-full max-w-sm items-center gap-1.5">
-                <p>Ma photo de profil</p>
-                <div className="relative w-full p-2 bg-white border rounded-lg flex flex-col gap-2 items-center justify-center">
+              <div className="grid w-full max-w-sm items-center gap-1">
+                <p className='text-xs text-gray-600'>Ma photo de profil</p>
+                <div className="relative w-full p-2 bg-white border rounded-lg flex flex-col gap-1 items-center justify-center">
                   {preview ? (
                     <Image
                       src={preview}
@@ -170,13 +170,13 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
                 />
               </div>
 
-              <div className="grid w-full max-w-sm items-center gap-1.5">
-                <p>Pseudo</p>
+              <div className="grid w-full max-w-sm items-center gap-1">
+                <p className='text-xs text-gray-500'>Pseudo</p>
                 <p className="text-sm">{currentUserData.username}</p>
               </div>
 
-              <div className="grid w-full max-w-sm items-center gap-1.5">
-                <p>Email</p>
+              <div className="grid w-full max-w-sm items-center gap-1">
+                <p className='text-xs text-gray-500'>Email</p>
                 <p className="text-sm">{currentUserData.email}</p>
               </div>
             </div>

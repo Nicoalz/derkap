@@ -65,7 +65,9 @@ const ChallengeFinalization = ({
       ...post,
       voteCount: getVoteCount(post.id),
     }));
-    const highestVotes = Math.max(...postsWithVotes.map(post => post.voteCount));
+    const highestVotes = Math.max(
+      ...postsWithVotes.map(post => post.voteCount),
+    );
     return postsWithVotes.find(post => post.voteCount === highestVotes);
   };
 
@@ -125,7 +127,9 @@ const ChallengeFinalization = ({
     if (challenge?.status === 'ended') {
       const highestVotedPost = getPostWithMostVotes();
       if (highestVotedPost && api) {
-        const postIndex = posts.findIndex(post => post.id === highestVotedPost.id);
+        const postIndex = posts.findIndex(
+          post => post.id === highestVotedPost.id,
+        );
         if (postIndex !== -1) {
           setCurrentPost(postIndex + 1);
           api.scrollTo(postIndex);
@@ -186,11 +190,11 @@ const ChallengeFinalization = ({
               className={cn(
                 'rounded-xl w-full object-cover max-h-[510px] aspect-image',
                 challenge?.status === 'voting' &&
-                post.id === userVote?.postId &&
-                'border-4 border-green-500',
+                  post.id === userVote?.postId &&
+                  'border-4 border-green-500',
                 challenge?.status === 'ended' &&
-                isPostHasMoreVotes(post.id) &&
-                'border-4 border-yellow-500',
+                  isPostHasMoreVotes(post.id) &&
+                  'border-4 border-yellow-500',
               )}
               src={post.img_url}
               alt="post"

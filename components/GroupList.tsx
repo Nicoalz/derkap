@@ -45,7 +45,7 @@ const GroupList = ({
         .share({
           title: 'Rejoignez mon Groupe sur Derkap !',
           text: `Rejoignez notre groupe "${title}" sur Derkap ! Le code d'accès est ${invite_code}`,
-          url: `https://derkap.vercel.app/groupe/${id}`,
+          url: `https://app.derkap.fr/groupe/${id}`,
         })
         .catch(() => toast.info("Une erreur s'est produite"));
     } else {

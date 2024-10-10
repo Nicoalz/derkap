@@ -124,7 +124,8 @@ const GroupScreen = ({ id }: { id: string }) => {
     <div className="min-h-screen relative overflow-x-scroll">
       <GroupeHeader
         currentChallenge={currentChallenge}
-        groupeData={currentGroup}
+        groupData={currentGroup}
+        setGroupData={setCurrentGroup}
       />
 
       {/* <PullToRefresh

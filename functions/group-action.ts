@@ -102,6 +102,46 @@ export const createGroup = async ({ name }: { name: string }) => {
   };
 };
 
+export const updateGroup = async ({
+  group_id,
+  name,
+}: {
+  group_id: number;
+  name: string;
+}) => {
+  const supabase = createSupabaseAppServerClient();
+  const { user } = (await supabase.auth.getUser()).data;
+  if (!user) {
+    return {
+      error: 'User not found',
+      data: null,
+    };
+  }
+  if (!group_id || !name) {
+    return {
+      error: 'Id and name are required',
+      data: null,
+    };
+  }
+  // UPDATE GROUP TABLE
+  const { data, error: errorGroup } = await supabase
+    .from('group')
+    .update({ name: name })
+    .eq('id', group_id)
+    .select('name')
+    .single();
+  if (errorGroup) {
+    return {
+      error: errorGroup.message,
+      data: null,
+    };
+  }
+  return {
+    error: null,
+    data,
+  };
+};
+
 export const deleteGroup = async ({ group_id }: { group_id: number }) => {
   const supabase = createSupabaseAppServerClient();
   const { user } = (await supabase.auth.getUser()).data;

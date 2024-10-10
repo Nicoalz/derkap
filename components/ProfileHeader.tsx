@@ -3,15 +3,12 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, Ellipsis, ImageIcon, LogOut } from 'lucide-react';
-
 import { Input } from '@/components/ui/input';
 import SheetComponent from './SheetComponent';
-import { TProfileDB } from '@/types/types';
 import { signoutSupabase } from '@/functions/supabase/signout-supabase';
 import Button from './Button';
 import Image from 'next/image';
 import { handleAskNotification } from '@/libs/notificationHelper';
-import { createSupabaseFrontendClient } from '@/libs/supabase/client';
 import { useUser } from '@/contexts/user-context';
 import { updateAvatarProfile } from '@/functions/profile-actions';
 interface GroupeHeaderProps {
@@ -37,6 +34,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
     `${currentUserData.avatar_url}?${currentUserData.avatarTimestamp}`,
   );
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
+  const [resetClickable, setResetClickable] = useState(true);
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -57,6 +55,12 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
       setPreview(URL.createObjectURL(file));
       setIsInfoChanged(true);
     }
+  };
+
+  const handleClickOnReset = async () => {
+    setResetClickable(false);
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    setResetClickable(true);
   };
 
   const handleSubmit = async () => {
@@ -102,10 +106,13 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
 
   const handleResetNotification = async () => {
     try {
+      handleClickOnReset();
       await handleAskNotification();
       toast.success('Notifications réinitialisées');
     } catch (error: any) {
       toast.error(error?.message);
+    } finally {
+      setOpenSheet(false);
     }
   };
 
@@ -124,7 +131,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
           <div className="flex flex-col justify-between h-full">
             <div className="flex flex-col gap-4 items-start justify-center">
               <div className="grid w-full max-w-sm items-center gap-1.5">
-                <p>Mon avatar</p>
+                <p>Ma photo de profil</p>
                 <div className="relative w-full p-2 bg-white border rounded-lg flex flex-col gap-2 items-center justify-center">
                   {preview ? (
                     <Image
@@ -152,10 +159,19 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
                     className="hidden"
                   />
                 </div>
+                <Button
+                  text={isLoading ? 'Chargement' : 'Modifier'}
+                  className={cn(
+                    'w-full',
+                    (!isInfoChanged || isLoading) && 'bg-gray-300',
+                  )}
+                  disabled={!isInfoChanged || isLoading}
+                  onClick={handleSubmit}
+                />
               </div>
 
               <div className="grid w-full max-w-sm items-center gap-1.5">
-                <p>Surnom</p>
+                <p>Pseudo</p>
                 <p className="text-sm">{currentUserData.username}</p>
               </div>
 
@@ -180,19 +196,11 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
                 text="Réinitialiser les notifications"
                 className={cn('w-full')}
                 isCancel={
-                  isNotificationSupported &&
-                  Notification.permission === 'denied'
+                  !isNotificationSupported ||
+                  Notification.permission === 'denied' ||
+                  !resetClickable
                 }
                 onClick={handleResetNotification}
-              />
-              <Button
-                text={isLoading ? 'Chargement' : 'Modifier'}
-                className={cn(
-                  'w-full',
-                  (!isInfoChanged || isLoading) && 'bg-gray-300',
-                )}
-                disabled={!isInfoChanged || isLoading}
-                onClick={handleSubmit}
               />
               <Button
                 className="w-full bg-red-500 flex items-center justify-center gap-2"

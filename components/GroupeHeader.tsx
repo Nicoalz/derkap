@@ -114,7 +114,7 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
     isUpdating || !groupName || groupName === groupData?.name;
 
   return (
-    <header className="w-full flex justify-between items-center p-4 h-fit fixed top-0 bg-[#f1d7f3] z-10">
+    <header className="w-full flex justify-between items-center p-4 h-fit fixed top-0 bg-[#f1d7f3] z-10 border-b-black shadow-lg">
       <div className="flex items-center gap-x-2" onClick={() => router.back()}>
         <ChevronLeft size={24} />
       </div>
@@ -135,7 +135,7 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
                 <Input
                   type="name"
                   id="name"
-                  placeholder="DerkapUser"
+                  placeholder="Sois original !"
                   value={groupName}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setgroupName(e.target.value);

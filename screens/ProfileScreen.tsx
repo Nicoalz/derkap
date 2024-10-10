@@ -50,22 +50,6 @@ const ProfileScreen = ({ id }: { id?: string }) => {
             <ChevronLeft size={24} />
           </Link>
         </header>
-        <div className="w-full flex flex-col items-center gap-4">
-          <div className="flex flex-col items-center justify-center gap-2">
-            <Skeleton className="rounded-full border border-custom-black w-24 h-24" />
-            <Skeleton className="w-24 h-[28px]" />
-          </div>
-          <div className="w-full flex justify-center items-center gap-12">
-            <div className="flex flex-col items-center justify-center gap-1">
-              <Skeleton className="w-6 h-6" />
-              <p className="text-sm">Amis</p>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-1">
-              <Skeleton className="w-6 h-6" />
-              <p className="text-sm">Groupes</p>
-            </div>
-          </div>
-        </div>
         <Separator className="w-[80%] bg-gray-400 my-5" />
       </div>
     );
@@ -116,20 +100,9 @@ const ProfileScreen = ({ id }: { id?: string }) => {
             {userData.username}
           </h1>
         </div>
-
-        <div className="w-full flex justify-center items-center gap-12">
-          <div className="flex flex-col items-center justify-center gap-1">
-            <p className="text-md font-bold">14</p>
-            <p className="text-sm">Amis</p>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-1">
-            <p className="text-md font-bold">5</p>
-            <p className="text-sm">Groupes</p>
-          </div>
-        </div>
       </div>
-
       <Separator className="w-[80%] bg-gray-400 my-5" />
+      <p>Cliquez sur les 3 petits points pour modifier votre profil.</p>
     </div>
   );
 };

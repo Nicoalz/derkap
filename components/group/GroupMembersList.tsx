@@ -24,8 +24,8 @@ const GroupMembersList = ({
     >
       {group?.members?.slice(0, LIMIT_MEMBERS_DISPLAY).map((member, index) =>
         member?.profile?.avatar_url ? (
-          <Link
-            href={`/profile/${member?.profile?.username}`}
+          <div
+            // href={`/profile/${member?.profile?.username}`}
             className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
             style={{ zIndex: group?.members?.length - index }}
             key={index}
@@ -37,10 +37,10 @@ const GroupMembersList = ({
               height={100}
               className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full object-cover`}
             />
-          </Link>
+          </div>
         ) : (
-          <Link
-            href={`/profile/${member?.profile?.username}`}
+          <div
+            // href={`/profile/${member?.profile?.username}`}
             className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
             style={{ zIndex: group?.members?.length - index }}
             key={index}
@@ -48,7 +48,7 @@ const GroupMembersList = ({
             <p className="flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white">
               {member?.profile?.username?.charAt(0)}
             </p>
-          </Link>
+          </div>
         ),
       )}
 

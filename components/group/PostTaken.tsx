@@ -112,13 +112,13 @@ const PostTaken = ({
         <p className="text-xl font-champ">Toujours en retard...</p>
         <div className="w-full flex flex-col gap-2">
           {getWhoDontPost().map((member, index) => (
-            <Link
+            <div
               key={index}
               className="text-s"
-              href={`/profile/${member?.profile?.username}`}
+              // href={`/profile/${member?.profile?.username}`}
             >
               @{member.profile?.username}
-            </Link>
+            </div>
           ))}
         </div>
       </div>

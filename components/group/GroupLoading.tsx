@@ -53,8 +53,8 @@ const NoChallenge = ({
               <p className="font-champ">vote(s)</p>
             </div>
           </div>
-          <div className='w-full flex items-center justify-center'>
-          <Skeleton className="w-12 h-2 rounded-full mt-4" />
+          <div className="w-full flex items-center justify-center">
+            <Skeleton className="w-12 h-2 rounded-full mt-4" />
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE === 'true';
   const isProduction = process.env.NODE_ENV === 'production';
   const { isPWA } = usePWA();
+
   if (isMaintenance) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -26,18 +27,13 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen dark">
       {!isPWA && isProduction ? (
-        <>
-          <div className="h-full container mx-auto flex-1 flex flex-col justify-center">
-            <NoPwaScreen />
-          </div>
-          <Footer />
-        </>
+        <NoPwaScreen />
       ) : (
-        <>
-          <main className="h-full container mx-auto flex-1 flex flex-col">
-            {children}
-          </main>
-        </>
+      <>
+        <main className="h-full container mx-auto flex-1 flex flex-col">
+          {children}
+        </main>
+      </>
       )}
     </div>
   );

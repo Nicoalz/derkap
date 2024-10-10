@@ -1,12 +1,12 @@
 'use client';
 
-import { ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { signinSupabase } from '../../functions/supabase/signin-supabase';
 import { cn } from '../../libs/utils';
 import { default as Input } from '../form/Input';
-
+import Link from 'next/link';
+import Button from '@/components/Button';
 export default function SignInForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -41,24 +41,28 @@ export default function SignInForm() {
         e.preventDefault();
         handleSignUp(new FormData(e.target as HTMLFormElement));
       }}
-      className="max-w-[550px] flex self-center gap-6 flex-col w-full"
+      className="flex self-center gap-y-6 flex-col items-center justify-center w-full"
     >
-      <div className="flex flex-col gap-3">
-        <Input placeholder="Email" type="email" name="email" />
-        <Input placeholder="Mot de passe" type="password" name="password" />
+      <div className="flex flex-col  w-64 justify-center items-center gap-y-6">
+        <div className="flex flex-col gap-y-3 w-full">
+          <Input placeholder="Email" type="email" name="email" />
+          <Input placeholder="Mot de passe" type="password" name="password" />
+        </div>
+        <input
+          disabled={isLoading}
+          type="submit"
+          value={isLoading ? 'Chargement...' : 'Connexion'}
+          className={cn(
+            'bg-custom-primary text-white py-2 px-6 rounded font-bold w-fit',
+            { 'bg-gray-200 ': isLoading },
+          )}
+        />
       </div>
-      <input
-        disabled={isLoading}
-        type="submit"
-        value={isLoading ? 'Chargement...' : 'Se connecter'}
-        className={cn(
-          'bg-red-500 cursor-pointer text-white py-1 transition-transform rounded',
-          { 'bg-gray-200 ': isLoading },
-        )}
-      />
-      <a href="/inscription" className="flex items-center">
-        S&apos;inscrire <ChevronRight size={20} />
-      </a>
+      <div className="w-full">
+        <Link href="/inscription" className="flex items-center">
+          <Button text="S'inscrire" />
+        </Link>
+      </div>
     </form>
   );
 }

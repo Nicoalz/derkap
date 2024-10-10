@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import Button from '@/components/Button';
 import { signupSupabase } from '../../functions/supabase/signup-supabase';
 import { cn } from '../../libs/utils';
 import { default as Input } from '../form/Input';
@@ -101,43 +102,48 @@ export default function SignUpForm() {
     <form
       action={handleSignUp}
       onSubmit={() => setIsLoading(true)}
-      className="max-w-[550px] flex self-center gap-6 flex-col w-full"
+      className="flex self-center gap-6 flex-col w-full justify-center items-center"
     >
-      <div className="flex flex-col gap-3">
-        <Input
-          placeholder="Pseudo"
-          type="text"
-          name="username"
-          errorMsg={usernameError}
-          onChange={e => checkUsernameSchema(e.target.value)}
-        />
-        <Input
-          placeholder="Email"
-          type="email"
-          name="email"
-          errorMsg={emailError}
-          onChange={e => checkEmailSchema(e.target.value)}
-        />
-        <Input
-          placeholder="Mot de passe"
-          type="password"
-          name="password"
-          errorMsg={passwordError}
-          onChange={e => checkPasswordSchema(e.target.value)}
+      <div className="flex flex-col w-64 justify-center items-center gap-y-6">
+        <div className="flex flex-col gap-y-3 w-full">
+          <Input
+            className="w-full"
+            placeholder="Pseudo"
+            type="text"
+            name="username"
+            errorMsg={usernameError}
+            onChange={e => checkUsernameSchema(e.target.value)}
+          />
+          <Input
+            placeholder="Email"
+            type="email"
+            name="email"
+            errorMsg={emailError}
+            onChange={e => checkEmailSchema(e.target.value)}
+          />
+          <Input
+            placeholder="Mot de passe"
+            type="password"
+            name="password"
+            errorMsg={passwordError}
+            onChange={e => checkPasswordSchema(e.target.value)}
+          />
+        </div>
+        <input
+          disabled={isLoading}
+          type="submit"
+          value={isLoading ? 'Chargement...' : 'Inscription'}
+          className={cn(
+            'bg-custom-primary text-white py-2 px-6 rounded font-bold w-fit',
+            { 'bg-gray-200 ': isLoading },
+          )}
         />
       </div>
-      <input
-        disabled={isLoading}
-        type="submit"
-        value={isLoading ? 'Chargement...' : "S'inscrire"}
-        className={cn(
-          'bg-red-500 cursor-pointer text-white py-1 transition-transform rounded',
-          { 'bg-gray-200 ': isLoading },
-        )}
-      />
-      <a href="/connexion" className="flex items-center">
-        Se connecter <ChevronRight size={20} />
-      </a>
+      <div className="w-full">
+        <Link href="/connexion" className="flex items-center">
+          <Button text="Se connecter" />
+        </Link>
+      </div>
     </form>
   );
 }

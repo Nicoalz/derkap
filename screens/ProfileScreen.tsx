@@ -56,11 +56,14 @@ const ProfileScreen = ({ id }: { id?: string }) => {
             <Skeleton className="w-24 h-[28px]" />
           </div>
         </div>
-        <Link href="mailto:derkap.dev@gmail.com" className='absolute bottom-5 right-5 flex flex-col gap-1 items-end'>
-          <div className='bg-white py-1 px-2 rounded-xl animate-in'>
+        <Link
+          href="mailto:derkap.dev@gmail.com"
+          className="absolute bottom-5 right-5 flex flex-col gap-1 items-end"
+        >
+          <div className="bg-white py-1 px-2 rounded-xl animate-in">
             <p>Donnez nous votre feedback !</p>
           </div>
-          <div className='w-fit border-2 border-custom-black p-2 rounded-full text-custom-black'>
+          <div className="w-fit border-2 border-custom-black p-2 rounded-full text-custom-black">
             <Lightbulb size={24} />
           </div>
         </Link>
@@ -85,7 +88,7 @@ const ProfileScreen = ({ id }: { id?: string }) => {
 
   return (
     <div className="w-full h-screen flex flex-col items-center justify-start relative">
-      < ProfileHeader
+      <ProfileHeader
         isUserProfil={isUserProfil}
         isMyProfile={id ? false : true}
       />
@@ -115,16 +118,18 @@ const ProfileScreen = ({ id }: { id?: string }) => {
         </div>
       </div>
 
-      <Link href="mailto:derkap.dev@gmail.com" className='absolute bottom-5 right-5 flex flex-col gap-1 items-end'>
-        <div className='bg-white py-1 px-2 rounded-xl animate-in'>
+      <Link
+        href="mailto:derkap.dev@gmail.com"
+        className="absolute bottom-5 right-5 flex flex-col gap-1 items-end"
+      >
+        <div className="bg-white py-1 px-2 rounded-xl animate-in">
           <p>Donnez nous votre feedback !</p>
         </div>
-        <div className='w-fit border-2 border-custom-black p-2 rounded-full text-custom-black'>
+        <div className="w-fit border-2 border-custom-black p-2 rounded-full text-custom-black">
           <Lightbulb size={24} />
         </div>
       </Link>
     </div>
-
   );
 };
 

@@ -33,8 +33,8 @@ const GroupMembersList = ({
             <Image
               src={member?.profile?.avatar_url}
               alt={member?.profile?.username + 'photo'}
-              width={10}
-              height={10}
+              width={100}
+              height={100}
               className={`min-w-10 min-h-10 max-h-10 max-w-10 rounded-full object-cover`}
             />
           </Link>

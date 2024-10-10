@@ -122,12 +122,6 @@ const GroupList = ({
               key={group.id}
               className={`relative flex flex-col gap-4 w-full px-4 bg-custom-white border border-custom-black rounded-xl py-4 text-custom-black shadow-element ${index === membresGroup.length - 1 && 'mb-12'}`}
             >
-              {group.hasNewStatus === true && (
-                <span className="absolute bottom-4 right-4 rounded-full bg-red-500 text-white w-6 h-6 flex justify-center items-center">
-                  1
-                </span>
-              )}
-
               <div className="flex gap-4 items-center justify-start relative w-full">
                 {group.img_url ? (
                   <Image
@@ -169,52 +163,58 @@ const GroupList = ({
                 />
               </div>
               <Separator className="w-full bg-gray-400" />
-              <ul className="list-none flex">
-                {group.members
-                  .filter(
-                    (member, idx, self) =>
-                      idx ===
-                      self.findIndex(t => t.profile?.id === member.profile?.id),
-                  )
-                  .slice(0, limitElements)
-                  .map((member, index) =>
-                    member.profile?.avatar_url ? (
-                      <div
-                        className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
-                        style={{ zIndex: group.members.length - index }}
-                        key={index}
-                      >
-                        <Image
-                          src={`${member.profile.avatar_url}?t=${currentUserData.avatarTimestamp}`}
-                          alt={member.profile.username + 'photo'}
-                          width={40}
-                          height={40}
-                          className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div
-                        className={`${index !== 0 && '-ml-2'}`}
-                        style={{ zIndex: group.members.length - index }}
-                        key={index}
-                      >
-                        <p className="flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white">
-                          {member.profile?.username?.charAt(0)}
+              <div className='w-full flex justify-between items-center'>
+                <ul className="list-none flex">
+                  {group.members
+                    .filter(
+                      (member, idx, self) =>
+                        idx ===
+                        self.findIndex(t => t.profile?.id === member.profile?.id),
+                    )
+                    .slice(0, limitElements)
+                    .map((member, index) =>
+                      member.profile?.avatar_url ? (
+                        <div
+                          className={`flex flex-col items-center ${index !== 0 && '-ml-2'}`}
+                          style={{ zIndex: group.members.length - index }}
+                          key={index}
+                        >
+                          <Image
+                            src={`${member.profile.avatar_url}?t=${currentUserData.avatarTimestamp}`}
+                            alt={member.profile.username + 'photo'}
+                            width={40}
+                            height={40}
+                            className="min-w-10 min-h-10 max-h-10 max-w-10 rounded-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className={`${index !== 0 && '-ml-2'}`}
+                          style={{ zIndex: group.members.length - index }}
+                          key={index}
+                        >
+                          <p className="flex items-center justify-center w-10 h-10 rounded-full border bg-custom-white">
+                            {member.profile?.username?.charAt(0)}
+                          </p>
+                        </div>
+                      ),
+                    )}
+
+                  {group.members.length > limitElements && (
+                    <div className="flex flex-col items-center">
+                      <div className="w-10 h-10 border border-custom-black rounded-full -ml-2 flex items-center justify-center">
+                        <p className="text-lg text-custom-black">
+                          +{group.members.length - limitElements}
                         </p>
                       </div>
-                    ),
-                  )}
-
-                {group.members.length > limitElements && (
-                  <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 border border-custom-black rounded-full -ml-2 flex items-center justify-center">
-                      <p className="text-lg text-custom-black">
-                        +{group.members.length - limitElements}
-                      </p>
                     </div>
-                  </div>
-                )}
-              </ul>
+                  )}
+                </ul>
+                <span className="relative flex h-5 w-5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="flex items-center justify-center text-white rounded-full aspect-square h-5 w-5 bg-red-500 text-xs">1</span>
+                </span>
+              </div>
             </Link>
           ))}
         </>

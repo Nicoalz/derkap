@@ -88,7 +88,10 @@ const ProfileScreen = ({ id }: { id?: string }) => {
 
   return (
     <div className="w-full h-screen flex flex-col items-center justify-start">
-      <ProfileHeader isUserProfil={isUserProfil} />
+      <ProfileHeader
+        isUserProfil={isUserProfil}
+        isMyProfile={id ? false : true}
+      />
       <div className="w-full flex flex-col items-center gap-4">
         <div className="flex flex-col items-center justify-center gap-2">
           {userData.avatar_url ? (

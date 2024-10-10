@@ -11,25 +11,28 @@ import { signoutSupabase } from '@/functions/supabase/signout-supabase';
 import Button from './Button';
 import Image from 'next/image';
 import { handleAskNotification } from '@/libs/notificationHelper';
+import { createSupabaseFrontendClient } from '@/libs/supabase/client';
+import { useUser } from '@/contexts/user-context';
+import { updateAvatarProfile } from '@/functions/profile-actions';
 interface GroupeHeaderProps {
   isUserProfil: boolean;
-  userData: TProfileDB;
   children?: React.ReactNode;
   link?: string;
 }
 
 const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   isUserProfil,
-  userData,
   children,
 }) => {
   const [isInfoChanged, setIsInfoChanged] = useState(false);
+  const { updateUserData, userData: currentUserData } = useUser();
+
   const [userImage, setUserImage] = useState<File | string | null>(
-    userData.avatar_url,
+    `${currentUserData.avatar_url}?${currentUserData.avatarTimestamp}`,
   );
-  const [preview, setPreview] = useState<string | null>(userData.avatar_url);
-  const [userName, setUserName] = useState(userData.username);
-  const [userEmail, setUserEmail] = useState(userData.email);
+  const [preview, setPreview] = useState<string | null>(
+    `${currentUserData.avatar_url}?${currentUserData.avatarTimestamp}`,
+  );
   const [isNotificationSupported, setIsNotificationSupported] = useState(false);
   const router = useRouter();
 
@@ -53,16 +56,35 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
     }
   };
 
-  const handleSubmit = () => {
-    if (userName && userEmail && userImage) {
-      toast.success('Informations mises à jour');
+  const handleSubmit = async () => {
+    if (userImage && userImage instanceof File) {
+      try {
+        // CONVERT FILE TO BASE64 TO PASS TO SERVER
+        const reader = new FileReader();
+        reader.readAsDataURL(userImage);
+        reader.onload = async () => {
+          const base64data = reader.result as string;
+          const { data, error } = await updateAvatarProfile(base64data);
+
+          if (error) {
+            console.error(error);
+            toast.error("Impossible de modifier l'image");
+            return;
+          }
+          updateUserData({ avatar_url: data?.publicUrl });
+          toast.success('Informations mises à jour');
+        };
+      } catch (error) {
+        console.error(error);
+        toast.error("Une erreur s'est produite lors du traitement de l'image");
+      }
     } else {
-      toast.error('Veuillez remplir tous les champs');
+      toast.error('Veuillez sélectionner une nouvelle image');
     }
   };
 
   const membreSince = () => {
-    const date = new Date(userData.created_at);
+    const date = new Date(currentUserData.created_at);
     return date.toLocaleDateString('fr-FR', {
       year: 'numeric',
       month: 'long',
@@ -95,8 +117,8 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
                     <Image
                       src={preview}
                       alt="Preview"
-                      width={24}
-                      height={24}
+                      width={150}
+                      height={150}
                       className="w-24 aspect-square object-cover rounded bg-white"
                     />
                   ) : (
@@ -121,30 +143,12 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
 
               <div className="grid w-full max-w-sm items-center gap-1.5">
                 <p>Surnom</p>
-                <Input
-                  type="name"
-                  id="name"
-                  placeholder="DerkapUser"
-                  value={userName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setUserName(e.target.value);
-                    setIsInfoChanged(true);
-                  }}
-                />
+                <p className="text-sm">{currentUserData.username}</p>
               </div>
 
               <div className="grid w-full max-w-sm items-center gap-1.5">
                 <p>Email</p>
-                <Input
-                  type="name"
-                  id="name"
-                  placeholder="thomas@derkap.com"
-                  value={userEmail}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setUserEmail(e.target.value);
-                    setIsInfoChanged(true);
-                  }}
-                />
+                <p className="text-sm">{currentUserData.email}</p>
               </div>
             </div>
 

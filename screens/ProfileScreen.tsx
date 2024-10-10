@@ -85,12 +85,12 @@ const ProfileScreen = ({ id }: { id?: string }) => {
 
   return (
     <div className="w-full h-screen flex flex-col items-center justify-start">
-      <ProfileHeader isUserProfil={isUserProfil} userData={userData} />
+      <ProfileHeader isUserProfil={isUserProfil} />
       <div className="w-full flex flex-col items-center gap-4">
         <div className="flex flex-col items-center justify-center gap-2">
           {userData.avatar_url ? (
             <Image
-              src={userData.avatar_url ?? ''}
+              src={`${currentUserData.avatar_url}?t=${currentUserData.avatarTimestamp}`}
               alt={userData.username ?? ''}
               width={70}
               height={70}

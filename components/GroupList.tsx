@@ -163,13 +163,15 @@ const GroupList = ({
                 />
               </div>
               <Separator className="w-full bg-gray-400" />
-              <div className='w-full flex justify-between items-center'>
+              <div className="w-full flex justify-between items-center">
                 <ul className="list-none flex">
                   {group.members
                     .filter(
                       (member, idx, self) =>
                         idx ===
-                        self.findIndex(t => t.profile?.id === member.profile?.id),
+                        self.findIndex(
+                          t => t.profile?.id === member.profile?.id,
+                        ),
                     )
                     .slice(0, limitElements)
                     .map((member, index) =>
@@ -210,10 +212,14 @@ const GroupList = ({
                     </div>
                   )}
                 </ul>
-                <span className="relative flex h-5 w-5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                  <span className="flex items-center justify-center text-white rounded-full aspect-square h-5 w-5 bg-red-500 text-xs">1</span>
-                </span>
+                {group.hasNewStatus === true && (
+                  <span className="relative flex h-5 w-5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="flex items-center justify-center text-white rounded-full aspect-square h-5 w-5 bg-red-500 text-xs">
+                      1
+                    </span>
+                  </span>
+                )}
               </div>
             </Link>
           ))}

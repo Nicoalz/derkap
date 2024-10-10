@@ -54,7 +54,7 @@ export const getProfileName = async ({ user_name }: { user_name?: string }) => {
   };
 };
 
-export async function updateAvatarProfile(fileData: string, fileName: string) {
+export async function updateAvatarProfile(fileData: string) {
   const supabase = createSupabaseAppServerClient();
   const { user } = (await supabase.auth.getUser()).data;
   if (!user) {

@@ -64,10 +64,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
         reader.readAsDataURL(userImage);
         reader.onload = async () => {
           const base64data = reader.result as string;
-          const { data, error } = await updateAvatarProfile(
-            base64data,
-            userImage.name,
-          );
+          const { data, error } = await updateAvatarProfile(base64data);
 
           if (error) {
             console.error(error);

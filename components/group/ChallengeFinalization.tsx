@@ -170,11 +170,11 @@ const ChallengeFinalization = ({
               className={cn(
                 'rounded-xl w-full object-cover max-h-[510px] aspect-image',
                 challenge?.status === 'voting' &&
-                post.id === userVote?.postId &&
-                'border-4 border-green-500',
+                  post.id === userVote?.postId &&
+                  'border-4 border-green-500',
                 challenge?.status === 'ended' &&
-                isPostHasMoreVotes(post.id) &&
-                'border-4 border-yellow-500',
+                  isPostHasMoreVotes(post.id) &&
+                  'border-4 border-yellow-500',
               )}
               src={post.img_url}
               alt="post"
@@ -237,7 +237,7 @@ const ChallengeFinalization = ({
       )}
       {challenge?.status === 'ended' && (
         <Button
-          className='font-champ'
+          className="font-champ"
           text="Relancer dès mainteant un défi !"
           onClick={() => setIsCreateChallengeOpen(true)}
         />

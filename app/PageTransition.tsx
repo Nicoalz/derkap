@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
@@ -10,7 +10,11 @@ interface PageProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
 }
 
-export default function PageTransition({ children, title, ...props }: PageProps) {
+export default function PageTransition({
+  children,
+  title,
+  ...props
+}: PageProps) {
   const pathname = usePathname();
 
   useEffect(() => {
@@ -19,7 +23,7 @@ export default function PageTransition({ children, title, ...props }: PageProps)
 
   const variants = {
     enter: () => {
-      const isPush = pathname !== '/'; 
+      const isPush = pathname !== '/';
       return {
         x: 0,
         transition,
@@ -85,4 +89,4 @@ export default function PageTransition({ children, title, ...props }: PageProps)
       {children}
     </motion.main>
   );
-};
+}

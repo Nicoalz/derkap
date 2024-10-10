@@ -91,7 +91,6 @@ const GroupList = ({
   }
 
   console.log(groups);
-  
 
   return (
     <div className="w-full h-full overflow-scroll no-scrollbar flex flex-col gap-4 p-4">

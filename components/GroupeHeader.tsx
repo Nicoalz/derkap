@@ -41,9 +41,9 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
     if (navigator.share) {
       navigator
         .share({
-          title: 'Rejoignez notre group',
-          text: `Rejoignez notre group "${groupData?.name}" sur Derkap ! Le code d'accès est ${groupData?.invite_code}`,
-          url: `https://derkap.vercel.app/group/${groupData?.id}`,
+          title: 'Rejoignez notre groupe',
+          text: `Rejoignez notre groupe "${groupData?.name}" sur Derkap ! Le code d'accès est ${groupData?.invite_code}`,
+          url: `https://derkap.vercel.app/groupe/${groupData?.id}`,
         })
         .catch(() => toast.error('Erreur lors du partage'));
     } else {
@@ -58,7 +58,7 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
     const { error } = await deleteGroup({ group_id: groupData.id });
     if (!error) {
       router.push('/');
-      return toast.success('group supprimé avec succès');
+      return toast.success('groupe supprimé avec succès');
     }
     if (error) return toast.error("Une erreur s'est produite...");
   };
@@ -70,7 +70,7 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
     const { error } = await leaveGroup({ group_id: groupData.id?.toString() });
     if (!error) {
       router.push('/');
-      return toast.success('group quitté avec succès');
+      return toast.success('groupe quitté avec succès');
     }
     if (error) return toast.error("Une erreur s'est produite...");
   };
@@ -78,7 +78,7 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
   const handleUpdateGroup = async () => {
     setIsUpdating(true);
     if (!groupData?.id) {
-      return toast.error('group introuvable');
+      return toast.error('groupe introuvable');
     }
     if (groupName === groupData?.name) {
       return toast.error('Aucune modification détectée');
@@ -97,7 +97,7 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
       const newGroup = { ...groupData, name: data.name };
       setGroupData(newGroup);
 
-      return toast.success('group modifié avec succès');
+      return toast.success('Groupe modifié avec succès');
     }
   };
 
@@ -125,13 +125,13 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
             {groupData?.name}
           </h1>
         }
-        title="Info du group"
+        title="Info du groupe"
       >
         <div className="flex flex-col justify-between gap-2 h-full">
           {isEditing ? (
             <div className="h-full flex flex-col gap-4 items-start justify-between">
               <div className="grid w-full max-w-sm items-center gap-1.5">
-                <p>Nom du group</p>
+                <p>Nom du groupe</p>
                 <Input
                   type="name"
                   id="name"
@@ -144,7 +144,7 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
                 />
               </div>
               <Button
-                text="Supprimer le group"
+                text="Supprimer le groupe"
                 className="w-full bg-red-500"
                 onClick={handleDeleteGroup}
               />
@@ -154,7 +154,7 @@ const GroupHeader: React.FC<groupHeaderProps> = ({
               {groupData?.img_url ? (
                 <Image
                   src={groupData?.img_url}
-                  alt="Logo group"
+                  alt="Logo groupe"
                   width={100}
                   height={100}
                   className="w-24 h-24 rounded-full border bg-custom-white"

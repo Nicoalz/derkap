@@ -26,7 +26,8 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
 }) => {
   const [isInfoChanged, setIsInfoChanged] = useState(false);
   const { updateUserData, userData: currentUserData } = useUser();
-
+  const [openSheet, setOpenSheet] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [userImage, setUserImage] = useState<File | string | null>(
     `${currentUserData.avatar_url}?${currentUserData.avatarTimestamp}`,
   );
@@ -63,16 +64,21 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
         const reader = new FileReader();
         reader.readAsDataURL(userImage);
         reader.onload = async () => {
+          setIsLoading(true);
+
           const base64data = reader.result as string;
           const { data, error } = await updateAvatarProfile(base64data);
 
           if (error) {
             console.error(error);
             toast.error("Impossible de modifier l'image");
+            setIsLoading(false);
             return;
           }
           updateUserData({ avatar_url: data?.publicUrl });
           toast.success('Informations mises à jour');
+          setOpenSheet(false);
+          setIsLoading(false);
         };
       } catch (error) {
         console.error(error);
@@ -107,7 +113,12 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
         <ChevronLeft size={24} />
       </div>
       {isUserProfil && (
-        <SheetComponent trigger={<Ellipsis />} title="Mes infos">
+        <SheetComponent
+          trigger={<Ellipsis />}
+          title="Mes infos"
+          open={openSheet}
+          setOpen={setOpenSheet}
+        >
           <div className="flex flex-col justify-between h-full">
             <div className="flex flex-col gap-4 items-start justify-center">
               <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -173,9 +184,12 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
                 onClick={handleResetNotification}
               />
               <Button
-                text="Modifier"
-                className={cn('w-full', !isInfoChanged && 'bg-gray-300')}
-                disabled={!isInfoChanged}
+                text={isLoading ? 'Chargement' : 'Modifier'}
+                className={cn(
+                  'w-full',
+                  (!isInfoChanged || isLoading) && 'bg-gray-300',
+                )}
+                disabled={!isInfoChanged || isLoading}
                 onClick={handleSubmit}
               />
               <Button

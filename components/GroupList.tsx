@@ -7,6 +7,7 @@ import { Separator } from './ui/separator';
 import { Skeleton } from './ui/skeleton';
 import Button from './Button';
 import Image from 'next/image';
+import { useUser } from '@/contexts/user-context';
 
 const GroupList = ({
   groups,
@@ -20,6 +21,7 @@ const GroupList = ({
   setIsJoinGroupDrawerOpen: (value: boolean) => void;
 }) => {
   const limitElements = 5;
+  const { userData: currentUserData } = useUser();
 
   const membresGroup = groups.map(group => {
     const membres = group.members.filter(
@@ -183,7 +185,7 @@ const GroupList = ({
                         key={index}
                       >
                         <Image
-                          src={member.profile.avatar_url}
+                          src={`${member.profile.avatar_url}?t=${currentUserData.avatarTimestamp}`}
                           alt={member.profile.username + 'photo'}
                           width={40}
                           height={40}

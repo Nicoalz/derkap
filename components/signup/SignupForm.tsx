@@ -139,11 +139,9 @@ export default function SignUpForm() {
           )}
         />
       </div>
-      <div className="w-full">
-        <Link href="/connexion" className="flex items-center">
-          <Button text="Se connecter" />
-        </Link>
-      </div>
+      <Link href="/connexion" className="flex items-center">
+        <Button className="bg-gray-500" text="Se connecter" />
+      </Link>
     </form>
   );
 }

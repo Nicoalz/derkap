@@ -58,11 +58,9 @@ export default function SignInForm() {
           )}
         />
       </div>
-      <div className="w-full">
-        <Link href="/inscription" className="flex items-center">
-          <Button text="S'inscrire" />
-        </Link>
-      </div>
+      <Link href="/inscription" className="flex items-center">
+        <Button className="bg-gray-500" text="S'inscrire" />
+      </Link>
     </form>
   );
 }

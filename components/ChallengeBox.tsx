@@ -4,7 +4,7 @@ import { cn } from '../libs/utils';
 import { TChallengeDB } from '@/types/types';
 
 interface ChallengeBoxProps extends React.HTMLAttributes<HTMLDivElement> {
-  challenge: TChallengeDB;
+  challenge?: TChallengeDB;
 }
 
 const ChallengeBox = ({
@@ -20,15 +20,15 @@ const ChallengeBox = ({
         <p>Loading ...</p>
       ) : (
         <div className="min-h-16 max-h-fit flex w-full px-4 bg-custom-white border border-custom-black rounded-xl py-2 text-custom-black shadow-element gap-4 items-center">
-          <p className="text-3xl text-center">{challenge ? '😹' : '😢'}</p>
+          <p className="text-3xl text-center">{challenge ? '😹' : '🥱'}</p>
           <div className="text-left">
             <p className="text-sm font-champ text-custom-black line-clamp-2 ">
-              {challenge ? challenge.description : 'Reviens plus tard'}
+              {challenge ? challenge.description : 'Pas de défi...'}
             </p>
             <p className="text-sm line-clamp-1">
               {challenge
                 ? 'Par ' + challenge.creator?.username
-                : 'Reviens plus tard'}
+                : 'Créez en un dès maintenant !'}
             </p>
           </div>
         </div>

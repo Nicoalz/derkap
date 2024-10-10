@@ -7,6 +7,7 @@ import localFont from 'next/font/local';
 import { Toaster } from 'sonner';
 import { createSupabaseAppServerClient } from '../libs/supabase/server';
 import './globals.css';
+import AnimatedTransition from './AnimatedTransition';
 const title = 'Derkap';
 const description = 'Derkap';
 const domain = 'app.derkap.fr/';
@@ -71,10 +72,12 @@ export default async function RootLayout({
     <PWAProvider>
       <html lang="fr" className={`${dmSans.variable} ${champ.variable}`}>
         <body className="bg-gradient-linear">
-          <UserProvider user={user} profile={profile}>
-            <LayoutApp>{children}</LayoutApp>
-            <Toaster position="top-center" richColors />
-          </UserProvider>
+          <AnimatedTransition>
+            <UserProvider user={user} profile={profile}>
+              <LayoutApp>{children}</LayoutApp>
+              <Toaster position="top-center" richColors />
+            </UserProvider>
+          </AnimatedTransition>
         </body>
       </html>
     </PWAProvider>

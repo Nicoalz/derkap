@@ -16,6 +16,7 @@ const StatusLabel = ({ challengeStatus, ...props }: StatusLabelProps) => {
     ended: 'bg-gray-400',
   };
 
+
   if (!challengeStatus) return <Skeleton className="w-20 h-5" />;
 
   return (

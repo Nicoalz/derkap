@@ -170,11 +170,11 @@ const ChallengeFinalization = ({
               className={cn(
                 'rounded-xl w-full object-cover max-h-[510px] aspect-image',
                 challenge?.status === 'voting' &&
-                  post.id === userVote?.postId &&
-                  'border-4 border-green-500',
+                post.id === userVote?.postId &&
+                'border-4 border-green-500',
                 challenge?.status === 'ended' &&
-                  isPostHasMoreVotes(post.id) &&
-                  'border-4 border-yellow-500',
+                isPostHasMoreVotes(post.id) &&
+                'border-4 border-yellow-500',
               )}
               src={post.img_url}
               alt="post"
@@ -217,7 +217,7 @@ const ChallengeFinalization = ({
             <div className="absolute left-0 -top-2 z-[2] w-full h-2 bg-gradient-to-t from-[#f8e9db] to-[#f8e9db]/0 content-['']"></div>
             {challenge?.creator_id === userData.id && (
               <Button
-                className="bg-purple-300 w-full"
+                className="bg-purple-300 w-full font-champ"
                 text="Fermer les votes"
                 onClick={() => {
                   setIsEndVoteOpen(true);
@@ -225,7 +225,7 @@ const ChallengeFinalization = ({
               />
             )}
             <Button
-              className="w-full"
+              className="w-full font-champ"
               text={userVote?.voted ? 'Changer mon vote' : 'Voter'}
               isCancel={!selectedPost}
               onClick={() => {
@@ -237,6 +237,7 @@ const ChallengeFinalization = ({
       )}
       {challenge?.status === 'ended' && (
         <Button
+          className='font-champ'
           text="Relancer dès mainteant un défi !"
           onClick={() => setIsCreateChallengeOpen(true)}
         />

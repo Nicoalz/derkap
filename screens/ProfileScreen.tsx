@@ -4,14 +4,13 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
-
+import Button from '@/components/Button';
 import { TProfileDB } from '@/types/types';
 import { useUser } from '@/contexts/user-context';
 import { getProfileName } from '@/functions/profile-actions';
 
 import ProfileHeader from '@/components/ProfileHeader';
 import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
 
 const ProfileScreen = ({ id }: { id?: string }) => {
   const { userData: currentUserData } = useUser();
@@ -101,8 +100,28 @@ const ProfileScreen = ({ id }: { id?: string }) => {
           </h1>
         </div>
       </div>
-      <Separator className="w-[80%] bg-gray-400 my-5" />
-      <p>Cliquez sur les 3 petits points pour modifier votre profil.</p>
+      <p className="text-xs">
+        Cliquez sur les 3 petits points pour modifier votre profil.
+      </p>
+      <Separator className="w-[80%] bg-gray-400 my-5 " />
+      <div className="flex flex-col items-center justify-center gap-y-4 px-4 text-center">
+        <p className="font-bold text-xl">
+          Des idées pour améliorer l&apos;application ?
+        </p>
+        <p className="text-justify">
+          N&apos;hésite pas à nous donner ton avis : ce que tu aimes, ce que tu
+          n&apos;aimes pas, ce que tu aimerais voir dans l&apos;application, ce
+          qui ne sert à rien...
+          <br />
+          Ca nous aide à améliorer l&apos;application pour toi et les autres !
+        </p>
+        <Link href="mailto:derkap.dev@gmail.com">
+          <Button
+            text="
+        Donner mon avis"
+          />
+        </Link>
+      </div>
     </div>
   );
 };

@@ -10,11 +10,19 @@ interface SheetProps {
   trigger: React.ReactNode;
   title: string;
   children: React.ReactNode;
+  open?: boolean;
+  setOpen?: (value: boolean) => void;
 }
 
-const SheetComponent: React.FC<SheetProps> = ({ trigger, title, children }) => {
+const SheetComponent: React.FC<SheetProps> = ({
+  trigger,
+  title,
+  children,
+  open,
+  setOpen,
+}) => {
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>{trigger}</SheetTrigger>
       <SheetContent className="flex flex-col h-full">
         <SheetHeader>

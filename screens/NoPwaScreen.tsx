@@ -1,10 +1,12 @@
-import { ArrowDown } from "lucide-react";
-import Image from "next/image";
+import { ArrowDown } from 'lucide-react';
+import Image from 'next/image';
 
 const NoPwaScreen: React.FC = () => {
   return (
     <div className="w-full h-screen flex flex-col gap-8 items-center justify-between text-center px-2 py-4">
-      <h1 className="text-3xl font-champ text-balance">Bienvenue sur Derkap!</h1>
+      <h1 className="text-3xl font-champ text-balance">
+        Bienvenue sur Derkap!
+      </h1>
       <div className="flex flex-col items-center gap-4">
         <p className="text-balance">
           Pour utiliser cette application, veuillez l&apos;installer sur votre

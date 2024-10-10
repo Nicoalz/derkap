@@ -29,11 +29,11 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
       {!isPWA && isProduction ? (
         <NoPwaScreen />
       ) : (
-      <>
-        <main className="h-full container mx-auto flex-1 flex flex-col">
-          {children}
-        </main>
-      </>
+        <>
+          <main className="h-full container mx-auto flex-1 flex flex-col">
+            {children}
+          </main>
+        </>
       )}
     </div>
   );

@@ -60,10 +60,13 @@ const ChallengeFinalization = ({
     return votes.filter(vote => vote.post_id === postId).length;
   };
 
-  const getPostCreatorName = (postId?: number) => {
-    if (!postId) return '';
-    const post = posts.find(post => post.id === postId);
-    return post?.creator?.username;
+  const getPostWithMostVotes = () => {
+    const postsWithVotes = posts.map(post => ({
+      ...post,
+      voteCount: getVoteCount(post.id),
+    }));
+    const highestVotes = Math.max(...postsWithVotes.map(post => post.voteCount));
+    return postsWithVotes.find(post => post.voteCount === highestVotes);
   };
 
   const isPostHasMoreVotes = (postId: number) => {
@@ -119,6 +122,19 @@ const ChallengeFinalization = ({
   }, []);
 
   useEffect(() => {
+    if (challenge?.status === 'ended') {
+      const highestVotedPost = getPostWithMostVotes();
+      if (highestVotedPost && api) {
+        const postIndex = posts.findIndex(post => post.id === highestVotedPost.id);
+        if (postIndex !== -1) {
+          setCurrentPost(postIndex + 1);
+          api.scrollTo(postIndex);
+        }
+      }
+    }
+  }, [challenge, posts, api, votes]);
+
+  useEffect(() => {
     if (!api) {
       return;
     }
@@ -170,11 +186,11 @@ const ChallengeFinalization = ({
               className={cn(
                 'rounded-xl w-full object-cover max-h-[510px] aspect-image',
                 challenge?.status === 'voting' &&
-                  post.id === userVote?.postId &&
-                  'border-4 border-green-500',
+                post.id === userVote?.postId &&
+                'border-4 border-green-500',
                 challenge?.status === 'ended' &&
-                  isPostHasMoreVotes(post.id) &&
-                  'border-4 border-yellow-500',
+                isPostHasMoreVotes(post.id) &&
+                'border-4 border-yellow-500',
               )}
               src={post.img_url}
               alt="post"
@@ -236,11 +252,16 @@ const ChallengeFinalization = ({
         </div>
       )}
       {challenge?.status === 'ended' && (
-        <Button
-          className="font-champ"
-          text="Relancer dès mainteant un défi !"
-          onClick={() => setIsCreateChallengeOpen(true)}
-        />
+        <div className="fixed w-full bg-[#f8e9db] bottom-0 right-0">
+          <div className="w-full relative pb-8 pt-2 flex justify-between items-center gap-2 px-2">
+            <div className="absolute left-0 -top-2 z-[2] w-full h-2 bg-gradient-to-t from-[#f8e9db] to-[#f8e9db]/0 content-['']"></div>
+            <Button
+              className="w-full font-champ"
+              text="Relancer dès mainteant un défi !"
+              onClick={() => setIsCreateChallengeOpen(true)}
+            />
+          </div>
+        </div>
       )}
     </div>
   );

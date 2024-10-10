@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { handleAskNotification } from '@/libs/notificationHelper';
 import { createSupabaseFrontendClient } from '@/libs/supabase/client';
 import { useUser } from '@/contexts/user-context';
+import { updateAvatarProfile } from '@/functions/profile-actions';
 interface GroupeHeaderProps {
   isUserProfil: boolean;
   children?: React.ReactNode;
@@ -56,20 +57,32 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   };
 
   const handleSubmit = async () => {
-    if (userImage !== currentUserData.avatar_url && userImage) {
-      const { data, error } = await updateAvatarProfile({
-        avatar: userImage as File,
-      });
-      if (error) {
-        console.error(error);
-        toast.error("Impossible de modifier l'image");
-        return;
-      }
-      updateUserData({ avatar_url: data?.publicUrl });
+    if (userImage && userImage instanceof File) {
+      try {
+        // CONVERT FILE TO BASE64 TO PASS TO SERVER
+        const reader = new FileReader();
+        reader.readAsDataURL(userImage);
+        reader.onload = async () => {
+          const base64data = reader.result as string;
+          const { data, error } = await updateAvatarProfile(
+            base64data,
+            userImage.name,
+          );
 
-      toast.success('Informations mises à jour');
+          if (error) {
+            console.error(error);
+            toast.error("Impossible de modifier l'image");
+            return;
+          }
+          updateUserData({ avatar_url: data?.publicUrl });
+          toast.success('Informations mises à jour');
+        };
+      } catch (error) {
+        console.error(error);
+        toast.error("Une erreur s'est produite lors du traitement de l'image");
+      }
     } else {
-      toast.error('Veuillez remplir tous les champs');
+      toast.error('Veuillez sélectionner une nouvelle image');
     }
   };
 
@@ -89,56 +102,6 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
     } catch (error: any) {
       toast.error(error?.message);
     }
-  };
-
-  const updateAvatarProfile = async ({ avatar }: { avatar: File }) => {
-    const supabase = createSupabaseFrontendClient();
-    const { user } = (await supabase.auth.getUser()).data;
-    if (!user) {
-      return {
-        data: null,
-        error: 'User not found',
-      };
-    }
-
-    // UPLOAD NEW AVATAR
-
-    const { data, error } = await supabase.storage
-      .from('avatars')
-      .upload(`${user.id}/avatar`, avatar, { upsert: true });
-    if (error) {
-      return {
-        data: null,
-        error: error.message,
-      };
-    }
-    if (!data) {
-      return {
-        data: null,
-        error: 'No data',
-      };
-    }
-
-    // GET NEW AVATAR URL
-    const { data: avatar_url } = await supabase.storage
-      .from('avatars')
-      .getPublicUrl(`${user.id}/avatar`);
-
-    const { error: updateError } = await supabase
-      .from('profile')
-      .update({
-        avatar_url: avatar_url.publicUrl,
-      })
-      .eq('id', user.id);
-
-    if (updateError) {
-      return {
-        data: null,
-        error: updateError.message,
-      };
-    }
-
-    return { data: avatar_url, error: null };
   };
 
   return (

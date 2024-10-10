@@ -28,6 +28,9 @@ const ProfileScreen = ({ id }: { id?: string }) => {
           setUserData(data);
           if (data.username === currentUserData.username) {
             setIsUserProfile(true);
+            setUserData(currentUserData);
+          } else {
+            setUserData(data);
           }
         }
       } else {
@@ -90,7 +93,7 @@ const ProfileScreen = ({ id }: { id?: string }) => {
         <div className="flex flex-col items-center justify-center gap-2">
           {userData.avatar_url ? (
             <Image
-              src={`${currentUserData.avatar_url}?t=${currentUserData.avatarTimestamp}`}
+              src={`${userData.avatar_url}?t=${currentUserData.avatarTimestamp}`}
               alt={userData.username ?? ''}
               width={70}
               height={70}

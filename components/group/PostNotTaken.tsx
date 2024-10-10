@@ -48,7 +48,7 @@ const PostNotTaken = ({
               ))}
             </CarouselComponent>
           ) : (
-            <div className="aspect-image w-full rounded-xl bg-gray-400"></div>
+            <div className="aspect-image w-full h-[510px] rounded-xl bg-gray-400"></div>
           )}
           <div className="abs-center flex flex-col gap-4">
             <p className="text-xl font-champ text-center">À vous de jouer !</p>

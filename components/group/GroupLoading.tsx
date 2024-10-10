@@ -10,7 +10,7 @@ const NoChallenge = ({
 }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <div {...props} className={cn('h-screen relative', className)}>
-      <header className="w-full flex justify-between items-center p-4 md:px-12 h-fit relative">
+      <header className="w-full flex justify-between items-center p-4 md:px-12 h-fit relative shadow-lg">
         <Link href="/" className="flex items-center gap-x-2">
           <ChevronLeft size={24} />
         </Link>
@@ -41,17 +41,20 @@ const NoChallenge = ({
           </div>
         </div>
 
-        <div className="flex flex-col mb-1 w-full ">
-          <Skeleton className="w-full h-[504px]" />
+        <div className="flex flex-col mb-1 w-full">
+          <Skeleton className="w-full h-[510px] rounded-xl" />
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <p className="font-champ">@</p>
               <Skeleton className="w-16 h-4" />
             </div>
-            <div className="flex gap-2 justify-center items-center">
-              <Skeleton className="w-4 h-4" />
+            <div className="flex gap-1 justify-center items-center">
+              <Skeleton className="w-3 h-4" />
               <p className="font-champ">vote(s)</p>
             </div>
+          </div>
+          <div className='w-full flex items-center justify-center'>
+          <Skeleton className="w-12 h-2 rounded-full mt-4" />
           </div>
         </div>
       </div>

@@ -8,6 +8,12 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -140,6 +146,10 @@ body {
 
 div[data-radix-popper-content-wrapper] {
   left: 16px !important;
+}
+
+.border-inline-green {
+  border-inline: 2px solid;
 }
 
 /* ANIMATION */

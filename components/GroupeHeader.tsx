@@ -146,7 +146,7 @@ const GroupeHeader: React.FC<GroupeHeaderProps> = ({
               </p>
               <span className="text-gray-500 text-sm">
                 {membresGroup?.length}
-                /10 memebres
+                /10 membres
               </span>
 
               <GroupMembersList group={groupeData} />

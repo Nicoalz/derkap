@@ -68,9 +68,7 @@ export default function SignUpForm() {
       if (error) {
         toast.error(error);
       } else {
-        toast.success(
-          'Un email de confirmation vous a été envoyé (à faire avec resend))',
-        );
+        toast.success('Inscription réussie !');
         router.push('/connexion');
       }
     } catch (error) {

@@ -16,12 +16,14 @@ import { useUser } from '@/contexts/user-context';
 import { updateAvatarProfile } from '@/functions/profile-actions';
 interface GroupeHeaderProps {
   isUserProfil: boolean;
+  isMyProfile?: boolean;
   children?: React.ReactNode;
   link?: string;
 }
 
 const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   isUserProfil,
+  isMyProfile,
   children,
 }) => {
   const [isInfoChanged, setIsInfoChanged] = useState(false);
@@ -112,7 +114,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
       <div className="flex items-center gap-x-2" onClick={() => router.back()}>
         <ChevronLeft size={24} />
       </div>
-      {isUserProfil && (
+      {isUserProfil && isMyProfile && (
         <SheetComponent
           trigger={<Ellipsis />}
           title="Mes infos"

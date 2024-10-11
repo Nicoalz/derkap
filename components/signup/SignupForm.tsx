@@ -69,8 +69,11 @@ export default function SignUpForm() {
       if (error) {
         toast.error(error);
       } else {
+        // UPDATE TEXT WHEN ENABLE EMAIL VERIFICATION
         toast.success('Inscription réussie');
-        router.push('/connexion');
+
+        // UPDATE REDIRECT TO 'CONNEXION' WHEN ENABLE EMAIL VERIFICATION
+        router.push('/');
       }
     } catch (error) {
       if (error instanceof z.ZodError) {

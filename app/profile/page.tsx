@@ -18,7 +18,7 @@ export default async function Profile() {
         <title>Profile</title>
         <meta name="description" content="Profile" />
       </Head>
-      <ProfileScreen />
+      <ProfileScreen userId={user.id} />
     </PageTransition>
   );
 }

@@ -7,13 +7,19 @@ import { ChevronLeft, Lightbulb } from 'lucide-react';
 import Button from '@/components/Button';
 import { TProfileDB } from '@/types/types';
 import { useUser } from '@/contexts/user-context';
-import { getProfileName } from '@/functions/profile-actions';
+import { getMyProfilName, getProfileName } from '@/functions/profile-actions';
 
 import ProfileHeader from '@/components/ProfileHeader';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const ProfileScreen = ({ id }: { id?: string }) => {
+const ProfileScreen = ({
+  userId,
+  username,
+}: {
+  userId?: string;
+  username?: string;
+}) => {
   const { userData: currentUserData } = useUser();
   const [userData, setUserData] = useState<TProfileDB | null>(null);
   const [isUserProfil, setIsUserProfile] = useState(true);
@@ -22,8 +28,10 @@ const ProfileScreen = ({ id }: { id?: string }) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      if (id) {
-        const { data } = await getProfileName({ user_name: id });
+      if (username || userId !== currentUserData.id) {
+        const { data } = username
+          ? await getProfileName({ user_name: username })
+          : await getMyProfilName();
         if (data) {
           setUserData(data);
           if (data.username === currentUserData.username) {
@@ -40,7 +48,7 @@ const ProfileScreen = ({ id }: { id?: string }) => {
     };
 
     fetchData();
-  }, [id, currentUserData]);
+  }, [username, currentUserData]);
 
   if (isLoading) {
     return (
@@ -90,7 +98,7 @@ const ProfileScreen = ({ id }: { id?: string }) => {
     <div className="w-full h-screen flex flex-col items-center justify-start relative">
       <ProfileHeader
         isUserProfil={isUserProfil}
-        isMyProfile={id ? false : true}
+        isMyProfile={username ? false : true}
       />
       <div className="w-full flex flex-col items-center gap-4">
         <div className="flex flex-col items-center justify-center gap-2">

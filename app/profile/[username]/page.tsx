@@ -5,16 +5,20 @@ import Head from 'next/head';
 import ProfileScreen from '@/screens/ProfileScreen';
 import PageTransition from '@/app/PageTransition';
 
-export default function ProfilUser({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default function ProfilUser({
+  params,
+}: {
+  params: { username: string };
+}) {
+  const { username } = params;
 
   return (
     <PageTransition title="Accueil">
       <Head>
-        <title>{id}</title>
+        <title>{username}</title>
         <meta name="description" content="Accueil" />
       </Head>
-      <ProfileScreen id={id} />
+      <ProfileScreen username={username} />
     </PageTransition>
   );
 }

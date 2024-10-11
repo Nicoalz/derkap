@@ -42,7 +42,7 @@ const PostNotTaken = ({
                     alt="post"
                     width={300}
                     height={300}
-                    className="blur-2xl rounded-xl w-full object-cover max-h-[510px] aspect-image"
+                    className="blur-2xl rounded-xl w-full object-cover h-[510px] aspect-image"
                   />
                 </CarouselItem>
               ))}

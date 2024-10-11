@@ -83,7 +83,7 @@ const PostTaken = ({
           </div>
         </DrawerComponent>
 
-        <div className="h-full aspect-image w-full overflow-hidden relative">
+        <div className="h-full aspect-image w-full rounded-xl relative">
           <CarouselComponent>
             {posts?.map((post, index) => (
               <CarouselItem key={index}>

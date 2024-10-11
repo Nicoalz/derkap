@@ -16,6 +16,7 @@ Everyone takes a photo challenge, and everyone votes for the best one!
 - Husky
 - EsLint
 - Prettier
+- Deno
 
 # Installation
 

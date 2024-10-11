@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import Button from '@/components/Button';
-import { XIcon, ArrowLeftIcon } from 'lucide-react';
+import { XIcon, ArrowLeftIcon, RefreshCcw, Timer } from 'lucide-react';
 import React, { useState } from 'react';
 import Webcam from 'react-webcam';
 import { toast } from 'sonner';
@@ -23,6 +23,50 @@ const CaptureScreen: React.FC<{
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
   const webcamRef = React.useRef<Webcam>(null);
   const validateRef = React.useRef<HTMLButtonElement>(null);
+  const [captureDelay, setCaptureDelay] = useState<0 | 3 | 5 | 10>(0);
+  const [countdown, setCountdown] = useState<number | null>(null); // State to manage countdown
+
+  const handleCaptureDelay = () => {
+    switch (captureDelay) {
+      case 0:
+        setCaptureDelay(3);
+        break;
+      case 3:
+        setCaptureDelay(5);
+        break;
+      case 5:
+        setCaptureDelay(10);
+        break;
+      case 10:
+        setCaptureDelay(0);
+        break;
+    }
+  };
+
+  const handleCapture = async () => {
+    if (captureDelay === 0) {
+      capture();
+    } else {
+      startCountdown();
+    }
+  };
+
+  // Countdown logic
+  const startCountdown = () => {
+    setCountdown(captureDelay); // Set the countdown to the current delay
+
+    const interval = setInterval(() => {
+      setCountdown(prev => {
+        if (prev === null) return null;
+        if (prev === 1) {
+          clearInterval(interval);
+          capture(); // Capture the image when countdown reaches 0
+          return null;
+        }
+        return prev - 1; // Decrement countdown
+      });
+    }, 1000);
+  };
 
   const capture = React.useCallback(() => {
     if (!webcamRef.current) return;
@@ -113,6 +157,26 @@ const CaptureScreen: React.FC<{
               screenshotFormat="image/jpeg"
               screenshotQuality={1}
             />
+            {countdown !== null && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 font-champ">
+                <p className="text-white text-6xl font-bold">{countdown}</p>
+              </div>
+            )}
+            <div
+              onClick={handleCaptureDelay}
+              className="absolute top-2 right-2 p-2 bg-custom-black text-white rounded-xl flex gap-x-2"
+            >
+              <Timer className="w-6 h-6" />
+              <p>{captureDelay}s</p>
+            </div>
+            <div
+              onClick={() =>
+                setFacingMode(facingMode === 'user' ? 'environment' : 'user')
+              }
+              className="absolute bottom-2 right-2 p-2 bg-custom-black text-white rounded-xl"
+            >
+              <RefreshCcw className="w-6 h-6" />
+            </div>
             <div
               onClick={() => setIsCapturing(false)}
               className="absolute top-2 left-2 p-2 bg-custom-black text-white rounded-xl"
@@ -121,7 +185,7 @@ const CaptureScreen: React.FC<{
             </div>
             <div className="flex justify-center items-center">
               <div
-                onClick={() => capture()}
+                onClick={handleCapture}
                 id="capture"
                 className="absolute w-20 h-20 border-[5px] border-gray-200 bg-blur-light bg bottom-2 rounded-full"
               ></div>

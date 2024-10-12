@@ -178,7 +178,7 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
                   />
                 </div>
                 <Button
-                  text={isLoading ? 'Chargement' : 'Modifier'}
+                  text={isLoading ? 'Chargement' : 'Valider'}
                   className={cn(
                     'w-full',
                     (!isInfoChanged || isLoading) && 'bg-gray-300',

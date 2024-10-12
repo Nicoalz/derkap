@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({
   children,
 }) => {
   return (
-    <header className="w-full flex justify-between items-center p-4 h-fit relative">
+    <header className="w-full flex justify-between items-center p-4 min-h-[65px] h-fit relative">
       <Link href={'/'} className="flex items-center gap-x-2">
         <ChevronLeft size={24} />
         {withText && 'Retour'}

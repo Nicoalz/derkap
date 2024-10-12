@@ -11,7 +11,8 @@ interface LayoutProps {
 const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE === 'true';
   const isProduction = process.env.NODE_ENV === 'production';
-  const { isPWA } = usePWA();
+  // const { isPWA } = usePWA();
+  const isPWA = true;
 
   if (isMaintenance) {
     return (
@@ -26,7 +27,7 @@ const LayoutApp: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="flex flex-col min-h-screen dark">
-      {!isPWA && isProduction ? (
+      {isPWA  ? (
         <NoPwaScreen />
       ) : (
         <>

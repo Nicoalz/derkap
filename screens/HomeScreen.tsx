@@ -176,7 +176,7 @@ const HomeScreen = () => {
               permission={permission}
             />
           )}
-        <header className="w-full flex items-center justify-between p-4 gap-2 h-[10vh]">
+        <header className="w-full flex items-center justify-between p-4 gap-2 h-fit min-h-[10vh]">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="p-1 bg-custom-primary text-custom-white rounded-full">

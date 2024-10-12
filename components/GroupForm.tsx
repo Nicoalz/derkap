@@ -60,7 +60,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
         <p>Nom du groupe</p>
         <Input
           type="text"
-          placeholder="Vacances Portugal 🇵🇹"
+          placeholder="Les boss..."
           value={groupName}
           onChange={e => setGroupName(e.target.value)}
           className="w-full p-2 border rounded"
@@ -72,7 +72,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
         )}
       </div>
 
-      <div className="w-full h-fit p-6 bg-gray-100 rounded-lg flex flex-col items-center justify-center">
+      {/* <div className="w-full h-fit p-6 bg-gray-100 rounded-lg flex flex-col items-center justify-center">
         {preview ? (
           <Image
             src={preview}
@@ -100,7 +100,7 @@ const GroupForm: React.FC<GroupFormProps> = ({
           onChange={handleImageChange}
           className="hidden"
         />
-      </div>
+      </div> */}
 
       <Button
         text={isRequestInProgress ? 'Chargement...' : 'Créer'}

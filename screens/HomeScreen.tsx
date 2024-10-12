@@ -225,7 +225,7 @@ const HomeScreen = () => {
                 onChange={e => setInviteCodeJoin(e.target.value)}
               />
               <Button
-                text={isRequestInProgress ? 'Chargement...' : 'Rejoidnre'}
+                text={isRequestInProgress ? 'Chargement...' : 'Rejoindre'}
                 onClick={handleJoinGroup}
                 className={cn(
                   isRequestInProgress && 'cursor-not-allowed bg-gray-400',

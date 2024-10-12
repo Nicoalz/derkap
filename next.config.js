@@ -30,6 +30,7 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    unoptimized: true,
   },
   experimental: {
     serverActions: {

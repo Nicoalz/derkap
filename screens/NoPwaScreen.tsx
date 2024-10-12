@@ -39,7 +39,7 @@ const NoPwaScreen: React.FC = () => {
           <div className="h-full flex flex-col items-center gap-4">
             <p className="flex flex-wrap items-center gap-1 justify-center">
               Pour utiliser cette application,{' '}
-              <span className="font-bold"> appuyé sur</span>
+              <span className="font-bold"> appuyez sur</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"

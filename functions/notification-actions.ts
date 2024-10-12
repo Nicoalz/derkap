@@ -22,7 +22,7 @@ export const postSubscription = async ({
       {
         user_id: user.id,
         subscription: subscription as unknown as Json,
-        url: subscription.endpoint,
+        updated_at: new Date().toLocaleString(),
       },
       {
         onConflict: 'user_id',

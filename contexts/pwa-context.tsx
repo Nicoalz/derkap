@@ -32,7 +32,7 @@ export const PWAProvider: React.FC<PWAProviderProps> = ({ children }) => {
   }, [pathname]);
 
   const isStandaloneAndroid = () =>
-    window.matchMedia('(display-mode: standalone)').matches;
+    window.matchMedia('(display-mode: fullscreen)').matches;
   const isStandaloneiOS = () =>
     ('standalone' in window.navigator &&
       window.navigator.standalone) as boolean;

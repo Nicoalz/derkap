@@ -1,24 +1,14 @@
 import { postSubscription } from '@/functions/notification-actions';
 
-const isNotificationSupported = (): boolean => {
-  return 'Notification' in window;
-};
-const askPermission = async () => {
-  const permission = await Notification.requestPermission();
-  return permission;
-};
-
 const generateSubscription = async () => {
   if (!('serviceWorker' in navigator)) {
     throw new Error('Service workers are not supported by this browser.');
   }
 
   const registration = await navigator.serviceWorker.ready;
-
   if (!registration) {
     throw new Error('Service worker registration failed or is not ready.');
   }
-
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
@@ -32,30 +22,11 @@ const subscribeUser = async () => {
   return await postSubscription({ subscription });
 };
 
-const getCurrentSubscription = async () => {
-  const registration = await navigator.serviceWorker.ready;
-  if (!registration) {
-    throw new Error('Service worker registration failed or is not ready.');
-  }
-
-  return await registration.pushManager.getSubscription();
-};
-
-export const getPermission = () => {
-  if (!isNotificationSupported()) return;
-  return Notification.permission;
-};
-
 export const handleAskNotification = async () => {
-  if (!isNotificationSupported()) {
-    throw new Error('Notifications are not supported by this browser.');
-  }
-  const permission = await askPermission();
-  const currentSubscription = await getCurrentSubscription();
-  if (currentSubscription) {
-    await currentSubscription.unsubscribe();
-  }
-  if (permission === 'granted') {
+  const permissionResult = await Notification.requestPermission();
+  if (permissionResult === 'granted') {
     return await subscribeUser();
+  } else {
+    throw new Error('Veuillez autoriser les notifications dans les réglages.');
   }
 };

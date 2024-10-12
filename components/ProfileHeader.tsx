@@ -33,8 +33,10 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
   const [preview, setPreview] = useState<string | null>(
     `${currentUserData.avatar_url}?${currentUserData.avatarTimestamp}`,
   );
-  const [isNotificationSupported, setIsNotificationSupported] = useState(false);
   const [resetClickable, setResetClickable] = useState(true);
+  const [isServiceWorkerReady, setServiceWorkerReady] = useState(false);
+  const [isNotificationSupported, setNotificationSupported] = useState(false);
+  const [permission, setPermission] = useState('default'); // 'default', 'granted', 'denied'
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -42,9 +44,25 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
     await signoutSupabase();
   };
 
+  // Check if notifications and service workers are supported
   useEffect(() => {
-    if (typeof Notification !== 'undefined') {
-      setIsNotificationSupported(true);
+    if ('serviceWorker' in navigator && 'Notification' in window) {
+      setNotificationSupported(true);
+
+      // Check for service worker readiness
+      navigator.serviceWorker.ready
+        .then(registration => {
+          console.log('Service worker is ready:', registration);
+          setServiceWorkerReady(true);
+        })
+        .catch(error => {
+          console.error('Error with service worker readiness:', error);
+        });
+
+      // Check for current notification permission status
+      setPermission(Notification.permission);
+    } else {
+      setNotificationSupported(false);
     }
   }, []);
 
@@ -185,19 +203,19 @@ const ProfileHeader: React.FC<GroupeHeaderProps> = ({
               <p className="text-gray-600 text-center text-sm">
                 Membre depuis le {membreSince()}
               </p>
-              {isNotificationSupported &&
-                Notification.permission === 'denied' && (
-                  <p className="text-xs text-red-500 text-justify">
-                    Avant de les réinitialiser, autorise les notifications de
-                    Derkap dans les réglages de ton smartphone !
-                  </p>
-                )}
+              {isNotificationSupported && permission === 'denied' && (
+                <p className="text-xs text-red-500 text-justify">
+                  Avant de les réinitialiser, autorise les notifications de
+                  Derkap dans les réglages de ton smartphone !
+                </p>
+              )}
               <Button
                 text="Réinitialiser les notifications"
                 className={cn('w-full')}
                 isCancel={
                   !isNotificationSupported ||
-                  Notification.permission === 'denied' ||
+                  !isServiceWorkerReady ||
+                  permission === 'denied' ||
                   !resetClickable
                 }
                 onClick={handleResetNotification}

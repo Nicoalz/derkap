@@ -37,7 +37,9 @@ const HomeScreen = () => {
   const [isJoinGroupDrawerOpen, setIsJoinGroupDrawerOpen] =
     useState<boolean>(false);
   const [isRequestInProgress, setIsRequestInProgress] = useState(false);
-  const [isNotificationSupported, setIsNotificationSupported] = useState(false);
+  const [isServiceWorkerReady, setServiceWorkerReady] = useState(false);
+  const [isNotificationSupported, setNotificationSupported] = useState(false);
+  const [permission, setPermission] = useState('default'); // 'default', 'granted', 'denied'
 
   const router = useRouter();
 
@@ -91,12 +93,27 @@ const HomeScreen = () => {
     setNotificationFirstTimeSeen('false');
   }, []);
 
+  // Check if notifications and service workers are supported
   useEffect(() => {
-    if (typeof Notification !== 'undefined') {
-      setIsNotificationSupported(true);
+    if ('serviceWorker' in navigator && 'Notification' in window) {
+      setNotificationSupported(true);
+
+      // Check for service worker readiness
+      navigator.serviceWorker.ready
+        .then(registration => {
+          console.log('Service worker is ready:', registration);
+          setServiceWorkerReady(true);
+        })
+        .catch(error => {
+          console.error('Error with service worker readiness:', error);
+        });
+
+      // Check for current notification permission status
+      setPermission(Notification.permission);
+    } else {
+      setNotificationSupported(false);
     }
   }, []);
-
   const updateNotifFirstTimeSeen = () => {
     const now = new Date();
     const expiresIn = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -151,11 +168,12 @@ const HomeScreen = () => {
     >
       <>
         {isNotificationSupported &&
-          Notification?.permission !== 'granted' &&
+          isServiceWorkerReady &&
+          (permission === 'default' || permission === 'denied') &&
           NotificationFirstTimeSeen === 'false' && (
             <NotificationFirstTime
               updateNotifFirstTimeSeen={updateNotifFirstTimeSeen}
-              permission={Notification.permission}
+              permission={permission}
             />
           )}
         <header className="w-full flex items-center justify-between p-4 gap-2 h-[10vh]">
